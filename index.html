@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d0b">
+  <title>SwiftPays — Digital Payments</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      min-height:100vh;background:#080d0b;color:#fff;
+      font-family:Arial,sans-serif;display:flex;
+      justify-content:center;align-items:center;padding:20px
+    }
+    .card{
+      width:100%;max-width:420px;background:#101915;
+      border:1px solid #26372e;border-radius:22px;
+      padding:30px 24px;box-shadow:0 15px 50px #0008
+    }
+    .logo{text-align:center;margin-bottom:28px}
+    .logo h1{font-size:34px;color:#42ed91;letter-spacing:-1px}
+    .logo p{color:#8d9d93;font-size:13px;margin-top:8px}
+    .tabs{display:flex;background:#080f0b;padding:5px;
+      border-radius:12px;margin-bottom:24px}
+    .tabs button{
+      width:50%;padding:12px;border:0;border-radius:9px;
+      background:transparent;color:#9aaba0;font-weight:bold
+    }
+    .tabs button.active{background:#42ed91;color:#07130c}
+    h2{font-size:23px;margin-bottom:8px}
+    .sub{font-size:13px;color:#91a096;margin-bottom:23px}
+    label{display:block;font-size:13px;margin:15px 0 8px;color:#c5d2c9}
+    input{
+      width:100%;padding:14px;background:#09110d;
+      border:1px solid #34463b;border-radius:10px;
+      color:white;font-size:15px;outline:none
+    }
+    input:focus{border-color:#42ed91}
+    .main-btn{
+      width:100%;padding:15px;margin-top:23px;
+      border:0;border-radius:10px;background:#42ed91;
+      color:#07130c;font-size:15px;font-weight:bold
+    }
+    .telegram{
+      display:block;text-align:center;padding:13px;
+      border:1px solid #34463b;border-radius:10px;
+      color:#42ed91;text-decoration:none;margin-top:15px;
+      font-size:14px
+    }
+    .foot{text-align:center;color:#87968c;font-size:12px;margin-top:24px}
+    .foot strong{color:#42ed91}
+    .hidden{display:none}
+    .note{font-size:11px;color:#87968c;margin-top:13px;line-height:1.5}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <header class="logo">
+      <h1>SwiftPays</h1>
+      <p>Fast. Secure. Simple Payments.</p>
+    </header>
+
+    <div class="tabs">
+      <button id="loginTab" class="active" onclick="showForm('login')">Login</button>
+      <button id="registerTab" onclick="showForm('register')">Register</button>
+    </div>
+
+    <form id="loginForm" onsubmit="demo(event)">
+      <h2>Welcome Back</h2>
+      <p class="sub">Login to your SwiftPays account.</p>
+      <label>Mobile Number</label>
+      <input type="tel" placeholder="10-digit mobile number"
+        pattern="[0-9]{10}" maxlength="10" required>
+      <label>Password</label>
+      <input type="password" placeholder="Enter password" required>
+      <button class="main-btn" type="submit">Login Securely</button>
+    </form>
+
+    <form id="registerForm" class="hidden" onsubmit="demo(event)">
+      <h2>Create Account</h2>
+      <p class="sub">Join SwiftPays today.</p>
+      <label>Full Name</label>
+      <input type="text" placeholder="Enter your full name" required>
+      <label>Mobile Number</label>
+      <input type="tel" placeholder="10-digit mobile number"
+        pattern="[0-9]{10}" maxlength="10" required>
+      <label>Password</label>
+      <input type="password" placeholder="Create password"
+        minlength="8" required>
+      <a class="telegram" href="#" onclick="alert('Telegram linking will be connected later.');return false">
+        Connect Telegram
+      </a>
+      <button class="main-btn" type="submit">Create Account</button>
+    </form>
+
+    <p class="note">Secure verification and account protection will be connected before launch.</p>
+    <p class="foot">Need help? Contact <strong>SwiftPays Support</strong></p>
+  </main>
+
+  <script>
+    function showForm(type){
+      const login = type === 'login';
+      document.getElementById('loginForm').classList.toggle('hidden',!login);
+      document.getElementById('registerForm').classList.toggle('hidden',login);
+      document.getElementById('loginTab').classList.toggle('active',login);
+      document.getElementById('registerTab').classList.toggle('active',!login);
+    }
+    function demo(event){
+      event.preventDefault();
+      alert('Frontend preview only. Secure authentication will be connected later.');
+    }
+  </script>
+</body>
+        </html>
+        
