@@ -2,115 +2,233 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080d0b">
-  <title>SwiftPays — Digital Payments</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      min-height:100vh;background:#080d0b;color:#fff;
-      font-family:Arial,sans-serif;display:flex;
-      justify-content:center;align-items:center;padding:20px
-    }
-    .card{
-      width:100%;max-width:420px;background:#101915;
-      border:1px solid #26372e;border-radius:22px;
-      padding:30px 24px;box-shadow:0 15px 50px #0008
-    }
-    .logo{text-align:center;margin-bottom:28px}
-    .logo h1{font-size:34px;color:#42ed91;letter-spacing:-1px}
-    .logo p{color:#8d9d93;font-size:13px;margin-top:8px}
-    .tabs{display:flex;background:#080f0b;padding:5px;
-      border-radius:12px;margin-bottom:24px}
-    .tabs button{
-      width:50%;padding:12px;border:0;border-radius:9px;
-      background:transparent;color:#9aaba0;font-weight:bold
-    }
-    .tabs button.active{background:#42ed91;color:#07130c}
-    h2{font-size:23px;margin-bottom:8px}
-    .sub{font-size:13px;color:#91a096;margin-bottom:23px}
-    label{display:block;font-size:13px;margin:15px 0 8px;color:#c5d2c9}
-    input{
-      width:100%;padding:14px;background:#09110d;
-      border:1px solid #34463b;border-radius:10px;
-      color:white;font-size:15px;outline:none
-    }
-    input:focus{border-color:#42ed91}
-    .main-btn{
-      width:100%;padding:15px;margin-top:23px;
-      border:0;border-radius:10px;background:#42ed91;
-      color:#07130c;font-size:15px;font-weight:bold
-    }
-    .telegram{
-      display:block;text-align:center;padding:13px;
-      border:1px solid #34463b;border-radius:10px;
-      color:#42ed91;text-decoration:none;margin-top:15px;
-      font-size:14px
-    }
-    .foot{text-align:center;color:#87968c;font-size:12px;margin-top:24px}
-    .foot strong{color:#42ed91}
-    .hidden{display:none}
-    .note{font-size:11px;color:#87968c;margin-top:13px;line-height:1.5}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080d0b">
+<title>SwiftPays — Secure Digital Payments</title>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:#080d0b;color:#fff;font-family:Arial,sans-serif;display:flex;justify-content:center;align-items:center;padding:20px}
+.card{width:100%;max-width:430px;background:#101915;border:1px solid #26372e;border-radius:22px;padding:30px 24px;box-shadow:0 15px 50px #0008}
+.logo{text-align:center;margin-bottom:27px}
+.logo h1{font-size:36px;color:#42ed91;letter-spacing:-1px}
+.logo p{color:#91a096;font-size:13px;margin-top:8px}
+.tabs{display:flex;background:#080f0b;padding:5px;border-radius:12px;margin-bottom:25px}
+.tabs button{width:50%;padding:12px;border:0;border-radius:9px;background:transparent;color:#9aaba0;font-weight:bold;cursor:pointer}
+.tabs button.active{background:#42ed91;color:#07130c}
+h2{font-size:23px;margin-bottom:8px}
+.sub{font-size:13px;color:#91a096;margin-bottom:22px;line-height:1.5}
+label{display:block;font-size:13px;margin:15px 0 8px;color:#c5d2c9}
+input{width:100%;padding:14px;background:#09110d;border:1px solid #34463b;border-radius:10px;color:white;font-size:15px;outline:none}
+input:focus{border-color:#42ed91}
+.main-btn{width:100%;padding:15px;margin-top:22px;border:0;border-radius:10px;background:#42ed91;color:#07130c;font-size:15px;font-weight:bold;cursor:pointer}
+.main-btn:disabled{opacity:.5;cursor:not-allowed}
+.telegram{display:block;text-align:center;padding:14px;border:1px solid #34463b;border-radius:10px;color:#42ed91;text-decoration:none;margin-top:15px;font-size:14px;cursor:pointer;background:transparent;width:100%}
+.forgot{text-align:right;margin-top:13px}
+.forgot button{background:none;border:0;color:#42ed91;font-size:13px;cursor:pointer}
+.foot{text-align:center;color:#87968c;font-size:12px;margin-top:24px}
+.foot strong{color:#42ed91}
+.hidden{display:none!important}
+.note{font-size:11px;color:#87968c;margin-top:15px;line-height:1.6;text-align:center}
+.status{font-size:13px;margin-top:15px;line-height:1.5;white-space:pre-wrap}
+.success{color:#42ed91}
+.error{color:#ff7777}
+.cf-wrap{margin-top:18px;overflow:hidden}
+.back{background:none;border:0;color:#42ed91;margin-bottom:18px;cursor:pointer}
+</style>
 </head>
 <body>
-  <main class="card">
-    <header class="logo">
-      <h1>SwiftPays</h1>
-      <p>Fast. Secure. Simple Payments.</p>
-    </header>
+<main class="card">
+<header class="logo">
+<h1>SwiftPays</h1>
+<p>Fast. Secure. Simple Payments.</p>
+</header>
 
-    <div class="tabs">
-      <button id="loginTab" class="active" onclick="showForm('login')">Login</button>
-      <button id="registerTab" onclick="showForm('register')">Register</button>
-    </div>
+<div class="tabs" id="tabs">
+<button id="loginTab" class="active" onclick="showPage('login')">LOGIN</button>
+<button id="registerTab" onclick="showPage('register')">REGISTER</button>
+</div>
 
-    <form id="loginForm" onsubmit="demo(event)">
-      <h2>Welcome Back</h2>
-      <p class="sub">Login to your SwiftPays account.</p>
-      <label>Mobile Number</label>
-      <input type="tel" placeholder="10-digit mobile number"
-        pattern="[0-9]{10}" maxlength="10" required>
-      <label>Password</label>
-      <input type="password" placeholder="Enter password" required>
-      <button class="main-btn" type="submit">Login Securely</button>
-    </form>
+<section id="loginPage">
+<h2>Welcome Back</h2>
+<p class="sub">Login to your SwiftPays account.</p>
+<form id="loginForm">
+<label>Mobile Number</label>
+<input id="loginMobile" type="tel" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" placeholder="10-digit mobile number" required>
+<label>Password</label>
+<input id="loginPassword" type="password" placeholder="Enter password" required>
+<div class="forgot"><button type="button" onclick="showPage('forgot')">Forgot Password?</button></div>
+<div class="cf-wrap">
+<div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY" data-theme="dark"></div>
+</div>
+<button class="main-btn" type="submit">LOGIN SECURELY</button>
+</form>
+</section>
 
-    <form id="registerForm" class="hidden" onsubmit="demo(event)">
-      <h2>Create Account</h2>
-      <p class="sub">Join SwiftPays today.</p>
-      <label>Full Name</label>
-      <input type="text" placeholder="Enter your full name" required>
-      <label>Mobile Number</label>
-      <input type="tel" placeholder="10-digit mobile number"
-        pattern="[0-9]{10}" maxlength="10" required>
-      <label>Password</label>
-      <input type="password" placeholder="Create password"
-        minlength="8" required>
-      <a class="telegram" href="#" onclick="alert('Telegram linking will be connected later.');return false">
-        Connect Telegram
-      </a>
-      <button class="main-btn" type="submit">Create Account</button>
-    </form>
+<section id="registerPage" class="hidden">
+<h2>Create Account</h2>
+<p class="sub">Register and connect your Telegram account.</p>
+<form id="registerForm">
+<label>Full Name</label>
+<input id="regName" type="text" maxlength="80" placeholder="Enter your full name" required>
+<label>Mobile Number</label>
+<input id="regMobile" type="tel" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" placeholder="10-digit mobile number" required>
+<label>Password</label>
+<input id="regPassword" type="password" minlength="8" placeholder="Create password (8+ characters)" required>
+<label>Confirm Password</label>
+<input id="regConfirm" type="password" minlength="8" placeholder="Confirm password" required>
+<button class="telegram" type="button" onclick="connectTelegram()">🔗 CONNECT TELEGRAM</button>
+<div class="cf-wrap">
+<div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY" data-theme="dark"></div>
+</div>
+<button class="main-btn" type="submit">CREATE ACCOUNT</button>
+</form>
+</section>
 
-    <p class="note">Secure verification and account protection will be connected before launch.</p>
-    <p class="foot">Need help? Contact <strong>SwiftPays Support</strong></p>
-  </main>
+<section id="forgotPage" class="hidden">
+<button class="back" onclick="showPage('login')">← Back to Login</button>
+<h2>Reset Password</h2>
+<p class="sub">Enter your registered mobile number. Your OTP will be sent to your linked SwiftPays Telegram account.</p>
+<form id="forgotForm">
+<label>Registered Mobile Number</label>
+<input id="forgotMobile" type="tel" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" placeholder="10-digit mobile number" required>
+<div class="cf-wrap">
+<div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY" data-theme="dark"></div>
+</div>
+<button class="main-btn" type="submit">SEND TELEGRAM OTP</button>
+</form>
+</section>
 
-  <script>
-    function showForm(type){
-      const login = type === 'login';
-      document.getElementById('loginForm').classList.toggle('hidden',!login);
-      document.getElementById('registerForm').classList.toggle('hidden',login);
-      document.getElementById('loginTab').classList.toggle('active',login);
-      document.getElementById('registerTab').classList.toggle('active',!login);
-    }
-    function demo(event){
-      event.preventDefault();
-      alert('Frontend preview only. Secure authentication will be connected later.');
-    }
-  </script>
+<section id="otpPage" class="hidden">
+<button class="back" onclick="showPage('forgot')">← Back</button>
+<h2>Verify OTP</h2>
+<p class="sub">Enter the 6-digit code sent to your linked Telegram account.</p>
+<form id="otpForm">
+<label>6-Digit OTP</label>
+<input id="resetOtp" type="text" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" placeholder="Enter OTP" required>
+<label>New Password</label>
+<input id="newPassword" type="password" minlength="8" placeholder="New password" required>
+<label>Confirm New Password</label>
+<input id="confirmNewPassword" type="password" minlength="8" placeholder="Confirm new password" required>
+<button class="main-btn" type="submit">RESET PASSWORD</button>
+</form>
+</section>
+
+<p id="status" class="status" role="status" aria-live="polite"></p>
+<p class="note">Protected by Cloudflare Turnstile. Never share your password or verification code.</p>
+<p class="foot">Need help? Contact <strong>SwiftPays Support</strong></p>
+</main>
+
+<script>
+const API_BASE = "https://swiftpay-api-6azu.onrender.com";
+const BOT_USERNAME = "YOUR_SWIFTPAYS_BOT_USERNAME";
+
+function showPage(page){
+["login","register","forgot","otp"].forEach(p=>{
+document.getElementById(p+"Page").classList.toggle("hidden",p!==page);
+});
+document.getElementById("tabs").classList.toggle("hidden",page==="forgot"||page==="otp");
+document.getElementById("loginTab").classList.toggle("active",page==="login");
+document.getElementById("registerTab").classList.toggle("active",page==="register");
+clearStatus();
+}
+
+function message(text,type=""){
+const el=document.getElementById("status");
+el.textContent=text;
+el.className="status "+type;
+}
+function clearStatus(){message("");}
+
+function captchaToken(form){
+const widget=form.querySelector(".cf-turnstile");
+return widget ? widget.querySelector('input[name="cf-turnstile-response"]')?.value : "";
+}
+
+async function postAPI(path,data){
+const response=await fetch(API_BASE+path,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify(data)
+});
+const result=await response.json().catch(()=>({detail:"Invalid server response"}));
+if(!response.ok) throw new Error(result.detail||"Request failed");
+return result;
+}
+
+async function verifyCaptcha(token){
+if(!token) throw new Error("Please complete the Cloudflare security verification.");
+return await postAPI("/verify-turnstile",{token});
+}
+
+async function connectTelegram(){
+const mobile=document.getElementById("regMobile").value.trim();
+if(!/^[0-9]{10}$/.test(mobile)){
+message("Enter your 10-digit mobile number first.","error");
+return;
+}
+try{
+const result=await postAPI("/telegram/link/start",{mobile});
+if(!result.url) throw new Error("Telegram linking is not available yet.");
+window.location.href=result.url;
+}catch(e){
+message("Telegram linking will be available after backend setup. "+e.message,"error");
+}
+}
+
+document.getElementById("loginForm").addEventListener("submit",async e=>{
+e.preventDefault();
+const mobile=document.getElementById("loginMobile").value.trim();
+const password=document.getElementById("loginPassword").value;
+try{
+const token=captchaToken(e.target);
+await verifyCaptcha(token);
+const result=await postAPI("/auth/login",{mobile,password});
+message("Login successful.","success");
+if(result.token) sessionStorage.setItem("swiftpays_token",result.token);
+}catch(err){message(err.message,"error");}
+});
+
+document.getElementById("registerForm").addEventListener("submit",async e=>{
+e.preventDefault();
+const name=document.getElementById("regName").value.trim();
+const mobile=document.getElementById("regMobile").value.trim();
+const password=document.getElementById("regPassword").value;
+const confirm=document.getElementById("regConfirm").value;
+if(password!==confirm){message("Passwords do not match.","error");return;}
+try{
+await verifyCaptcha(captchaToken(e.target));
+const result=await postAPI("/auth/register",{name,mobile,password});
+message(result.message||"Registration request submitted.","success");
+}catch(err){message(err.message,"error");}
+});
+
+document.getElementById("forgotForm").addEventListener("submit",async e=>{
+e.preventDefault();
+try{
+const mobile=document.getElementById("forgotMobile").value.trim();
+await verifyCaptcha(captchaToken(e.target));
+const result=await postAPI("/auth/forgot-password",{mobile});
+message(result.message||"If the account is eligible, an OTP will be sent to its linked Telegram account.","success");
+showPage("otp");
+}catch(err){message(err.message,"error");}
+});
+
+document.getElementById("otpForm").addEventListener("submit",async e=>{
+e.preventDefault();
+const otp=document.getElementById("resetOtp").value.trim();
+const password=document.getElementById("newPassword").value;
+const confirm=document.getElementById("confirmNewPassword").value;
+if(password!==confirm){message("Passwords do not match.","error");return;}
+try{
+const mobile=document.getElementById("forgotMobile").value.trim();
+const result=await postAPI("/auth/reset-password",{mobile,otp,password});
+message(result.message||"Password reset request completed.","success");
+showPage("login");
+}catch(err){message(err.message,"error");}
+});
+</script>
 </body>
-        </html>
-        
+  </html>
+  
