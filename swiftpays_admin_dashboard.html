@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07131b">
+<title>SwiftPays | Admin Dashboard</title>
+<style>
+:root{--bg:#07131b;--panel:#0d1d27;--panel2:#102630;--line:#203944;--text:#eff7f7;--muted:#91a8b2;--green:#00e5a8;--green2:#00bd8a;--red:#ff7c86;--amber:#ffc66d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.layout{min-height:100vh;display:grid;grid-template-columns:260px 1fr}.sidebar{background:#091820;border-right:1px solid var(--line);padding:24px 16px;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 10px 28px}.brand-mark{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:#10352f;color:var(--green);font-size:26px;font-weight:900}.brand strong{font-size:19px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:2px;margin-top:3px}
+.nav-label{padding:12px 12px 8px;color:#68818c;font-size:10px;letter-spacing:2px;font-weight:800}.nav{display:grid;gap:7px}.nav button{width:100%;display:flex;align-items:center;gap:12px;padding:13px 14px;border:1px solid transparent;border-radius:13px;background:transparent;color:#a9bdc5;text-align:left;font-size:14px;font-weight:650;cursor:pointer}.nav button.active,.nav button:hover{background:#102a31;border-color:#1c5148;color:var(--green)}.nav .ico{width:20px;text-align:center;font-size:17px}.side-bottom{margin-top:auto;padding:14px 10px 0;color:#718994;font-size:11px;line-height:1.6}
+main{min-width:0}.topbar{height:76px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;background:#091820}.crumb{font-size:13px;color:var(--muted)}.crumb b{color:var(--text)}.owner{display:flex;align-items:center;gap:10px;font-size:13px}.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#123b34;color:var(--green);font-weight:800}
+.content{padding:32px;max-width:1500px;margin:auto}.welcome{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:28px}.welcome h1{font-size:29px;margin:0 0 8px;letter-spacing:-.8px}.welcome p{margin:0;color:var(--muted);font-size:14px}.badge{padding:8px 12px;border:1px solid #1d5749;border-radius:30px;background:#0b2b25;color:#74eac3;font-size:11px;font-weight:800;letter-spacing:1px}
+.notice{border:1px solid #67502d;background:#292316;color:#f2d49d;border-radius:14px;padding:14px 16px;font-size:13px;line-height:1.5;margin-bottom:24px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.stat{padding:20px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#10232d,#0b1b24);min-height:135px}.stat-top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px}.stat-icon{width:35px;height:35px;border-radius:11px;background:#14352f;color:var(--green);display:grid;place-items:center;font-size:17px}.stat strong{display:block;font-size:27px;margin-top:15px}.stat small{color:#748d97;font-size:11px}
+.section{margin-top:24px;padding:22px;border:1px solid var(--line);border-radius:18px;background:var(--panel)}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.section h2{font-size:16px;margin:0}.section-head span{font-size:11px;color:var(--muted)}
+.quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.quick button{border:1px solid #24414b;background:#0a1a22;color:#d9e6e9;border-radius:13px;padding:16px;text-align:left;cursor:pointer;font-weight:700}.quick button:hover{border-color:var(--green);color:var(--green)}.quick b{display:block;font-size:20px;margin-bottom:9px}
+.page{display:none}.page.active{display:block}.empty{padding:30px 18px;text-align:center;border:1px dashed #29434d;border-radius:14px;color:var(--muted);font-size:13px;line-height:1.7}.empty strong{display:block;color:#dce9eb;margin-bottom:6px}
+.logout{margin-top:8px;color:#ff9ca3!important}.logout:hover{background:#311d23!important;border-color:#6a343b!important;color:#ff9ca3!important}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.quick{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){.layout{grid-template-columns:1fr}.sidebar{padding:12px;border-right:0;border-bottom:1px solid var(--line)}.brand{padding:4px 8px 12px}.nav-label{display:none}.nav{display:flex;overflow:auto;padding-bottom:4px}.nav button{width:auto;white-space:nowrap;padding:10px 12px}.side-bottom{display:none}.topbar{height:60px;padding:0 18px}.content{padding:22px 16px}.welcome h1{font-size:24px}.badge{display:none}.grid{gap:10px}.stat{padding:15px;min-height:125px}.stat strong{font-size:23px}.section{padding:16px}}
+@media(max-width:390px){.grid{grid-template-columns:1fr 1fr}.quick{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="brand"><div class="brand-mark">ϟ</div><div><strong>SwiftPays</strong><small>OWNER CONTROL</small></div></div>
+  <div class="nav-label">MAIN MENU</div>
+  <nav class="nav" id="nav">
+    <button class="active" data-page="home"><span class="ico">⌂</span>Dashboard</button>
+    <button data-page="users"><span class="ico">♙</span>Users</button>
+    <button data-page="deposits"><span class="ico">＋</span>Deposits</button>
+    <button data-page="withdrawals"><span class="ico">↗</span>Withdrawals</button>
+    <button data-page="transactions"><span class="ico">▤</span>Transactions</button>
+    <button data-page="branding"><span class="ico">▧</span>Branding & Logo</button>
+    <button data-page="security"><span class="ico">♢</span>Security Settings</button>
+    <button data-page="settings"><span class="ico">⚙</span>General Settings</button>
+    <button class="logout" id="logout"><span class="ico">⇥</span>Logout</button>
+  </nav>
+  <div class="side-bottom">SwiftPays Admin Portal<br>Owner-only access</div>
+</aside>
+<main>
+  <header class="topbar"><div class="crumb">SwiftPays / <b id="crumb">Dashboard</b></div><div class="owner"><div class="avatar">O</div><span>Owner</span></div></header>
+  <div class="content">
+    <section class="page active" id="page-home">
+      <div class="welcome"><div><h1>Dashboard Overview</h1><p>Welcome to your SwiftPays control panel.</p></div><div class="badge">● OWNER VERIFIED</div></div>
+      <div class="notice">Dashboard layout is ready. Live figures and management actions will appear after the protected admin data APIs are connected. No sample balances or user counts are being presented as real data.</div>
+      <div class="grid">
+        <div class="stat"><div class="stat-top">Total Users <span class="stat-icon">♙</span></div><strong>—</strong><small>Awaiting secure API connection</small></div>
+        <div class="stat"><div class="stat-top">Pending Deposits <span class="stat-icon">＋</span></div><strong>—</strong><small>Awaiting secure API connection</small></div>
+        <div class="stat"><div class="stat-top">Pending Withdrawals <span class="stat-icon">↗</span></div><strong>—</strong><small>Awaiting secure API connection</small></div>
+        <div class="stat"><div class="stat-top">Total Transactions <span class="stat-icon">▤</span></div><strong>—</strong><small>Awaiting secure API connection</small></div>
+      </div>
+      <div class="section"><div class="section-head"><h2>Quick Access</h2><span>Admin tools</span></div><div class="quick">
+        <button data-open="users"><b>♙</b>Manage Users</button><button data-open="deposits"><b>＋</b>Review Deposits</button><button data-open="withdrawals"><b>↗</b>Review Withdrawals</button><button data-open="branding"><b>▧</b>Website Branding</button>
+      </div></div>
+      <div class="section"><div class="section-head"><h2>System Status</h2><span>Current connection</span></div><div class="empty"><strong>Owner authentication verified</strong>Your Firebase owner session has been checked by the SwiftPays backend. Business data modules are not connected yet.</div></div>
+    </section>
+    <section class="page" id="page-users"><div class="welcome"><div><h1>Users Management</h1><p>Review and manage registered SwiftPays users.</p></div></div><div class="empty"><strong>Users module not connected</strong>Protected user-list API, search, block/unblock and account details will be added next.</div></section>
+    <section class="page" id="page-deposits"><div class="welcome"><div><h1>Deposit Management</h1><p>Review incoming deposit requests.</p></div></div><div class="empty"><strong>Deposits module not connected</strong>Deposit queue and approve/reject actions will be connected to the backend before use.</div></section>
+    <section class="page" id="page-withdrawals"><div class="welcome"><div><h1>Withdrawal Management</h1><p>Review and process withdrawal requests.</p></div></div><div class="empty"><strong>Withdrawals module not connected</strong>Requests, payout review and audit trail will be added with protected backend endpoints.</div></section>
+    <section class="page" id="page-transactions"><div class="welcome"><div><h1>Transactions</h1><p>View the wallet transaction ledger.</p></div></div><div class="empty"><strong>Transactions module not connected</strong>Transaction history and filters will be loaded from the backend ledger.</div></section>
+    <section class="page" id="page-branding"><div class="welcome"><div><h1>Branding & Logo</h1><p>Manage the logo used across SwiftPays pages.</p></div></div><div class="empty"><strong>Logo management UI is planned</strong>Secure upload, preview and publishing will be connected to Firebase Storage and a protected backend setting.</div></section>
+    <section class="page" id="page-security"><div class="welcome"><div><h1>Security Settings</h1><p>Manage website verification and security configuration.</p></div></div><div class="empty"><strong>Security settings are not connected</strong>Cloudflare Turnstile Site Key and server-only Secret Key controls will be added here. The Secret Key will never be exposed in browser code.</div></section>
+    <section class="page" id="page-settings"><div class="welcome"><div><h1>General Settings</h1><p>Configure SwiftPays platform settings.</p></div></div><div class="empty"><strong>Settings module not connected</strong>Payment limits, fees, maintenance mode and support settings will be connected through owner-only APIs.</div></section>
+  </div>
+</main>
+</div>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {getAuth,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+const firebaseConfig={apiKey:"AIzaSyA_KW4G3pdXu2VKTqa2-Sk9xE4hzDIWU9I",authDomain:"swiftpay-d0bd2.firebaseapp.com",databaseURL:"https://swiftpay-d0bd2-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"swiftpay-d0bd2",storageBucket:"swiftpay-d0bd2.firebasestorage.app",messagingSenderId:"83327557267",appId:"1:83327557267:web:a5605f47bc72ae4190f766",measurementId:"G-2Y21LJQTRZ"};
+const API_BASE="https://swiftpay-api-6azu.onrender.com";
+const auth=getAuth(initializeApp(firebaseConfig));
+let authorized=false;
+onAuthStateChanged(auth,async user=>{
+ if(!user){location.replace("/admin");return;}
+ try{
+  const token=await user.getIdToken(true);
+  const res=await fetch(API_BASE+"/admin/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({firebase_id_token:token})});
+  const data=await res.json().catch(()=>({}));
+  if(!res.ok||data.authorized!==true||data.role!=="owner")throw new Error("Owner access denied");
+  authorized=true;sessionStorage.setItem("swiftpays_admin_id_token",token);
+ }catch(e){await signOut(auth);sessionStorage.removeItem("swiftpays_admin_id_token");location.replace("/admin");}
+});
+function openPage(name){
+ if(!authorized)return;
+ document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+name));
+ document.querySelectorAll(".nav button[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===name));
+ const labels={home:"Dashboard",users:"Users",deposits:"Deposits",withdrawals:"Withdrawals",transactions:"Transactions",branding:"Branding & Logo",security:"Security Settings",settings:"General Settings"};
+ document.getElementById("crumb").textContent=labels[name]||"Dashboard";
+}
+document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>openPage(b.dataset.page)));
+document.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>openPage(b.dataset.open)));
+document.getElementById("logout").addEventListener("click",async()=>{sessionStorage.removeItem("swiftpays_admin_id_token");await signOut(auth);location.replace("/admin");});
+</script>
+</body>
+</html>
