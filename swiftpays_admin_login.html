@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#06171c">
+<title>SwiftPays | Owner Login</title>
+<style>
+:root{--green:#00e6a0;--muted:#91afb6;--line:rgba(57,207,179,.28)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:22px;background:radial-gradient(ellipse at 80% 5%,#075047 0,transparent 32%),radial-gradient(ellipse at 5% 100%,#073b3c 0,transparent 30%),linear-gradient(135deg,#020d12,#08242b 58%,#031319);font-family:Inter,Arial,sans-serif;color:#effafa}
+.card{width:min(100%,460px);padding:38px 34px 28px;border:1px solid var(--line);border-radius:25px;background:linear-gradient(145deg,rgba(10,43,50,.96),rgba(4,22,29,.97));box-shadow:0 25px 90px #0009,inset 0 1px #ffffff12}
+.brand{text-align:center;margin-bottom:30px}
+.logo{height:70px;width:70px;margin:0 auto 16px;display:grid;place-items:center;border-radius:22px;border:1px solid #178d77;background:linear-gradient(145deg,#0c4942,#092a31);color:var(--green);font-size:39px;box-shadow:0 0 35px #00e6a01c}
+h1{font-size:39px;letter-spacing:-1.8px;margin:0;font-weight:800}h1 span{color:var(--green)}
+.subtitle{font-size:11px;letter-spacing:4px;color:#9bbac1;margin-top:9px}
+.badge{display:inline-flex;align-items:center;gap:8px;margin-top:21px;padding:9px 15px;border:1px solid #16775f;border-radius:30px;background:#00e6a00d;color:#b7ffe4;font-size:12px}
+label{display:block;color:#b4cbd0;font-size:12px;margin:17px 0 8px}
+.input-wrap{position:relative}
+input{width:100%;height:55px;padding:0 48px 0 15px;border:1px solid #28545c;border-radius:12px;background:#041a20;color:#f2ffff;font-size:15px;outline:none}
+input:focus{border-color:var(--green);box-shadow:0 0 0 3px #00e6a018}
+input::placeholder{color:#6f929a}
+.eye{position:absolute;right:13px;top:50%;transform:translateY(-50%);border:0;background:none;color:#9bbac1;font-size:17px;cursor:pointer}
+.options{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:18px 1px 24px;font-size:12px}
+.remember{display:flex;align-items:center;gap:8px;color:#b9d0d4;margin:0}.remember input{width:15px;height:15px;accent-color:var(--green)}
+a{color:var(--green);text-decoration:none}a:hover{text-decoration:underline}
+.submit{width:100%;height:57px;border:0;border-radius:12px;background:linear-gradient(90deg,#00c98b,#00efa4);color:#03251d;font-size:15px;font-weight:800;letter-spacing:.4px;cursor:pointer;box-shadow:0 10px 30px #00d99526}
+.submit:hover{filter:brightness(1.07)}
+#notice{display:none;margin-top:15px;padding:11px 12px;border:1px solid #80652d;border-radius:10px;background:#5c451b26;color:#f4d48d;font-size:12px;line-height:1.5}
+.security{margin-top:25px;padding:15px;border:1px solid #1c4650;border-radius:13px;background:#09252c;text-align:center}
+.security strong{display:block;font-size:12px;margin-bottom:6px}.security p{font-size:11px;line-height:1.5;color:var(--muted);margin:0}
+.footer{text-align:center;margin-top:20px;color:#638890;font-size:10px;letter-spacing:1.5px}
+@media(max-width:420px){.card{padding:31px 22px 24px}h1{font-size:35px}}
+</style>
+</head>
+<body>
+<main class="card">
+ <header class="brand">
+  <div class="logo" aria-hidden="true">ϟ</div>
+  <h1>Swift<span>Pays</span></h1>
+  <div class="subtitle">OWNER ADMIN LOGIN</div>
+  <div class="badge">♢ &nbsp; AUTHORIZED OWNER ONLY</div>
+ </header>
+ <form id="loginForm">
+  <label for="identity">Owner Username / Email</label>
+  <input id="identity" name="identity" type="text" placeholder="Enter username or email" autocomplete="username" required>
+  <label for="password">Password</label>
+  <div class="input-wrap">
+   <input id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+   <button class="eye" id="toggle" type="button" aria-label="Show password">◉</button>
+  </div>
+  <div class="options">
+   <label class="remember"><input type="checkbox" id="remember"> Remember me</label>
+   <a href="#" id="forgot">Forgot Password?</a>
+  </div>
+  <button class="submit" type="submit">LOGIN SECURELY &nbsp; →</button>
+  <div id="notice" role="status"></div>
+ </form>
+ <section class="security">
+  <strong>♧ &nbsp; Secure Owner Access</strong>
+  <p>This is the SwiftPays owner login screen. Access must be verified by the secure backend.</p>
+ </section>
+ <div class="footer">SWIFTPAYS &nbsp;•&nbsp; OWNER CONSOLE</div>
+</main>
+<script>
+const notice=document.getElementById('notice');
+document.getElementById('toggle').addEventListener('click',()=>{
+ const p=document.getElementById('password'),show=p.type==='password';
+ p.type=show?'text':'password';
+ document.getElementById('toggle').setAttribute('aria-label',show?'Hide password':'Show password');
+});
+document.getElementById('loginForm').addEventListener('submit',e=>{
+ e.preventDefault();notice.style.display='block';
+ notice.textContent='Backend authentication is not connected yet. Login is currently disabled; this page is only the frontend.';
+});
+document.getElementById('forgot').addEventListener('click',e=>{
+ e.preventDefault();notice.style.display='block';
+ notice.textContent='Owner password recovery will be enabled after the secure backend recovery flow is connected.';
+});
+</script>
+</body>
+</html>
