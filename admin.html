@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#03151a">
+<title>SwiftPays — Admin Login</title>
+<style>
+:root{--bg:#031318;--panel:rgba(7,34,42,.82);--line:rgba(53,220,190,.34);--muted:#91b6c2;--green:#00f0a0;--green2:#00c987}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 80% 0%,#06433d 0,transparent 32%),radial-gradient(ellipse at 5% 100%,#06413b 0,transparent 30%),linear-gradient(135deg,#020c12,#06232b 55%,#031219);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#f4fbff;overflow-x:hidden}
+body:before,body:after{content:"";position:fixed;width:55vw;height:55vw;border:1px solid rgba(0,240,160,.18);border-radius:50%;pointer-events:none}
+body:before{top:-47vw;right:-12vw;box-shadow:0 0 90px rgba(0,240,160,.1)}
+body:after{bottom:-49vw;left:-18vw;box-shadow:0 0 90px rgba(0,240,160,.1)}
+.card{width:min(100%,560px);padding:42px 38px 30px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,rgba(9,39,48,.94),rgba(3,20,27,.96));box-shadow:0 24px 90px #0008,inset 0 1px 0 #ffffff12;position:relative;z-index:1}
+.brand{text-align:center}
+.logo{width:76px;height:76px;margin:0 auto 18px;border:1px solid #1b9d8b;border-radius:24px;display:grid;place-items:center;background:linear-gradient(145deg,#0d3b3e,#06262c);color:var(--green);font-size:43px;box-shadow:0 0 35px #00e7a51c}
+h1{font-size:clamp(34px,8vw,48px);letter-spacing:-2px;margin:0;font-weight:800}.brand span{color:var(--green)}
+.subtitle{color:#9bb8c4;letter-spacing:5px;font-size:14px;margin:9px 0 22px}
+.badge{display:inline-flex;align-items:center;gap:9px;border:1px solid #00c98a;border-radius:30px;padding:10px 19px;color:#d9fff3;background:#00d99010;margin-bottom:30px;font-size:14px}
+.field{margin:0 0 16px;position:relative}
+.field label{display:block;font-size:13px;color:#9bb8c4;margin:0 0 8px 3px}
+.field input{width:100%;height:58px;border:1px solid rgba(82,164,173,.38);border-radius:15px;background:rgba(3,24,31,.72);color:#f5ffff;padding:0 48px 0 17px;font-size:16px;outline:none;transition:.2s}
+.field input:focus{border-color:var(--green);box-shadow:0 0 0 3px #00e6a51c}
+.field input::placeholder{color:#789ba7}
+.toggle{position:absolute;right:15px;bottom:17px;border:0;background:none;color:#9bb8c4;font-size:19px;cursor:pointer}
+.options{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:18px 2px 25px;font-size:14px}
+.remember{display:flex;align-items:center;gap:9px;color:#e4f2f5}.remember input{accent-color:var(--green);width:17px;height:17px}
+a{color:var(--green);text-decoration:none}a:hover{text-decoration:underline}
+button.submit{width:100%;height:62px;border:0;border-radius:16px;background:linear-gradient(90deg,#00d98e,#00f0a0);color:#00251d;font-size:17px;font-weight:800;letter-spacing:.4px;cursor:pointer;box-shadow:0 10px 35px #00d98e28;transition:transform .15s,filter .15s}
+button.submit:hover{filter:brightness(1.08);transform:translateY(-1px)}button.submit:active{transform:translateY(0)}
+.notice{margin-top:26px;border:1px solid rgba(73,173,180,.28);border-radius:17px;padding:17px;text-align:center;background:#0a2931a8}
+.notice strong{display:block;font-size:14px;margin-bottom:6px}.notice p{margin:0;color:var(--muted);font-size:12px;line-height:1.5}
+#message{display:none;margin:0 0 16px;padding:12px 14px;border-radius:12px;font-size:13px;line-height:1.5}
+#message.info{display:block;color:#ffe4b5;background:#6b481b38;border:1px solid #d39b4b55}
+.footer{text-align:center;color:#668b96;font-size:11px;margin-top:22px}
+@media(max-width:480px){.card{padding:32px 22px 24px;border-radius:22px}.subtitle{letter-spacing:3px}.options{font-size:13px}}
+</style>
+</head>
+<body>
+<main class="card">
+  <header class="brand">
+    <div class="logo" aria-hidden="true">ϟ</div>
+    <h1>Swift<span>Pays</span></h1>
+    <div class="subtitle">ADMIN PANEL LOGIN</div>
+    <div class="badge"><span aria-hidden="true">⬡</span> Owner Access Only</div>
+  </header>
+
+  <form id="adminLogin" autocomplete="on">
+    <div class="field">
+      <label for="username">Admin Username / Email</label>
+      <input id="username" name="username" type="text" placeholder="Enter owner username or email" autocomplete="username" required>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+      <button class="toggle" type="button" id="togglePassword" aria-label="Show password">◉</button>
+    </div>
+    <div class="options">
+      <label class="remember"><input type="checkbox" id="remember"> Remember me</label>
+      <a href="#" id="forgot">Forgot Password?</a>
+    </div>
+    <div id="message" role="status"></div>
+    <button class="submit" type="submit">↪ &nbsp; LOGIN SECURELY</button>
+  </form>
+
+  <section class="notice">
+    <strong>♢ &nbsp; Protected Admin Area</strong>
+    <p>Only the authorized SwiftPays owner can access this panel.<br>Login attempts should be verified securely by the backend.</p>
+  </section>
+  <div class="footer">SWIFTPAYS &nbsp;•&nbsp; SECURE OWNER CONSOLE</div>
+</main>
+<script>
+const password=document.getElementById('password');
+document.getElementById('togglePassword').addEventListener('click',()=>{
+  const show=password.type==='password'; password.type=show?'text':'password';
+  document.getElementById('togglePassword').setAttribute('aria-label',show?'Hide password':'Show password');
+});
+const message=document.getElementById('message');
+document.getElementById('adminLogin').addEventListener('submit',e=>{
+  e.preventDefault();
+  message.className='info';
+  message.textContent='Admin login API is not connected yet. This page is the frontend design only; do not use it as a live security login until backend owner authentication is implemented.';
+});
+document.getElementById('forgot').addEventListener('click',e=>{
+  e.preventDefault(); message.className='info';
+  message.textContent='Owner password recovery must be connected to a secure backend recovery flow.';
+});
+</script>
+</body>
+</html>
