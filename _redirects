@@ -1,0 +1,5 @@
+/admin /admin.html 200
+/admin/dashboard /admin-dashboard.html 200
+/login /index.html 200
+/register /index.html 200
+/forgot-password /index.html 200
