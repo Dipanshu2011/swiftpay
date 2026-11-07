@@ -371,7 +371,7 @@ async function verifyOwner(user) {
   const response = await fetch(API_BASE + "/admin/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id_token: idToken })
+    body: JSON.stringify({ firebase_id_token: idToken })
   });
 
   const result = await response.json().catch(() => ({}));
