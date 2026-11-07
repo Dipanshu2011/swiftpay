@@ -74,7 +74,7 @@ main{min-width:0}.topbar{height:68px;border-bottom:1px solid var(--line);display
 .brand-preview{display:flex;align-items:center;gap:18px;padding:18px;border:1px solid var(--line);border-radius:14px;background:#091b22;margin-bottom:14px}
 .brand-preview img{width:130px;height:130px;object-fit:contain;border-radius:16px;background:#061219;padding:7px;border:1px solid #24434a}
 .upload-label,.action-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 14px;border:1px solid #1c6655;background:#0d332d;color:#9af1d5;border-radius:10px;font-weight:750;font-size:11px}
-.upload-label input{display:none}.action-btn.danger{border-color:#71323a;background:#35191e;color:#ff9da3}
+.action-btn.danger{border-color:#71323a;background:#35191e;color:#ff9da3}
 .hint{color:#789398;font-size:10px;line-height:1.6;margin-top:10px}
 .config-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .config-field{display:flex;flex-direction:column;gap:8px;color:#d8e9e5;font-size:11px;font-weight:750}
@@ -84,7 +84,8 @@ main{min-width:0}.topbar{height:68px;border-bottom:1px solid var(--line);display
 .config-actions{display:flex;align-items:center;gap:13px;flex-wrap:wrap}
 .save-config{background:linear-gradient(120deg,#00a77f,#08765f);color:white}
 @media(max-width:1050px){.stats{grid-template-columns:repeat(2,1fr)}.analytics-grid{grid-template-columns:1fr}}
-@media(max-width:700px){.shell{display:block}aside{position:relative;height:auto;min-height:0;padding:11px 12px}
+@media(max-width:700px){
+.shell{display:block}aside{position:relative;height:auto;min-height:0;padding:11px 12px}
 .brand{padding:1px 5px 10px}.nav-caption,.aside-foot{display:none}
 .nav{display:flex;gap:6px;overflow-x:auto}.nav button{flex:0 0 auto;white-space:nowrap;padding:9px 11px;font-size:11px}
 .nav button.active{box-shadow:inset 0 -2px var(--green)}
@@ -149,7 +150,9 @@ main{min-width:0}.topbar{height:68px;border-bottom:1px solid var(--line);display
 <div class="section"><div class="section-head"><h2>✦ Quick Actions</h2><small>Owner shortcuts</small></div><div class="quick">
 <button data-open="users"><b>♙</b><span>Manage Users</span></button><button data-open="deposits"><b>＋</b><span>Review Deposits</span></button><button data-open="withdrawals"><b>↗</b><span>Review Withdrawals</span></button><button data-open="branding"><b>▧</b><span>Website Branding</span></button>
 </div></div>
-</section>
+                                                                                                                                                                                                                                                                                                        </section>
+                                                                                                                                                                                                                                                                                                        
+
 
 
 
@@ -189,28 +192,36 @@ main{min-width:0}.topbar{height:68px;border-bottom:1px solid var(--line);display
 <!-- BRANDING & LOGO -->
 <section class="page" id="page-branding">
 <div class="welcome"><div><h1>▧ Branding & Logo Studio</h1><p>Manage the visual identity of SwiftPays.</p></div></div>
-<div class="notice">Logo files are stored in Firebase Storage. The active logo URL is saved in Firestore.</div>
+<div class="notice">Upload your image to the GitHub repository first. Then paste its public image URL below. Firebase Storage is not used.</div>
 
 <div class="section">
 <div class="section-head"><h2>Website Logo</h2><small>BRAND IDENTITY</small></div>
 
 <div class="brand-preview">
-<img id="logoPreview" alt="SwiftPays logo preview" src="">
+<img id="logoPreview" alt="SwiftPays logo preview" src="https://swiftpays.pages.dev/logo.png">
 <div>
-<b id="logoName">No logo uploaded</b>
-<p class="hint">Recommended: transparent PNG or WebP, square format. Maximum 3 MB.</p>
+<b id="logoName">SwiftPays Logo</b>
+<p class="hint">Recommended: transparent PNG or WebP, square format. Upload the image to your GitHub repository and paste its public URL.</p>
 </div>
 </div>
 
-<div class="config-actions">
-<label class="upload-label">＋ Choose Logo
-<input type="file" id="logoFile" accept="image/png,image/jpeg,image/webp">
+<label class="config-field">
+Logo Image URL
+<input
+id="logoUrlInput"
+type="url"
+placeholder="https://swiftpays.pages.dev/logo.png"
+value="https://swiftpays.pages.dev/logo.png"
+>
 </label>
+
+<div class="config-actions" style="margin-top:15px">
+<button class="action-btn" id="previewLogo" type="button">◉ Preview Logo</button>
 <button class="action-btn" id="saveLogo" type="button">✓ Save & Publish Logo</button>
 <button class="action-btn danger" id="removeLogo" type="button">✕ Remove Logo</button>
 </div>
 
-<p class="hint" id="logoStatus">Choose an image to preview it. Save it to publish the logo URL.</p>
+<p class="hint" id="logoStatus">Paste a public image URL and preview it before saving.</p>
 </div>
 </section>
 
@@ -229,6 +240,7 @@ main{min-width:0}.topbar{height:68px;border-bottom:1px solid var(--line);display
 <section class="page" id="page-config">
 <div class="welcome"><div><h1>⌘ Configuration</h1><p>Manage Telegram and Cloudflare integration settings.</p></div></div>
 <div class="notice">Configuration save API is not connected. Do not enter production secrets here yet.</div>
+
 <div class="section">
 <div class="section-head"><h2>✦ Telegram Bot Configuration</h2><small>BOT INTEGRATION</small></div>
 <div class="config-grid">
@@ -236,6 +248,7 @@ main{min-width:0}.topbar{height:68px;border-bottom:1px solid var(--line);display
 <label class="config-field">Support Bot Username<input id="supportBot" type="text" placeholder="@YourSupportBot"><small>Public Telegram username.</small></label>
 </div>
 </div>
+
 <div class="section">
 <div class="section-head"><h2>☁ Cloudflare Turnstile</h2><small>BOT PROTECTION</small></div>
 <div class="config-grid">
@@ -245,6 +258,7 @@ main{min-width:0}.topbar{height:68px;border-bottom:1px solid var(--line);display
 <label class="config-check"><input id="turnstileEnabled" type="checkbox" checked> Enable Turnstile on public website pages</label>
 <p class="hint">Admin Login remains excluded from Turnstile.</p>
 </div>
+
 <div class="section">
 <div class="section-head"><h2>✦ Save Configuration</h2><small>SECURE SETTINGS</small></div>
 <div class="config-actions">
@@ -269,6 +283,8 @@ main{min-width:0}.topbar{height:68px;border-bottom:1px solid var(--line);display
 
 
 
+
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 
@@ -277,14 +293,6 @@ import {
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-
-import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
 
 import {
   getFirestore,
@@ -309,14 +317,11 @@ const OWNER_UID = "Vvkmab68NFfLno80Yu7ZLyAd3kF3";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const storage = getStorage(app);
 const db = getFirestore(app);
 
 const brandingRef = doc(db, "siteSettings", "branding");
 
 let ownerAuthorized = false;
-let selectedLogoFile = null;
-let currentLogoPath = null;
 let currentLogoUrl = null;
 
 const pageNames = {
@@ -330,6 +335,8 @@ const pageNames = {
   config: "Configuration",
   settings: "Settings"
 };
+
+/* PAGE NAVIGATION */
 
 function pageFromPath() {
   const page = location.hash.replace("#", "").trim();
@@ -377,6 +384,8 @@ window.addEventListener("popstate", () => {
   if (ownerAuthorized) showPage(pageFromPath(), false);
 });
 
+/* OWNER VERIFICATION */
+
 async function verifyOwner(user) {
   if (user.uid !== OWNER_UID) {
     throw new Error("This Firebase account is not the configured Owner.");
@@ -410,35 +419,45 @@ async function verifyOwner(user) {
   sessionStorage.setItem("swiftpays_admin_id_token", idToken);
 }
 
+/* LOGO STATUS */
+
 function setLogoStatus(message, error = false) {
   const status = document.getElementById("logoStatus");
   status.textContent = message;
   status.style.color = error ? "#ff929b" : "#789398";
 }
 
-function displayLogo(url, name = "SwiftPays Logo", path = null) {
+/* DISPLAY LOGO */
+
+function displayLogo(url, name = "SwiftPays Logo") {
   const preview = document.getElementById("logoPreview");
   const title = document.getElementById("logoName");
   const sidebar = document.getElementById("sidebarMark");
+  const input = document.getElementById("logoUrlInput");
 
   currentLogoUrl = url || null;
-  currentLogoPath = path || null;
 
   if (url) {
     preview.src = url;
     title.textContent = name;
+    input.value = url;
+
     sidebar.innerHTML = "";
 
     const image = document.createElement("img");
     image.src = url;
-    image.alt = "SwiftPays";
+    image.alt = "SwiftPays Logo";
+
     sidebar.appendChild(image);
   } else {
     preview.removeAttribute("src");
     title.textContent = "No logo uploaded";
+    input.value = "";
     sidebar.textContent = "ϟ";
   }
 }
+
+/* LOAD SAVED LOGO */
 
 async function loadSavedLogo() {
   try {
@@ -450,16 +469,16 @@ async function loadSavedLogo() {
       if (data.logoUrl) {
         displayLogo(
           data.logoUrl,
-          data.logoName || "SwiftPays Logo",
-          data.logoPath || null
+          data.logoName || "SwiftPays Logo"
         );
+
         setLogoStatus("Saved logo loaded successfully.");
         return;
       }
     }
 
     displayLogo(null);
-    setLogoStatus("No saved logo found. Upload a logo to begin.");
+    setLogoStatus("No saved logo found. Enter a logo URL.");
   } catch (error) {
     setLogoStatus(
       "Could not load logo: " + error.message,
@@ -469,6 +488,7 @@ async function loadSavedLogo() {
 }
 
 /* OWNER SESSION */
+
 onAuthStateChanged(auth, async user => {
   const gate = document.getElementById("authChecking");
 
@@ -502,6 +522,7 @@ onAuthStateChanged(auth, async user => {
 });
 
 /* LOGOUT */
+
 document.getElementById("logout").addEventListener("click", async () => {
   if (!ownerAuthorized) return;
 
@@ -514,91 +535,93 @@ document.getElementById("logout").addEventListener("click", async () => {
   location.replace("/admin.html");
 });
 
-/* SELECT LOGO */
-const logoFile = document.getElementById("logoFile");
+/* VALIDATE LOGO URL */
 
-logoFile.addEventListener("change", event => {
-  const file = event.target.files?.[0];
+function getValidLogoUrl() {
+  const value = document.getElementById("logoUrlInput").value.trim();
 
-  if (!file) return;
-
-  const allowedTypes = [
-    "image/png",
-    "image/jpeg",
-    "image/webp"
-  ];
-
-  if (!allowedTypes.includes(file.type)) {
-    setLogoStatus("Only PNG, JPG and WebP images are allowed.", true);
-    logoFile.value = "";
-    return;
+  if (!value) {
+    throw new Error("Please enter a logo image URL.");
   }
 
-  if (file.size > 3 * 1024 * 1024) {
-    setLogoStatus("Logo must be smaller than 3 MB.", true);
-    logoFile.value = "";
-    return;
+  let parsed;
+
+  try {
+    parsed = new URL(value);
+  } catch {
+    throw new Error("Please enter a valid image URL.");
   }
 
-  selectedLogoFile = file;
+  if (parsed.protocol !== "https:") {
+    throw new Error("Logo URL must use HTTPS.");
+  }
 
-  const previewUrl = URL.createObjectURL(file);
+  return parsed.href;
+}
 
-  document.getElementById("logoPreview").src = previewUrl;
-  document.getElementById("logoName").textContent = file.name;
+/* PREVIEW LOGO */
 
-  setLogoStatus("Preview ready. Click Save & Publish Logo to upload it.");
+document.getElementById("previewLogo").addEventListener("click", () => {
+  try {
+    const url = getValidLogoUrl();
+    const preview = document.getElementById("logoPreview");
+
+    preview.onload = () => {
+      document.getElementById("logoName").textContent = "Logo Preview";
+      setLogoStatus("Logo preview loaded successfully.");
+    };
+
+    preview.onerror = () => {
+      setLogoStatus("Image could not be loaded. Check the URL.", true);
+    };
+
+    preview.src = url;
+
+  } catch (error) {
+    setLogoStatus(error.message, true);
+  }
 });
 
-/* SAVE LOGO TO FIREBASE */
+/* SAVE LOGO URL TO FIRESTORE */
+
 document.getElementById("saveLogo").addEventListener("click", async () => {
   if (!ownerAuthorized || !auth.currentUser) {
     setLogoStatus("Owner authentication required.", true);
     return;
   }
 
-  if (!selectedLogoFile) {
-    setLogoStatus("Please choose an image first.", true);
-    return;
-  }
-
   const button = document.getElementById("saveLogo");
   button.disabled = true;
-  button.textContent = "Uploading...";
+  button.textContent = "Saving...";
 
   try {
-    const file = selectedLogoFile;
-    const logoPath = "branding/swiftpays-logo-" + Date.now();
-    const logoRef = ref(storage, logoPath);
+    const url = getValidLogoUrl();
 
-    await uploadBytes(logoRef, file, {
-      contentType: file.type
+    // Confirm the image URL actually loads before saving.
+    await new Promise((resolve, reject) => {
+      const image = new Image();
+
+      image.onload = resolve;
+      image.onerror = () => reject(
+        new Error("Image URL is not accessible. Check your GitHub image URL.")
+      );
+
+      image.src = url;
     });
 
-    const downloadUrl = await getDownloadURL(logoRef);
-
     await setDoc(brandingRef, {
-      logoUrl: downloadUrl,
-      logoPath: logoPath,
-      logoName: file.name,
+      logoUrl: url,
+      logoName: "SwiftPays Logo",
       updatedAt: new Date().toISOString(),
       updatedBy: auth.currentUser.uid
     }, { merge: true });
 
-    displayLogo(downloadUrl, file.name, logoPath);
-
-    selectedLogoFile = null;
-    logoFile.value = "";
-
-    setLogoStatus("Logo uploaded and saved successfully.");
+    displayLogo(url, "SwiftPays Logo");
+    setLogoStatus("Logo URL saved successfully in Firestore.");
 
   } catch (error) {
-    console.error("Logo upload error:", error);
-
-    setLogoStatus(
-      "Logo upload failed: " + error.message,
-      true
-    );
+    console.error("Logo save error:", error);
+    setLogoStatus("Could not save logo: " + error.message, true);
 
   } finally {
     button.disabled = false;
@@ -606,9 +629,13 @@ document.getElementById("saveLogo").addEventListener("click", async () => {
   }
 });
 
-/* REMOVE SAVED LOGO */
+/* REMOVE SAVED LOGO URL */
+
 document.getElementById("removeLogo").addEventListener("click", async () => {
-  if (!ownerAuthorized) return;
+  if (!ownerAuthorized || !auth.currentUser) {
+    setLogoStatus("Owner authentication required.", true);
+    return;
+  }
 
   if (!confirm("Are you sure you want to remove the saved SwiftPays logo?")) {
     return;
@@ -618,41 +645,19 @@ document.getElementById("removeLogo").addEventListener("click", async () => {
   button.disabled = true;
 
   try {
-    const snapshot = await getDoc(brandingRef);
-
-    if (snapshot.exists()) {
-      const data = snapshot.data();
-
-      if (data.logoPath) {
-        try {
-          await deleteObject(ref(storage, data.logoPath));
-        } catch (error) {
-          console.warn("Old logo file could not be deleted:", error);
-        }
-      }
-    }
-
     await setDoc(brandingRef, {
       logoUrl: null,
-      logoPath: null,
       logoName: null,
       updatedAt: new Date().toISOString(),
       updatedBy: auth.currentUser.uid
     }, { merge: true });
 
-    selectedLogoFile = null;
-    logoFile.value = "";
-
     displayLogo(null);
-    setLogoStatus("Saved logo removed successfully.");
+    setLogoStatus("Saved logo URL removed successfully.");
 
   } catch (error) {
     console.error("Logo removal error:", error);
-
-    setLogoStatus(
-      "Could not remove logo: " + error.message,
-      true
-    );
+    setLogoStatus("Could not remove logo: " + error.message, true);
 
   } finally {
     button.disabled = false;
@@ -660,6 +665,7 @@ document.getElementById("removeLogo").addEventListener("click", async () => {
 });
 
 /* CONFIGURATION PLACEHOLDER */
+
 document.getElementById("saveConfig").addEventListener("click", () => {
   document.getElementById("configStatus").textContent =
     "Secure configuration API is not connected. Settings were not saved.";
@@ -668,8 +674,5 @@ document.getElementById("saveConfig").addEventListener("click", () => {
 </body>
 </html>
 
-
-
-
-
+  
   
