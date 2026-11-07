@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,14 +10,13 @@
 :root{color-scheme:dark;--bg:#06131a;--panel:#0b2028;--line:#173943;--text:#effaf8;--muted:#8da8ad;--green:#00e5a8;--red:#ff7885}
 *{box-sizing:border-box}
 body{margin:0;background:radial-gradient(ellipse at 70% -20%,#0d3834,transparent 38%),var(--bg);color:var(--text);font:14px/1.5 system-ui,sans-serif}
-button,input{font:inherit}
-button{cursor:pointer}
+button,input{font:inherit}button{cursor:pointer}
 .shell{min-height:100vh;display:grid;grid-template-columns:248px minmax(0,1fr)}
 aside{background:#081a21;border-right:1px solid var(--line);padding:20px 14px;display:flex;flex-direction:column;min-height:100vh;position:sticky;top:0;height:100vh}
 .brand{display:flex;align-items:center;gap:11px;padding:3px 9px 25px}
-.mark{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:#123b37;border:1px solid #20534a;color:var(--green);font-size:27px;font-weight:900}
-.brand-name{font-weight:850;font-size:19px}
-.brand-sub{font-size:9px;color:#6f9998;letter-spacing:2px;font-weight:800}
+.mark{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:#123b37;border:1px solid #20534a;color:var(--green);font-size:27px;font-weight:900;overflow:hidden}
+.mark img{width:100%;height:100%;object-fit:contain}
+.brand-name{font-weight:850;font-size:19px}.brand-sub{font-size:9px;color:#6f9998;letter-spacing:2px;font-weight:800}
 .nav-caption{padding:7px 11px;color:#55747b;font-size:9px;letter-spacing:2px;font-weight:850}
 .nav{display:grid;gap:5px}
 .nav button{border:1px solid transparent;background:transparent;color:#a5bec0;text-align:left;border-radius:11px;padding:11px 12px;display:flex;align-items:center;gap:12px;font-weight:650;font-size:13px}
@@ -25,96 +25,74 @@ aside{background:#081a21;border-right:1px solid var(--line);padding:20px 14px;di
 .ico{width:19px;text-align:center;font-size:16px}
 .nav .logout{margin-top:12px;color:#ff929b}
 .aside-foot{margin-top:auto;padding:14px 10px;color:#648087;font-size:10px;border-top:1px solid #16333a}
-main{min-width:0}
-.topbar{height:68px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 30px;background:#071820dc;position:sticky;top:0;z-index:5}
-.crumb{color:#779398;font-size:12px}
-.crumb b{color:#d9e9e6}
+main{min-width:0}.topbar{height:68px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 30px;background:#071820dc;position:sticky;top:0;z-index:5}
+.crumb{color:#779398;font-size:12px}.crumb b{color:#d9e9e6}
 .top-right{display:flex;align-items:center;gap:12px}
 .status,.verified{border:1px solid #1b5549;background:#0a2a25;color:#82eacb;padding:7px 10px;border-radius:30px;font-size:10px;font-weight:800}
 .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:6px}
 .owner{display:flex;align-items:center;gap:8px;font-size:12px}
 .avatar{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;background:#123b35;color:var(--green)}
 .content{max-width:1500px;margin:auto;padding:30px}
-.page{display:none}
-.page.active{display:block;animation:fade .2s}
+.page{display:none}.page.active{display:block;animation:fade .2s}
 @keyframes fade{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:none}}
 .welcome{display:flex;justify-content:space-between;gap:15px;margin-bottom:23px}
-.welcome h1{font-size:clamp(23px,3vw,30px);margin:0 0 5px}
-.welcome p{margin:0;color:var(--muted);font-size:13px}
+.welcome h1{font-size:clamp(23px,3vw,30px);margin:0 0 5px}.welcome p{margin:0;color:var(--muted);font-size:13px}
 .notice{padding:13px 15px;border:1px solid #574a2e;background:#211f17;color:#e5cf9d;border-radius:13px;font-size:12px;margin-bottom:18px}
 .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
 .stat{padding:18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#102a32,#0a1c24);min-height:130px}
 .stat-head{display:flex;justify-content:space-between;color:#9bb3b5;font-size:11px}
 .stat-icon{width:31px;height:31px;border-radius:10px;display:grid;place-items:center;background:#103c34;color:var(--green)}
-.stat strong{display:block;font-size:29px;margin:13px 0 2px}
-.stat small{color:#66848a;font-size:10px}
+.stat strong{display:block;font-size:29px;margin:13px 0 2px}.stat small{color:#66848a;font-size:10px}
 .stat-foot{display:block;margin-top:7px;color:#56c9a7;font-size:8px;font-weight:850;letter-spacing:1px}
 .section{margin-top:19px;padding:18px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,#0b2028,#091a21)}
 .section-head{display:flex;justify-content:space-between;gap:10px;margin-bottom:14px}
-.section-head h2{font-size:14px;margin:0}
-.section-head small{font-size:10px;color:#789398}
+.section-head h2{font-size:14px;margin:0}.section-head small{font-size:10px;color:#789398}
 .analytics-grid{display:grid;grid-template-columns:1.7fr 1fr;gap:14px;margin-top:18px}
 .analytics-grid .section{margin-top:0}
 .chart-grid{height:205px;position:relative;display:flex;flex-direction:column;justify-content:space-between;color:#58777e;font-size:9px}
 .chart-grid svg{position:absolute;inset:0 0 0 35px;width:calc(100% - 35px);height:100%}
 .chart-message{position:absolute;inset:0 0 0 35px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.chart-message span{font-size:32px;color:var(--green)}
-.chart-message b{font-size:12px}
+.chart-message span{font-size:32px;color:var(--green)}.chart-message b{font-size:12px}
 .chart-message small{font-size:10px;color:#78979b;margin-top:4px}
 .chart-days{display:flex;justify-content:space-between;margin:9px 0 0 35px;color:#64858a;font-size:8px}
 .chart-legend{display:flex;gap:17px;margin-top:15px;color:#8da8ad;font-size:10px}
 .legend-dot{width:7px;height:7px;border-radius:50%;display:inline-block}
-.deposits-dot{background:#00e5a8}
-.withdrawals-dot{background:#6da8ff}
+.deposits-dot{background:#00e5a8}.withdrawals-dot{background:#6da8ff}
 .activity-row{display:flex;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #17343c}
-.activity-row:last-child{border:0}
-.activity-symbol{width:31px;height:31px;display:grid;place-items:center;border-radius:10px}
-.activity-row div{flex:1}
-.activity-row b{display:block;font-size:11px}
-.activity-row small{color:#718f94;font-size:9px}
+.activity-row:last-child{border:0}.activity-row div{flex:1}
+.activity-row b{display:block;font-size:11px}.activity-row small{color:#718f94;font-size:9px}
 .activity-row>strong{font-size:19px}
 .quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .quick button{min-height:84px;text-align:left;border:1px solid #1a3b43;background:#0a1d24;border-radius:12px;color:#d9e9e6;padding:13px}
-.quick b{display:block;color:var(--green);font-size:20px}
-.quick span{font-size:11px;font-weight:750}
+.quick b{display:block;color:var(--green);font-size:20px}.quick span{font-size:11px;font-weight:750}
 .empty{border:1px dashed #28505a;border-radius:14px;padding:24px;text-align:center;color:#8aa4a8;font-size:12px}
 .empty strong{display:block;color:#dcebe8;font-size:14px;margin-bottom:5px}
 .module-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
 .module-card{padding:17px;border:1px solid var(--line);border-radius:14px;background:#0b2028}
-.module-card h3{font-size:13px;margin:0 0 5px}
-.module-card p{font-size:11px;color:var(--muted);margin:0;line-height:1.6}
+.module-card h3{font-size:13px;margin:0 0 5px}.module-card p{font-size:11px;color:var(--muted);margin:0;line-height:1.6}
 .pill{display:inline-block;margin-top:12px;padding:5px 8px;border:1px solid #55492c;border-radius:20px;color:#e5c98c;background:#242117;font-size:9px;font-weight:800}
-.brand-preview{display:flex;align-items:center;gap:14px;padding:18px;border:1px solid var(--line);border-radius:14px;background:#091b22;margin-bottom:14px}
-.brand-preview img{width:112px;height:112px;object-fit:contain;border-radius:16px;background:#061219;padding:5px}
-.upload-label,.save-config{display:inline-flex;align-items:center;gap:8px;padding:11px 14px;border:1px solid #1c6655;background:#0d332d;color:#9af1d5;border-radius:10px;font-weight:750;font-size:11px}
-.upload-label input{display:none}
+.brand-preview{display:flex;align-items:center;gap:18px;padding:18px;border:1px solid var(--line);border-radius:14px;background:#091b22;margin-bottom:14px}
+.brand-preview img{width:130px;height:130px;object-fit:contain;border-radius:16px;background:#061219;padding:7px;border:1px solid #24434a}
+.upload-label,.action-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 14px;border:1px solid #1c6655;background:#0d332d;color:#9af1d5;border-radius:10px;font-weight:750;font-size:11px}
+.upload-label input{display:none}.action-btn.danger{border-color:#71323a;background:#35191e;color:#ff9da3}
 .hint{color:#789398;font-size:10px;line-height:1.6;margin-top:10px}
 .config-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .config-field{display:flex;flex-direction:column;gap:8px;color:#d8e9e5;font-size:11px;font-weight:750}
 .config-field input{width:100%;border:1px solid #24464e;background:#071820;color:#e9f7f2;border-radius:10px;padding:13px}
-.config-field small{font-size:9px;color:#789398;font-weight:450}
 .config-check{display:flex;gap:10px;margin-top:17px;padding:13px;border:1px solid #20443f;background:#0a2424;border-radius:11px;font-size:11px}
 .config-check input{accent-color:var(--green)}
 .config-actions{display:flex;align-items:center;gap:13px;flex-wrap:wrap}
 .save-config{background:linear-gradient(120deg,#00a77f,#08765f);color:white}
 @media(max-width:1050px){.stats{grid-template-columns:repeat(2,1fr)}.analytics-grid{grid-template-columns:1fr}}
-@media(max-width:700px){
-.shell{display:block}
-aside{position:relative;height:auto;min-height:0;padding:11px 12px}
-.brand{padding:1px 5px 10px}
-.nav-caption,.aside-foot{display:none}
-.nav{display:flex;gap:6px;overflow-x:auto}
-.nav button{flex:0 0 auto;white-space:nowrap;padding:9px 11px;font-size:11px}
+@media(max-width:700px){.shell{display:block}aside{position:relative;height:auto;min-height:0;padding:11px 12px}
+.brand{padding:1px 5px 10px}.nav-caption,.aside-foot{display:none}
+.nav{display:flex;gap:6px;overflow-x:auto}.nav button{flex:0 0 auto;white-space:nowrap;padding:9px 11px;font-size:11px}
 .nav button.active{box-shadow:inset 0 -2px var(--green)}
-.topbar{height:53px;padding:0 15px;position:relative}
-.content{padding:21px 13px 35px}
-.welcome h1{font-size:23px}
-.stats{grid-template-columns:repeat(2,1fr);gap:9px}
-.stat{min-height:115px;padding:13px}
-.stat strong{font-size:23px}
-.analytics-grid,.module-grid{grid-template-columns:1fr}
-.quick{grid-template-columns:repeat(2,1fr)}
-.config-grid{grid-template-columns:1fr}
+.topbar{height:53px;padding:0 15px;position:relative}.content{padding:21px 13px 35px}
+.welcome h1{font-size:23px}.stats{grid-template-columns:repeat(2,1fr);gap:9px}
+.stat{min-height:115px;padding:13px}.stat strong{font-size:23px}
+.analytics-grid,.module-grid{grid-template-columns:1fr}.quick{grid-template-columns:repeat(2,1fr)}
+.config-grid{grid-template-columns:1fr}.brand-preview{align-items:flex-start;flex-direction:column}
 }
 </style>
 </head>
@@ -122,7 +100,10 @@ aside{position:relative;height:auto;min-height:0;padding:11px 12px}
 <div id="authChecking" style="position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#06131a;color:#00e5a8;font:700 15px system-ui">Verifying Owner Access…</div>
 <div class="shell" id="dashboardApp" style="visibility:hidden">
 <aside>
-<div class="brand"><div class="mark">ϟ</div><div><div class="brand-name">SwiftPays</div><div class="brand-sub">OWNER CONTROL</div></div></div>
+<div class="brand">
+  <div class="mark" id="sidebarMark">ϟ</div>
+  <div><div class="brand-name">SwiftPays</div><div class="brand-sub">OWNER CONTROL</div></div>
+</div>
 <div class="nav-caption">WORKSPACE</div>
 <nav class="nav">
 <button data-page="home" class="active"><span class="ico">⌂</span>Dashboard</button>
@@ -168,55 +149,68 @@ aside{position:relative;height:auto;min-height:0;padding:11px 12px}
 <div class="section"><div class="section-head"><h2>✦ Quick Actions</h2><small>Owner shortcuts</small></div><div class="quick">
 <button data-open="users"><b>♙</b><span>Manage Users</span></button><button data-open="deposits"><b>＋</b><span>Review Deposits</span></button><button data-open="withdrawals"><b>↗</b><span>Review Withdrawals</span></button><button data-open="branding"><b>▧</b><span>Website Branding</span></button>
 </div></div>
-                                                           </section>
-                                                           <!-- USERS -->
+</section>
+
+
+
+
+  
+<!-- USERS -->
 <section class="page" id="page-users">
 <div class="welcome"><div><h1>♙ User Management</h1><p>Manage registered SwiftPays users.</p></div></div>
-<div class="notice">ⓘ User records will appear after Users API integration.</div>
-<div class="section">
-<div class="section-head"><h2>All Users</h2><small>USER DIRECTORY</small></div>
-<div class="empty"><strong>♙ No user data connected</strong>Connect the protected Users API to view and manage accounts.</div>
-</div>
+<div class="notice">User records will appear after Users API integration.</div>
+<div class="section"><div class="section-head"><h2>All Users</h2><small>USER DIRECTORY</small></div>
+<div class="empty"><strong>No user data connected</strong>Connect the protected Users API to manage accounts.</div></div>
 </section>
 
 <!-- DEPOSITS -->
 <section class="page" id="page-deposits">
 <div class="welcome"><div><h1>＋ Deposit Management</h1><p>Review incoming deposit requests.</p></div></div>
-<div class="notice">ⓘ Deposit approvals require a protected backend API.</div>
+<div class="notice">Deposit approvals require a protected backend API.</div>
 <div class="section"><div class="section-head"><h2>Pending Deposits</h2><small>PAYMENT REVIEW</small></div>
-<div class="empty"><strong>＋ No deposit records connected</strong>Deposit requests will appear here after API integration.</div></div>
+<div class="empty"><strong>No deposit records connected</strong>Deposit requests will appear here after API integration.</div></div>
 </section>
 
 <!-- WITHDRAWALS -->
 <section class="page" id="page-withdrawals">
 <div class="welcome"><div><h1>↗ Withdrawal Management</h1><p>Review and process payout requests.</p></div></div>
-<div class="notice">ⓘ Never approve a payout based only on a client-side status. Verify it on the server.</div>
+<div class="notice">Never approve a payout based only on a client-side status.</div>
 <div class="section"><div class="section-head"><h2>Pending Withdrawals</h2><small>PAYOUT CONTROL</small></div>
-<div class="empty"><strong>↗ No withdrawal records connected</strong>Withdrawal requests will appear here after API integration.</div></div>
+<div class="empty"><strong>No withdrawal records connected</strong>Withdrawal requests will appear after API integration.</div></div>
 </section>
 
 <!-- TRANSACTIONS -->
 <section class="page" id="page-transactions">
 <div class="welcome"><div><h1>▤ Transactions</h1><p>Monitor deposits, withdrawals and payment activity.</p></div></div>
 <div class="section"><div class="section-head"><h2>Transaction History</h2><small>PAYMENT LEDGER</small></div>
-<div class="empty"><strong>▤ No transaction data connected</strong>Connect the protected Transactions API to display records.</div></div>
+<div class="empty"><strong>No transaction data connected</strong>Connect the protected Transactions API to display records.</div></div>
 </section>
 
-<!-- BRANDING -->
+<!-- BRANDING & LOGO -->
 <section class="page" id="page-branding">
 <div class="welcome"><div><h1>▧ Branding & Logo Studio</h1><p>Manage the visual identity of SwiftPays.</p></div></div>
-<div class="notice">ⓘ Preview is local until secure logo storage and publishing APIs are connected.</div>
+<div class="notice">Logo files are stored in Firebase Storage. The active logo URL is saved in Firestore.</div>
+
 <div class="section">
 <div class="section-head"><h2>Website Logo</h2><small>BRAND IDENTITY</small></div>
+
 <div class="brand-preview">
 <img id="logoPreview" alt="SwiftPays logo preview" src="">
-<div><b id="logoName">SwiftPays Logo</b><p class="hint">Recommended: transparent PNG or WebP, square format.</p></div>
+<div>
+<b id="logoName">No logo uploaded</b>
+<p class="hint">Recommended: transparent PNG or WebP, square format. Maximum 3 MB.</p>
 </div>
+</div>
+
 <div class="config-actions">
-<label class="upload-label">＋ Upload Logo<input type="file" id="logoFile" accept="image/png,image/jpeg,image/webp,image/svg+xml"></label>
-<button class="upload-label" id="removeLogo" type="button">✕ Remove Preview</button>
+<label class="upload-label">＋ Choose Logo
+<input type="file" id="logoFile" accept="image/png,image/jpeg,image/webp">
+</label>
+<button class="action-btn" id="saveLogo" type="button">✓ Save & Publish Logo</button>
+<button class="action-btn danger" id="removeLogo" type="button">✕ Remove Logo</button>
 </div>
-<p class="hint">Choose a logo to preview it. Publishing across Home, Login, Register and Dashboard requires the secure Branding API.</p>
+
+<p class="hint" id="logoStatus">Choose an image to preview it. Save it to publish the logo URL.</p>
 </div>
 </section>
 
@@ -224,61 +218,80 @@ aside{position:relative;height:auto;min-height:0;padding:11px 12px}
 <section class="page" id="page-security">
 <div class="welcome"><div><h1>♢ Security Center</h1><p>Owner access and platform protection.</p></div></div>
 <div class="module-grid">
-<div class="module-card"><h3>✦ Owner Authentication</h3><p>Admin access is checked through Firebase authentication and the backend owner verification endpoint.</p><span class="pill">SERVER VERIFICATION REQUIRED</span></div>
+<div class="module-card"><h3>✦ Owner Authentication</h3><p>Admin access is checked through Firebase authentication and backend owner verification.</p><span class="pill">SERVER VERIFICATION</span></div>
 <div class="module-card"><h3>☁ Cloudflare Turnstile</h3><p>Public Site Key may be used on public pages. Secret Key must remain on the backend.</p><span class="pill">BACKEND CONFIGURATION</span></div>
 <div class="module-card"><h3>⌑ Protected Admin APIs</h3><p>Every sensitive admin action must independently verify the Firebase ID token and Owner UID.</p><span class="pill">API INTEGRATION PENDING</span></div>
-<div class="module-card"><h3>✧ Session Protection</h3><p>Admin pages should require an authenticated Owner session on every direct route visit.</p><span class="pill">OWNER ONLY</span></div>
+<div class="module-card"><h3>✧ Session Protection</h3><p>Admin pages require an authenticated Owner session on every direct visit.</p><span class="pill">OWNER ONLY</span></div>
 </div>
 </section>
 
 <!-- CONFIGURATION -->
 <section class="page" id="page-config">
 <div class="welcome"><div><h1>⌘ Configuration</h1><p>Manage Telegram and Cloudflare integration settings.</p></div></div>
-<div class="notice">⚠ Configuration form is a UI preview. Do not paste production secrets here until the secure backend save API is connected.</div>
+<div class="notice">Configuration save API is not connected. Do not enter production secrets here yet.</div>
 <div class="section">
 <div class="section-head"><h2>✦ Telegram Bot Configuration</h2><small>BOT INTEGRATION</small></div>
 <div class="config-grid">
-<label class="config-field">Bot Token<input id="botToken" type="password" placeholder="Enter Telegram Bot Token" autocomplete="off"><small>Keep this token private. Never place it in public frontend code.</small></label>
-<label class="config-field">Support Bot Username<input id="supportBot" type="text" placeholder="@YourSupportBot"><small>Enter the public Telegram bot username.</small></label>
+<label class="config-field">Bot Token<input id="botToken" type="password" placeholder="Enter Telegram Bot Token" autocomplete="off"><small>Keep this token private.</small></label>
+<label class="config-field">Support Bot Username<input id="supportBot" type="text" placeholder="@YourSupportBot"><small>Public Telegram username.</small></label>
 </div>
 </div>
 <div class="section">
 <div class="section-head"><h2>☁ Cloudflare Turnstile</h2><small>BOT PROTECTION</small></div>
 <div class="config-grid">
-<label class="config-field">Site Verification Key<input id="siteKey" type="text" placeholder="Cloudflare public Site Key"><small>This public key is used by the website widget.</small></label>
-<label class="config-field">Secret Verification Key<input id="secretKey" type="password" placeholder="Cloudflare Secret Key" autocomplete="new-password"><small>Secret key must only be stored and used on Render backend.</small></label>
+<label class="config-field">Site Verification Key<input id="siteKey" type="text" placeholder="Cloudflare public Site Key"><small>Public widget key.</small></label>
+<label class="config-field">Secret Verification Key<input id="secretKey" type="password" placeholder="Cloudflare Secret Key" autocomplete="new-password"><small>Store this only on Render backend.</small></label>
 </div>
 <label class="config-check"><input id="turnstileEnabled" type="checkbox" checked> Enable Turnstile on public website pages</label>
-<p class="hint">Admin Login remains excluded from Turnstile, as requested.</p>
+<p class="hint">Admin Login remains excluded from Turnstile.</p>
 </div>
 <div class="section">
 <div class="section-head"><h2>✦ Save Configuration</h2><small>SECURE SETTINGS</small></div>
 <div class="config-actions">
-<button class="save-config" id="saveConfig" type="button">♢ Save Settings</button>
+<button class="action-btn" id="saveConfig" type="button">Save Settings</button>
 <span class="hint" id="configStatus">Backend save API not connected.</span>
 </div>
 </div>
 </section>
 
-<!-- GENERAL SETTINGS -->
+<!-- SETTINGS -->
 <section class="page" id="page-settings">
-<div class="welcome"><div><h1>⚙ General Settings</h1><p>Platform preferences and website information.</p></div></div>
+<div class="welcome"><div><h1>⚙ General Settings</h1><p>Platform preferences and account controls.</p></div></div>
 <div class="module-grid">
-<div class="module-card"><h3>Website Identity</h3><p>SwiftPays website title, description and brand details.</p><span class="pill">CONFIGURATION API PENDING</span></div>
-<div class="module-card"><h3>Platform Preferences</h3><p>Manage supported payment methods, currency and platform preferences.</p><span class="pill">CONFIGURATION API PENDING</span></div>
+<div class="module-card"><h3>Platform Branding</h3><p>Manage your website logo from Branding & Logo.</p><span class="pill">AVAILABLE</span></div>
+<div class="module-card"><h3>Owner Account</h3><p>Owner authentication is managed by Firebase Authentication.</p><span class="pill">FIREBASE AUTH</span></div>
 </div>
 </section>
 
 </div>
 </main>
 </div>
+
+
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+
 import {
   getAuth,
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
+
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA_KW4G3pdXu2VKTqa2-Sk9xE4hzDIWU9I",
@@ -292,20 +305,19 @@ const firebaseConfig = {
 };
 
 const API_BASE = "https://swiftpay-api-6azu.onrender.com";
+const OWNER_UID = "Vvkmab68NFfLno80Yu7ZLyAd3kF3";
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const storage = getStorage(app);
+const db = getFirestore(app);
 
-const routeMap = {
-  "home": "/admin-dashboard/",
-  "users": "/admin-dashboard/users",
-  "deposits": "/admin-dashboard/deposits",
-  "withdrawals": "/admin-dashboard/withdrawals",
-  "transactions": "/admin-dashboard/transactions",
-  "branding": "/admin-dashboard/branding",
-  "security": "/admin-dashboard/security",
-  "config": "/admin-dashboard/configuration",
-  "settings": "/admin-dashboard/settings"
-};
+const brandingRef = doc(db, "siteSettings", "branding");
+
+let ownerAuthorized = false;
+let selectedLogoFile = null;
+let currentLogoPath = null;
+let currentLogoUrl = null;
 
 const pageNames = {
   home: "Dashboard",
@@ -319,33 +331,33 @@ const pageNames = {
   settings: "Settings"
 };
 
-let ownerAuthorized = false;
-let currentLogoUrl = null;
-
 function pageFromPath() {
-  const path = location.pathname.replace(/\/+$/, "");
-  for (const [page, route] of Object.entries(routeMap)) {
-    if (route.replace(/\/+$/, "") === path) return page;
-  }
-  return "home";
+  const page = location.hash.replace("#", "").trim();
+  return pageNames[page] ? page : "home";
 }
 
 function showPage(page, updateUrl = true) {
   if (!ownerAuthorized) return;
-  if (!routeMap[page]) page = "home";
+  if (!pageNames[page]) page = "home";
 
   document.querySelectorAll(".page").forEach(section => {
-    section.classList.toggle("active", section.id === "page-" + page);
+    section.classList.toggle(
+      "active",
+      section.id === "page-" + page
+    );
   });
 
   document.querySelectorAll(".nav button[data-page]").forEach(button => {
-    button.classList.toggle("active", button.dataset.page === page);
+    button.classList.toggle(
+      "active",
+      button.dataset.page === page
+    );
   });
 
   document.getElementById("crumb").textContent = pageNames[page];
 
-  if (updateUrl && location.pathname !== routeMap[page]) {
-    history.pushState({ page }, "", routeMap[page]);
+  if (updateUrl && location.hash !== "#" + page) {
+    history.pushState({ page }, "", "#" + page);
   }
 }
 
@@ -366,21 +378,97 @@ window.addEventListener("popstate", () => {
 });
 
 async function verifyOwner(user) {
+  if (user.uid !== OWNER_UID) {
+    throw new Error("This Firebase account is not the configured Owner.");
+  }
+
   const idToken = await user.getIdToken(true);
 
   const response = await fetch(API_BASE + "/admin/login", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ firebase_id_token: idToken })
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + idToken
+    },
+    body: JSON.stringify({
+      firebase_id_token: idToken
+    })
   });
 
   const result = await response.json().catch(() => ({}));
 
-  if (!response.ok || result.authorized !== true || result.role !== "owner") {
-    throw new Error("Owner authorization failed.");
+  if (
+    !response.ok ||
+    result.authorized !== true ||
+    result.role !== "owner"
+  ) {
+    throw new Error(
+      result.detail || "Backend Owner authorization failed."
+    );
+  }
+
+  sessionStorage.setItem("swiftpays_admin_id_token", idToken);
+}
+
+function setLogoStatus(message, error = false) {
+  const status = document.getElementById("logoStatus");
+  status.textContent = message;
+  status.style.color = error ? "#ff929b" : "#789398";
+}
+
+function displayLogo(url, name = "SwiftPays Logo", path = null) {
+  const preview = document.getElementById("logoPreview");
+  const title = document.getElementById("logoName");
+  const sidebar = document.getElementById("sidebarMark");
+
+  currentLogoUrl = url || null;
+  currentLogoPath = path || null;
+
+  if (url) {
+    preview.src = url;
+    title.textContent = name;
+    sidebar.innerHTML = "";
+
+    const image = document.createElement("img");
+    image.src = url;
+    image.alt = "SwiftPays";
+    sidebar.appendChild(image);
+  } else {
+    preview.removeAttribute("src");
+    title.textContent = "No logo uploaded";
+    sidebar.textContent = "ϟ";
   }
 }
 
+async function loadSavedLogo() {
+  try {
+    const snapshot = await getDoc(brandingRef);
+
+    if (snapshot.exists()) {
+      const data = snapshot.data();
+
+      if (data.logoUrl) {
+        displayLogo(
+          data.logoUrl,
+          data.logoName || "SwiftPays Logo",
+          data.logoPath || null
+        );
+        setLogoStatus("Saved logo loaded successfully.");
+        return;
+      }
+    }
+
+    displayLogo(null);
+    setLogoStatus("No saved logo found. Upload a logo to begin.");
+  } catch (error) {
+    setLogoStatus(
+      "Could not load logo: " + error.message,
+      true
+    );
+  }
+}
+
+/* OWNER SESSION */
 onAuthStateChanged(auth, async user => {
   const gate = document.getElementById("authChecking");
 
@@ -391,67 +479,197 @@ onAuthStateChanged(auth, async user => {
 
   try {
     await verifyOwner(user);
+
     ownerAuthorized = true;
 
     document.getElementById("dashboardApp").style.visibility = "visible";
     gate.style.display = "none";
 
     showPage(pageFromPath(), false);
+    await loadSavedLogo();
+
   } catch (error) {
     ownerAuthorized = false;
+
+    console.error("Owner verification:", error);
+
     await signOut(auth).catch(() => {});
-    sessionStorage.clear();
+
+    sessionStorage.removeItem("swiftpays_admin_id_token");
+
     location.replace("/admin.html");
   }
 });
 
+/* LOGOUT */
 document.getElementById("logout").addEventListener("click", async () => {
   if (!ownerAuthorized) return;
+
   ownerAuthorized = false;
-  await signOut(auth);
-  sessionStorage.clear();
+
+  await signOut(auth).catch(() => {});
+
+  sessionStorage.removeItem("swiftpays_admin_id_token");
+
   location.replace("/admin.html");
 });
 
-/* LOGO PREVIEW */
+/* SELECT LOGO */
 const logoFile = document.getElementById("logoFile");
-const logoPreview = document.getElementById("logoPreview");
-const logoName = document.getElementById("logoName");
 
 logoFile.addEventListener("change", event => {
   const file = event.target.files?.[0];
+
   if (!file) return;
 
-  if (!file.type.startsWith("image/")) {
-    alert("Please select a valid image.");
+  const allowedTypes = [
+    "image/png",
+    "image/jpeg",
+    "image/webp"
+  ];
+
+  if (!allowedTypes.includes(file.type)) {
+    setLogoStatus("Only PNG, JPG and WebP images are allowed.", true);
+    logoFile.value = "";
     return;
   }
 
   if (file.size > 3 * 1024 * 1024) {
-    alert("Logo must be smaller than 3 MB.");
+    setLogoStatus("Logo must be smaller than 3 MB.", true);
+    logoFile.value = "";
     return;
   }
 
-  if (currentLogoUrl) URL.revokeObjectURL(currentLogoUrl);
+  selectedLogoFile = file;
 
-  currentLogoUrl = URL.createObjectURL(file);
-  logoPreview.src = currentLogoUrl;
-  logoName.textContent = file.name;
+  const previewUrl = URL.createObjectURL(file);
+
+  document.getElementById("logoPreview").src = previewUrl;
+  document.getElementById("logoName").textContent = file.name;
+
+  setLogoStatus("Preview ready. Click Save & Publish Logo to upload it.");
 });
 
-document.getElementById("removeLogo").addEventListener("click", () => {
-  if (currentLogoUrl) URL.revokeObjectURL(currentLogoUrl);
-  currentLogoUrl = null;
-  logoPreview.removeAttribute("src");
-  logoName.textContent = "SwiftPays Logo";
-  logoFile.value = "";
+/* SAVE LOGO TO FIREBASE */
+document.getElementById("saveLogo").addEventListener("click", async () => {
+  if (!ownerAuthorized || !auth.currentUser) {
+    setLogoStatus("Owner authentication required.", true);
+    return;
+  }
+
+  if (!selectedLogoFile) {
+    setLogoStatus("Please choose an image first.", true);
+    return;
+  }
+
+  const button = document.getElementById("saveLogo");
+  button.disabled = true;
+  button.textContent = "Uploading...";
+
+  try {
+    const file = selectedLogoFile;
+    const logoPath = "branding/swiftpays-logo-" + Date.now();
+    const logoRef = ref(storage, logoPath);
+
+    await uploadBytes(logoRef, file, {
+      contentType: file.type
+    });
+
+    const downloadUrl = await getDownloadURL(logoRef);
+
+    await setDoc(brandingRef, {
+      logoUrl: downloadUrl,
+      logoPath: logoPath,
+      logoName: file.name,
+      updatedAt: new Date().toISOString(),
+      updatedBy: auth.currentUser.uid
+    }, { merge: true });
+
+    displayLogo(downloadUrl, file.name, logoPath);
+
+    selectedLogoFile = null;
+    logoFile.value = "";
+
+    setLogoStatus("Logo uploaded and saved successfully.");
+
+  } catch (error) {
+    console.error("Logo upload error:", error);
+
+    setLogoStatus(
+      "Logo upload failed: " + error.message,
+      true
+    );
+
+  } finally {
+    button.disabled = false;
+    button.textContent = "✓ Save & Publish Logo";
+  }
 });
 
-/* CONFIGURATION: DO NOT CLAIM SAVE UNTIL API EXISTS */
+/* REMOVE SAVED LOGO */
+document.getElementById("removeLogo").addEventListener("click", async () => {
+  if (!ownerAuthorized) return;
+
+  if (!confirm("Are you sure you want to remove the saved SwiftPays logo?")) {
+    return;
+  }
+
+  const button = document.getElementById("removeLogo");
+  button.disabled = true;
+
+  try {
+    const snapshot = await getDoc(brandingRef);
+
+    if (snapshot.exists()) {
+      const data = snapshot.data();
+
+      if (data.logoPath) {
+        try {
+          await deleteObject(ref(storage, data.logoPath));
+        } catch (error) {
+          console.warn("Old logo file could not be deleted:", error);
+        }
+      }
+    }
+
+    await setDoc(brandingRef, {
+      logoUrl: null,
+      logoPath: null,
+      logoName: null,
+      updatedAt: new Date().toISOString(),
+      updatedBy: auth.currentUser.uid
+    }, { merge: true });
+
+    selectedLogoFile = null;
+    logoFile.value = "";
+
+    displayLogo(null);
+    setLogoStatus("Saved logo removed successfully.");
+
+  } catch (error) {
+    console.error("Logo removal error:", error);
+
+    setLogoStatus(
+      "Could not remove logo: " + error.message,
+      true
+    );
+
+  } finally {
+    button.disabled = false;
+  }
+});
+
+/* CONFIGURATION PLACEHOLDER */
 document.getElementById("saveConfig").addEventListener("click", () => {
   document.getElementById("configStatus").textContent =
-    "Secure configuration API is not connected yet. Settings were not saved.";
+    "Secure configuration API is not connected. Settings were not saved.";
 });
 </script>
 </body>
 </html>
+
+
+
+
+
+  
