@@ -307,3 +307,254 @@ def reset_password(data: ResetRequest):
     user_ref.update({"password_hash": hash_password(data.password), "password_changed_at": firestore.SERVER_TIMESTAMP})
     ref.delete()
     return {"success": True, "message": "Password reset successful. Please log in."}
+
+
+
+
+# ==========================================
+# SWIFTPAYS CONFIGURATION SAVE SYSTEM
+# Firebase Firestore + Owner Authentication
+# ==========================================
+
+from typing import Optional
+from fastapi import Depends
+
+CONFIG_COLLECTION = "siteSettings"
+CONFIG_DOCUMENT = "platform"
+
+class PlatformConfig(BaseModel):
+    # Website
+    website_name: str = Field(default="SwiftPays", min_length=1, max_length=80)
+    support_email: str = Field(default="", max_length=150)
+    support_link: str = Field(default="", max_length=500)
+    currency: str = Field(default="INR", pattern="^INR$")
+    timezone: str = Field(default="Asia/Kolkata", max_length=80)
+
+    # Telegram (public username only)
+    support_bot_username: str = Field(default="", max_length=80)
+
+    # Turnstile (public key only)
+    turnstile_site_key: str = Field(default="", max_length=300)
+    turnstile_enabled: bool = True
+
+    # UPI Manual Payment
+    upi_id: str = Field(default="", max_length=150)
+    upi_payee_name: str = Field(default="", max_length=150)
+    upi_qr_url: str = Field(default="", max_length=1000)
+
+    # Deposit
+    deposit_enabled: bool = True
+    min_deposit: float = Field(default=10, ge=1, le=10000000)
+    max_deposit: float = Field(default=10000, ge=1, le=10000000)
+
+    # Withdrawal
+    withdrawal_enabled: bool = True
+    min_withdrawal: float = Field(default=100, ge=1, le=10000000)
+    max_withdrawal: float = Field(default=10000, ge=1, le=10000000)
+    withdrawal_tax_percent: float = Field(default=0, ge=0, le=100)
+    withdrawal_fixed_tax: float = Field(default=0, ge=0, le=10000000)
+    daily_withdrawal_limit: float = Field(default=20000, ge=1, le=10000000)
+    withdrawal_upi_enabled: bool = True
+    withdrawal_mobile_enabled: bool = False
+    withdrawal_verification_required: bool = True
+
+    # Security
+    registration_enabled: bool = True
+    maintenance_mode: bool = False
+
+    # Manual review only
+    deposit_approval: str = Field(default="manual", pattern="^manual$")
+    withdrawal_approval: str = Field(default="manual", pattern="^manual$")
+
+
+def require_platform_owner(
+    authorization: Optional[str] = Header(default=None)
+):
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(
+            status_code=401,
+            detail="Owner authentication required."
+        )
+
+    token = authorization[7:].strip()
+    owner_uid = os.getenv("OWNER_UID", "").strip()
+
+    if not owner_uid:
+        raise HTTPException(
+            status_code=503,
+            detail="Owner is not configured."
+        )
+
+    try:
+        get_firebase()
+        decoded = firebase_auth.verify_id_token(
+            token,
+            check_revoked=True
+        )
+    except Exception:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or expired Firebase session."
+        )
+
+    uid = str(decoded.get("uid", ""))
+
+    if not hmac.compare_digest(uid, owner_uid):
+        raise HTTPException(
+            status_code=403,
+            detail="Owner access denied."
+        )
+
+    return uid
+
+
+def validate_platform_config(config):
+    if config.min_deposit > config.max_deposit:
+        raise HTTPException(
+            422,
+            "Minimum deposit cannot exceed maximum deposit."
+        )
+
+    if config.min_withdrawal > config.max_withdrawal:
+        raise HTTPException(
+            422,
+            "Minimum withdrawal cannot exceed maximum withdrawal."
+        )
+
+    if config.daily_withdrawal_limit < config.min_withdrawal:
+        raise HTTPException(
+            422,
+            "Daily withdrawal limit cannot be below minimum withdrawal."
+        )
+
+    if config.withdrawal_fixed_tax >= config.min_withdrawal:
+        raise HTTPException(
+            422,
+            "Fixed withdrawal tax must be below minimum withdrawal."
+        )
+
+    if config.upi_id and not re.fullmatch(
+        r"[A-Za-z0-9._-]{2,256}@[A-Za-z0-9.-]{2,100}",
+        config.upi_id
+    ):
+        raise HTTPException(422, "Invalid UPI ID.")
+
+    for url in [config.upi_qr_url, config.support_link]:
+        if url and not url.startswith("https://"):
+            raise HTTPException(422, "Links must use HTTPS.")
+
+
+def platform_config_ref():
+    return get_firebase().collection(
+        CONFIG_COLLECTION
+    ).document(CONFIG_DOCUMENT)
+
+
+def load_platform_config():
+    snapshot = platform_config_ref().get()
+    saved = snapshot.to_dict() if snapshot.exists else {}
+
+    defaults = PlatformConfig().model_dump()
+    allowed = {
+        key: value
+        for key, value in (saved or {}).items()
+        if key in defaults
+    }
+
+    defaults.update(allowed)
+    return defaults
+
+
+@app.get("/admin/config")
+def admin_get_config(
+    owner_uid: str = Depends(require_platform_owner)
+):
+    try:
+        settings = load_platform_config()
+    except Exception:
+        raise HTTPException(
+            503,
+            "Could not load configuration."
+        )
+
+    return {
+        "success": True,
+        "settings": settings
+    }
+
+
+@app.post("/admin/config")
+def admin_save_config(
+    config: PlatformConfig,
+    owner_uid: str = Depends(require_platform_owner)
+):
+    validate_platform_config(config)
+
+    data = config.model_dump()
+
+    try:
+        platform_config_ref().set({
+            **data,
+            "updated_by": owner_uid,
+            "updated_at": firestore.SERVER_TIMESTAMP
+        })
+    except Exception:
+        raise HTTPException(
+            503,
+            "Configuration could not be saved."
+        )
+
+    return {
+        "success": True,
+        "message": "Configuration saved successfully.",
+        "settings": data
+    }
+
+
+@app.get("/public/config")
+def public_platform_config():
+    try:
+        settings = load_platform_config()
+    except Exception:
+        raise HTTPException(
+            503,
+            "Public configuration unavailable."
+        )
+
+    # Only expose safe public settings.
+    public_fields = [
+        "website_name",
+        "support_email",
+        "support_link",
+        "currency",
+        "timezone",
+        "support_bot_username",
+        "turnstile_site_key",
+        "turnstile_enabled",
+        "upi_id",
+        "upi_payee_name",
+        "upi_qr_url",
+        "deposit_enabled",
+        "min_deposit",
+        "max_deposit",
+        "withdrawal_enabled",
+        "min_withdrawal",
+        "max_withdrawal",
+        "withdrawal_tax_percent",
+        "withdrawal_fixed_tax",
+        "daily_withdrawal_limit",
+        "withdrawal_upi_enabled",
+        "withdrawal_mobile_enabled",
+        "withdrawal_verification_required",
+        "registration_enabled",
+        "maintenance_mode"
+    ]
+
+    return {
+        "success": True,
+        **{
+            key: settings[key]
+            for key in public_fields
+        }
+    }
+    
