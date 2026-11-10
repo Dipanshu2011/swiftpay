@@ -558,3 +558,67 @@ def public_platform_config():
         }
     }
     
+
+class TelegramStatusRequest(BaseModel):
+    telegram_user_id: str
+
+
+@app.post("/telegram/status")
+def telegram_status(
+    data: TelegramStatusRequest,
+    x_telegram_link_secret: str = Header(default="")
+):
+    supplied = os.getenv("TELEGRAM_LINK_SECRET", "")
+
+    if not supplied or not hmac.compare_digest(
+        supplied, x_telegram_link_secret
+    ):
+        raise HTTPException(401, "Unauthorized Telegram bot callback.")
+
+    uid = str(data.telegram_user_id).strip()
+
+    if not uid.isdigit():
+        raise HTTPException(400, "Invalid Telegram user ID.")
+
+    db = get_firebase()
+
+    link = db.collection("telegram_users").document(uid).get()
+
+    if not link.exists:
+        return {
+            "status": "success",
+            "registered": False,
+            "linked": False
+        }
+
+    link_data = link.to_dict() or {}
+    mobile = str(link_data.get("mobile", "")).strip()
+
+    if not mobile:
+        raise HTTPException(404, "Linked account not found.")
+
+    user_snap = db.collection("users").document("m_" + mobile).get()
+
+    if not user_snap.exists:
+        raise HTTPException(404, "Linked account record not found.")
+
+    user = user_snap.to_dict() or {}
+
+    if str(user.get("telegram_user_id", "")) != uid:
+        raise HTTPException(403, "Telegram account mismatch.")
+
+    return {
+        "status": "success",
+        "registered": True,
+        "linked": True,
+        "operator": user.get("name", ""),
+        "user_id": user.get("user_id", ""),
+        "telegram_id": uid,
+        "mobile_masked": mobile[:2] + "******" + mobile[-2:],
+        "wallet_balance": round(int(user.get("balance_paise", 0)) / 100, 2),
+        "keeper_balance": round(
+            int(user.get("keeper_balance_paise", 0)) / 100, 2
+        ),
+        "account_status": user.get("status", "active")
+    }
+    
