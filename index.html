@@ -31,9 +31,7 @@ label{display:block;margin:18px 0 9px;color:#9eafbd;font-size:13px;font-weight:6
 .action{width:100%;min-height:65px;border:0;border-radius:21px;background:linear-gradient(100deg,#00d99a,#00f0aa);color:#031811;font-weight:850;font-size:16px;letter-spacing:.2px;cursor:pointer;box-shadow:0 10px 25px #00d99a20;margin-top:23px}
 .action.blue{background:linear-gradient(100deg,#168fce,#28b7f1);color:white;box-shadow:0 10px 25px #168fce20}
 .action:disabled{opacity:.5;cursor:not-allowed}
-.telegram{width:100%;min-height:65px;border:0;border-radius:21px;background:linear-gradient(100deg,#168fce,#28b7f1);color:white;font-weight:800;font-size:15px;cursor:pointer;margin-top:22px}
 .helper{margin-top:22px;padding:18px 16px;border:1px solid #17617a;border-radius:20px;background:#0b3440a8;text-align:center;color:#b4c6d1;font-size:13px;line-height:1.8}
-.helper b{color:#2ab9f4}
 .captcha-box{min-height:85px;margin-top:23px;padding:10px;border:1px solid #155b4d;border-radius:20px;display:flex;justify-content:center;align-items:center;background:#062a25aa;overflow:hidden}
 .cf-slot{min-height:65px;display:flex;align-items:center;justify-content:center}
 .forgot{text-align:right;margin-top:15px}
@@ -52,17 +50,6 @@ label{display:block;margin:18px 0 9px;color:#9eafbd;font-size:13px;font-weight:6
 <body>
 
 <main class="shell">
-
-<section id="entryGate">
-<header class="brand">
-<div class="mark"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5 10 25h11l-2 18 19-24H26l-2-14Z" stroke-linejoin="round"/></svg></div>
-<h1>SwiftPays <span></span></h1>
-<p>SECURE ACCESS VERIFICATION</p>
-</header>
-<p class="page-title">Please verify that you are human to continue.</p>
-<div class="captcha-box"><div class="cf-slot" id="captcha-entry"></div></div>
-<p id="entryStatus" class="status" role="status" aria-live="polite">Complete the security check to continue.</p>
-</section>
 
 <header class="brand">
 <div class="mark"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5 10 25h11l-2 18 19-24H26l-2-14Z" stroke-linejoin="round"/></svg></div>
@@ -96,8 +83,7 @@ label{display:block;margin:18px 0 9px;color:#9eafbd;font-size:13px;font-weight:6
 <div class="field"><span class="field-icon">▣</span><input id="regPassword" type="password" minlength="8" placeholder="Create Secure Password" required><button class="eye" type="button" onclick="togglePassword('regPassword',this)">◉</button></div>
 <label for="regConfirm">Confirm Password</label>
 <div class="field"><span class="field-icon">▣</span><input id="regConfirm" type="password" minlength="8" placeholder="Confirm Password" required></div>
-<button class="telegram" type="button" onclick="connectTelegram()">1. CONNECT TELEGRAM　➤</button>
-<div class="helper">ⓘ Button not working? Open your official SwiftPays Telegram bot and follow its linking instructions.</div>
+<div class="helper">Telegram connection is optional. You can connect your Telegram account later from your SwiftPays dashboard.</div>
 <div class="captcha-box"><div class="cf-slot" id="captcha-register"></div></div>
 <button class="action" type="submit">2. CREATE ACCOUNT　▣</button>
 </form>
@@ -131,30 +117,16 @@ label{display:block;margin:18px 0 9px;color:#9eafbd;font-size:13px;font-weight:6
 
 <p id="status" class="status" role="status" aria-live="polite"></p>
 <footer class="footer">Privacy　•　Terms　•　Support<br>© 2026 SwiftPays. Secure connection.</footer>
-  </main>
+</main>
 
-
-  
 <script>
+  
 const API_BASE="https://swiftpay-api-6azu.onrender.com";
+
 let TURNSTILE_SITE_KEY="";
 let BOT_USERNAME="";
 let publicConfigReady=false;
 let widgets={};
-let entryVerified=false;
-
-function finishEntryGate(){
- if(entryVerified)return;
- entryVerified=true;
- const savedToken=localStorage.getItem("swiftpays_token")||sessionStorage.getItem("swiftpays_token");
- document.getElementById("entryGate").classList.add("hidden");
- if(savedToken){
-   location.replace("/dashboard");
- }else{
-   showPage("register",false);
-   history.replaceState({page:"register"},"","/register");
- }
-}
 
 function say(t,type=""){
  const el=document.getElementById("status");
@@ -170,34 +142,54 @@ function togglePassword(id,btn){
 
 function showPage(page,updateUrl=true){
  if(!["login","register","forgot","otp"].includes(page))page="login";
+
  ["login","register","forgot","otp"].forEach(p=>{
    document.getElementById(p+"Page").classList.toggle("hidden",p!==page);
  });
+
  document.getElementById("brandSubtitle").textContent=
  page==="login"?"MERCHANT ACCESS PORTAL":
  page==="register"?"SECURE GATEWAY REGISTRATION":
  page==="forgot"?"ACCOUNT RECOVERY":"PASSWORD VERIFICATION";
 
  if(updateUrl){
-   const paths={login:"/login",register:"/register",forgot:"/forgot-password",otp:"/forgot-password"};
+   const paths={
+     login:"/login",
+     register:"/register",
+     forgot:"/forgot-password",
+     otp:"/forgot-password"
+   };
+
    const target=paths[page]||"/login";
-   if(location.pathname!==target)history.pushState({page},"",target);
+
+   if(location.pathname!==target){
+     history.pushState({page},"",target);
+   }
  }
+
  say("");
  setTimeout(()=>renderCaptcha(page),180);
 }
 
 function pageFromUrl(){
  const path=location.pathname;
- const page=path==="/register"?"register":path==="/forgot-password"?"forgot":path==="/login"?"login":"register";
+
+ const page=
+   path==="/register"?"register":
+   path==="/forgot-password"?"forgot":
+   path==="/login"?"login":"register";
+
  showPage(page,false);
 }
 
 window.addEventListener("popstate",pageFromUrl);
 
 function renderCaptcha(page){
- if(!publicConfigReady||!window.turnstile||!["login","register","forgot"].includes(page))return;
+ if(!publicConfigReady||!window.turnstile||
+    !["login","register","forgot"].includes(page))return;
+
  const box=document.getElementById("captcha-"+page);
+
  if(!box||box.dataset.ready==="1")return;
 
  if(!TURNSTILE_SITE_KEY){
@@ -210,29 +202,42 @@ function renderCaptcha(page){
    widgets[page]=turnstile.render(box,{
      sitekey:TURNSTILE_SITE_KEY,
      theme:"dark",
+
      callback:()=>{
-       if(page==="login")document.getElementById("loginVerified").style.display="block";
+       if(page==="login"){
+         document.getElementById("loginVerified").style.display="block";
+       }
      },
+
      "expired-callback":()=>{
-       if(page==="login")document.getElementById("loginVerified").style.display="none";
+       if(page==="login"){
+         document.getElementById("loginVerified").style.display="none";
+       }
      }
    });
+
    box.dataset.ready="1";
+
  }catch(e){
    say("Cloudflare verification could not load. Refresh the page.","error");
  }
 }
 
 function token(page){
- return widgets[page]!==undefined&&window.turnstile?turnstile.getResponse(widgets[page]):"";
+ return widgets[page]!==undefined&&window.turnstile
+   ?turnstile.getResponse(widgets[page])
+   :"";
 }
 
 function reset(page){
- if(widgets[page]!==undefined&&window.turnstile)turnstile.reset(widgets[page]);
+ if(widgets[page]!==undefined&&window.turnstile){
+   turnstile.reset(widgets[page]);
+ }
 }
 
 async function post(path,data){
  let res;
+
  try{
    res=await fetch(API_BASE+path,{
      method:"POST",
@@ -243,56 +248,46 @@ async function post(path,data){
    throw new Error("Cannot connect to SwiftPays server. Please try again.");
  }
 
- const out=await res.json().catch(()=>({detail:"Invalid server response"}));
- if(!res.ok)throw new Error(out.detail||"Request failed");
+ const out=await res.json().catch(()=>({
+   detail:"Invalid server response"
+ }));
+
+ if(!res.ok){
+   throw new Error(out.detail||"Request failed");
+ }
+
  return out;
 }
 
 async function checkCaptcha(page){
  const t=token(page);
- if(!t)throw new Error("Please complete Cloudflare verification first.");
+
+ if(!t){
+   throw new Error("Please complete Cloudflare verification first.");
+ }
+
  await post("/verify-turnstile",{token:t});
-}
-
-async function connectTelegram(){
- const name=document.getElementById("regName").value.trim();
- const mobile=document.getElementById("regMobile").value.trim();
- const password=document.getElementById("regPassword").value;
- const confirm=document.getElementById("regConfirm").value;
-
- if(!name||!/^[0-9]{10}$/.test(mobile)){
-   say("Enter your full name and valid 10-digit mobile number first.","error");
-   return;
- }
- if(password.length<8||password!==confirm){
-   say("Passwords must match and contain at least 8 characters.","error");
-   return;
- }
-
- try{
-   const r=await post("/telegram/link/start",{name,mobile,password});
-   if(!r.url)throw new Error("Telegram link could not be generated.");
-   sessionStorage.setItem("swiftpays_pending_mobile",mobile);
-   location.href=r.url;
- }catch(e){
-   say(e.message,"error");
- }
-}
-
+  }
+  
 document.getElementById("loginForm").addEventListener("submit",async e=>{
  e.preventDefault();
+
  try{
    await checkCaptcha("login");
+
    const r=await post("/auth/login",{
      mobile:document.getElementById("loginMobile").value.trim(),
      password:document.getElementById("loginPassword").value
    });
+
    if(r.token){
      localStorage.setItem("swiftpays_token",r.token);
      sessionStorage.setItem("swiftpays_token",r.token);
    }
+
    say(r.message||"Login successful.","success");
    location.replace("/dashboard");
+
  }catch(err){
    say(err.message,"error");
    reset("login");
@@ -301,6 +296,7 @@ document.getElementById("loginForm").addEventListener("submit",async e=>{
 
 document.getElementById("registerForm").addEventListener("submit",async e=>{
  e.preventDefault();
+
  const name=document.getElementById("regName").value.trim();
  const mobile=document.getElementById("regMobile").value.trim();
  const password=document.getElementById("regPassword").value;
@@ -311,10 +307,26 @@ document.getElementById("registerForm").addEventListener("submit",async e=>{
    return;
  }
 
+ if(password.length<8){
+   say("Password must contain at least 8 characters.","error");
+   return;
+ }
+
  try{
    await checkCaptcha("register");
-   const r=await post("/auth/register",{name,mobile,password});
-   say((r.message||"Registration successful.")+(r.user_id?" SwiftPays ID: "+r.user_id:""),"success");
+
+   const r=await post("/auth/register",{
+     name,
+     mobile,
+     password
+   });
+
+   say(
+     (r.message||"Registration successful.")+
+     (r.user_id?" SwiftPays ID: "+r.user_id:""),
+     "success"
+   );
+
  }catch(err){
    say(err.message,"error");
    reset("register");
@@ -323,13 +335,17 @@ document.getElementById("registerForm").addEventListener("submit",async e=>{
 
 document.getElementById("forgotForm").addEventListener("submit",async e=>{
  e.preventDefault();
+
  try{
    await checkCaptcha("forgot");
+
    const r=await post("/auth/forgot-password",{
      mobile:document.getElementById("forgotMobile").value.trim()
    });
+
    say(r.message||"If eligible, an OTP will be sent to Telegram.","success");
    showPage("otp");
+
  }catch(err){
    say(err.message,"error");
    reset("forgot");
@@ -349,95 +365,85 @@ document.getElementById("otpForm").addEventListener("submit",async e=>{
    return;
  }
 
+ if(password.length<8){
+   say("Password must contain at least 8 characters.","error");
+   return;
+ }
+
  try{
-   const r=await post("/auth/reset-password",{mobile,otp,password});
+   const r=await post("/auth/reset-password",{
+     mobile,
+     otp,
+     password
+   });
+
    showPage("login");
    say(r.message||"Password reset successful.","success");
+
  }catch(err){
    say(err.message,"error");
  }
 });
 
-function renderEntryCaptcha(){
- if(!publicConfigReady||!window.turnstile)return;
- const box=document.getElementById("captcha-entry");
- if(!box||box.dataset.ready==="1")return;
-
- if(!TURNSTILE_SITE_KEY){
-   document.getElementById("entryStatus").textContent="Cloudflare verification is not configured. Please contact support.";
-   return;
- }
-
- try{
-   widgets.entry=turnstile.render(box,{
-     sitekey:TURNSTILE_SITE_KEY,
-     theme:"dark",
-     callback:async(tokenValue)=>{
-       document.getElementById("entryStatus").textContent="Verification successful. Continuing…";
-       try{
-         await post("/verify-turnstile",{token:tokenValue});
-         finishEntryGate();
-       }catch(err){
-         document.getElementById("entryStatus").textContent=err.message;
-         turnstile.reset(widgets.entry);
-       }
-     },
-     "expired-callback":()=>{
-       document.getElementById("entryStatus").textContent="Verification expired. Please verify again.";
-     }
-   });
-   box.dataset.ready="1";
- }catch(e){
-   document.getElementById("entryStatus").textContent="Cloudflare verification could not load. Refresh the page.";
- }
-}
-
 async function loadPublicConfig(){
- const status=document.getElementById("entryStatus");
+ const status=document.getElementById("status");
 
  try{
-   const response=await fetch(API_BASE+"/public/config",{method:"GET",cache:"no-store"});
-   if(!response.ok)throw new Error("Configuration service unavailable ("+response.status+").");
+   const response=await fetch(API_BASE+"/public/config",{
+     method:"GET",
+     cache:"no-store"
+   });
+
+   if(!response.ok){
+     throw new Error("Configuration service unavailable ("+response.status+").");
+   }
 
    const config=await response.json();
 
-   TURNSTILE_SITE_KEY=String(config.turnstile_site_key||config.site_key||"").trim();
-   BOT_USERNAME=String(config.support_bot_username||config.bot_username||"").replace(/^@/,"").trim();
+   TURNSTILE_SITE_KEY=String(
+     config.turnstile_site_key||config.site_key||""
+   ).trim();
+
+   BOT_USERNAME=String(
+     config.support_bot_username||config.bot_username||""
+   ).replace(/^@/,"").trim();
 
    if(config.brand_name){
      document.querySelectorAll(".brand h1").forEach(el=>{
-       el.innerHTML="";
-       const name=document.createElement("span");
-       name.textContent=config.brand_name;
-       el.append(name);
+       el.textContent=config.brand_name;
      });
+   }
+
+   if(!TURNSTILE_SITE_KEY){
+     throw new Error("Cloudflare Site Key is not configured.");
    }
 
    publicConfigReady=true;
 
-   if(!TURNSTILE_SITE_KEY)throw new Error("Cloudflare Site Key is not configured in Admin → Configuration.");
-
-   const tryRender=()=>{
+   const waitForTurnstile=()=>{
      if(window.turnstile){
-       renderEntryCaptcha();
        const current=["login","register","forgot"].find(p=>
          !document.getElementById(p+"Page").classList.contains("hidden")
        );
+
        if(current)renderCaptcha(current);
      }else{
-       setTimeout(tryRender,250);
+       setTimeout(waitForTurnstile,250);
      }
    };
 
-   tryRender();
+   waitForTurnstile();
 
  }catch(error){
-   status.textContent=error.message||"Could not load security configuration. Please refresh.";
+   status.textContent=error.message||"Could not load security configuration.";
    status.className="status error";
  }
 }
 
-window.addEventListener("load",loadPublicConfig);
+window.addEventListener("load",()=>{
+ pageFromUrl();
+ loadPublicConfig();
+});
 </script>
 
 <!-- FIREBASE LIVE LOGO SYNC -->
@@ -445,110 +451,110 @@ window.addEventListener("load",loadPublicConfig);
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 
 import {
-  getFirestore,
-  doc,
-  onSnapshot
+ getFirestore,
+ doc,
+ onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 const swiftpayFirebaseConfig = {
-  apiKey: "AIzaSyA_KW4G3pdXu2VKTqa2-Sk9xE4hzDIWU9I",
-  authDomain: "swiftpay-d0bd2.firebaseapp.com",
-  projectId: "swiftpay-d0bd2",
-  storageBucket: "swiftpay-d0bd2.firebasestorage.app",
-  messagingSenderId: "83327557267",
-  appId: "1:83327557267:web:a5605f47bc72ae4190f766"
+ apiKey: "AIzaSyA_KW4G3pdXu2VKTqa2-Sk9xE4hzDIWU9I",
+ authDomain: "swiftpay-d0bd2.firebaseapp.com",
+ projectId: "swiftpay-d0bd2",
+ storageBucket: "swiftpay-d0bd2.firebasestorage.app",
+ messagingSenderId: "83327557267",
+ appId: "1:83327557267:web:a5605f47bc72ae4190f766"
 };
 
 const swiftpayApp = getApps().length
-  ? getApps()[0]
-  : initializeApp(swiftpayFirebaseConfig);
+ ? getApps()[0]
+ : initializeApp(swiftpayFirebaseConfig);
 
 const swiftpayDb = getFirestore(swiftpayApp);
 
 const brandingDocument = doc(
-  swiftpayDb,
-  "siteSettings",
-  "branding"
+ swiftpayDb,
+ "siteSettings",
+ "branding"
 );
 
 function restoreDefaultSwiftPaysLogo(){
-  document.querySelectorAll(".mark").forEach(mark=>{
-    if(mark.dataset.defaultLogo){
-      mark.innerHTML=mark.dataset.defaultLogo;
-    }
-  });
+ document.querySelectorAll(".mark").forEach(mark=>{
+   if(mark.dataset.defaultLogo){
+     mark.innerHTML=mark.dataset.defaultLogo;
+   }
+ });
 }
 
 function updateSwiftPaysLogo(url,updatedAt){
-  document.querySelectorAll(".mark").forEach(mark=>{
-    if(!mark.dataset.defaultLogo){
-      mark.dataset.defaultLogo=mark.innerHTML;
-    }
+ document.querySelectorAll(".mark").forEach(mark=>{
+   if(!mark.dataset.defaultLogo){
+     mark.dataset.defaultLogo=mark.innerHTML;
+   }
 
-    if(!url){
-      mark.innerHTML=mark.dataset.defaultLogo;
-      return;
-    }
+   if(!url){
+     mark.innerHTML=mark.dataset.defaultLogo;
+     return;
+   }
 
-    let imageUrl;
+   let imageUrl;
 
-    try{
-      imageUrl=new URL(url);
+   try{
+     imageUrl=new URL(url);
 
-      if(imageUrl.protocol!=="https:"){
-        throw new Error("Invalid logo URL");
-      }
+     if(imageUrl.protocol!=="https:"){
+       throw new Error("Invalid logo URL");
+     }
 
-      if(updatedAt){
-        imageUrl.searchParams.set(
-          "swiftpay_logo_v",
-          String(updatedAt)
-        );
-      }
-    }catch(error){
-      mark.innerHTML=mark.dataset.defaultLogo;
-      return;
-    }
+     if(updatedAt){
+       imageUrl.searchParams.set(
+         "swiftpay_logo_v",
+         String(updatedAt)
+       );
+     }
 
-    const image=document.createElement("img");
-    image.alt="SwiftPays Logo";
-    image.src=imageUrl.href;
+   }catch(error){
+     mark.innerHTML=mark.dataset.defaultLogo;
+     return;
+   }
 
-    image.onerror=()=>{
-      mark.innerHTML=mark.dataset.defaultLogo;
-    };
+   const image=document.createElement("img");
+   image.alt="SwiftPays Logo";
+   image.src=imageUrl.href;
 
-    mark.innerHTML="";
-    mark.appendChild(image);
-  });
+   image.onerror=()=>{
+     mark.innerHTML=mark.dataset.defaultLogo;
+   };
+
+   mark.innerHTML="";
+   mark.appendChild(image);
+ });
 }
 
 onSnapshot(
-  brandingDocument,
-  snapshot=>{
-    if(!snapshot.exists()){
-      restoreDefaultSwiftPaysLogo();
-      return;
-    }
+ brandingDocument,
+ snapshot=>{
+   if(!snapshot.exists()){
+     restoreDefaultSwiftPaysLogo();
+     return;
+   }
 
-    const data=snapshot.data();
+   const data=snapshot.data();
 
-    if(!data.logoUrl){
-      restoreDefaultSwiftPaysLogo();
-      return;
-    }
+   if(!data.logoUrl){
+     restoreDefaultSwiftPaysLogo();
+     return;
+   }
 
-    updateSwiftPaysLogo(
-      data.logoUrl,
-      data.updatedAt||""
-    );
-  },
-  error=>{
-    console.error("SwiftPays Logo Sync Error:",error);
-  }
+   updateSwiftPaysLogo(
+     data.logoUrl,
+     data.updatedAt||""
+   );
+ },
+ error=>{
+   console.error("SwiftPays Logo Sync Error:",error);
+ }
 );
 </script>
 
 </body>
-  </html>
-  
+</html>
