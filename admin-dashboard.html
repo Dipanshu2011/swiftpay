@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#06131a">
 <title>SwiftPays | Owner Dashboard</title>
 
 <style>
-:root {
-  color-scheme: dark;
+:root{
+  color-scheme:dark;
   --bg:#06131a;
   --panel:#0b2028;
   --line:#173943;
@@ -18,33 +18,21 @@
   --green:#00e5a8;
   --red:#ff7885;
 }
-
-* {
-  box-sizing:border-box;
-}
-
-body {
+*{box-sizing:border-box}
+body{
   margin:0;
   background:radial-gradient(ellipse at 70% -20%,#0d3834,transparent 38%),var(--bg);
   color:var(--text);
   font:14px/1.5 system-ui,sans-serif;
 }
-
-button,input,select {
-  font:inherit;
-}
-
-button {
-  cursor:pointer;
-}
-
-.shell {
+button,input,select{font:inherit}
+button{cursor:pointer}
+.shell{
   min-height:100vh;
   display:grid;
   grid-template-columns:248px minmax(0,1fr);
 }
-
-aside {
+aside{
   background:#081a21;
   border-right:1px solid var(--line);
   padding:20px 14px;
@@ -55,15 +43,13 @@ aside {
   top:0;
   height:100vh;
 }
-
-.brand {
+.brand{
   display:flex;
   align-items:center;
   gap:11px;
   padding:3px 9px 25px;
 }
-
-.mark {
+.mark{
   width:42px;
   height:42px;
   display:grid;
@@ -76,39 +62,27 @@ aside {
   font-weight:900;
   overflow:hidden;
 }
-
-.mark img {
+.mark img{
   width:100%;
   height:100%;
   object-fit:contain;
 }
-
-.brand-name {
-  font-weight:850;
-  font-size:19px;
-}
-
-.brand-sub {
+.brand-name{font-weight:850;font-size:19px}
+.brand-sub{
   font-size:9px;
   color:#6f9998;
   letter-spacing:2px;
   font-weight:800;
 }
-
-.nav-caption {
+.nav-caption{
   padding:7px 11px;
   color:#55747b;
   font-size:9px;
   letter-spacing:2px;
   font-weight:850;
 }
-
-.nav {
-  display:grid;
-  gap:5px;
-}
-
-.nav button {
+.nav{display:grid;gap:5px}
+.nav button{
   border:1px solid transparent;
   background:transparent;
   color:#a5bec0;
@@ -121,43 +95,24 @@ aside {
   font-weight:650;
   font-size:13px;
 }
-
-.nav button:hover {
-  background:#0d292e;
-  color:white;
-}
-
-.nav button.active {
+.nav button:hover{background:#0d292e;color:white}
+.nav button.active{
   background:#0d3b35;
   border-color:#176456;
   color:var(--green);
   box-shadow:inset 3px 0 var(--green);
 }
-
-.ico {
-  width:19px;
-  text-align:center;
-  font-size:16px;
-}
-
-.nav .logout {
-  margin-top:12px;
-  color:#ff929b;
-}
-
-.aside-foot {
+.ico{width:19px;text-align:center;font-size:16px}
+.nav .logout{margin-top:12px;color:#ff929b}
+.aside-foot{
   margin-top:auto;
   padding:14px 10px;
   color:#648087;
   font-size:10px;
   border-top:1px solid #16333a;
 }
-
-main {
-  min-width:0;
-}
-
-.topbar {
+main{min-width:0}
+.topbar{
   height:68px;
   border-bottom:1px solid var(--line);
   display:flex;
@@ -169,23 +124,10 @@ main {
   top:0;
   z-index:5;
 }
-
-.crumb {
-  color:#779398;
-  font-size:12px;
-}
-
-.crumb b {
-  color:#d9e9e6;
-}
-
-.top-right {
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.status,.verified {
+.crumb{color:#779398;font-size:12px}
+.crumb b{color:#d9e9e6}
+.top-right{display:flex;align-items:center;gap:12px}
+.status,.verified{
   border:1px solid #1b5549;
   background:#0a2a25;
   color:#82eacb;
@@ -194,8 +136,7 @@ main {
   font-size:10px;
   font-weight:800;
 }
-
-.dot {
+.dot{
   display:inline-block;
   width:7px;
   height:7px;
@@ -203,63 +144,28 @@ main {
   background:var(--green);
   margin-right:6px;
 }
-
-.owner {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-size:12px;
+.owner{display:flex;align-items:center;gap:8px;font-size:12px}
+.avatar{
+  width:31px;height:31px;border-radius:50%;
+  display:grid;place-items:center;
+  background:#123b35;color:var(--green);
 }
-
-.avatar {
-  width:31px;
-  height:31px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:#123b35;
-  color:var(--green);
+.content{max-width:1500px;margin:auto;padding:30px}
+.page{display:none}
+.page.active{display:block;animation:fade .2s}
+@keyframes fade{
+  from{opacity:.4;transform:translateY(5px)}
+  to{opacity:1;transform:none}
 }
-
-.content {
-  max-width:1500px;
-  margin:auto;
-  padding:30px;
-}
-
-.page {
-  display:none;
-}
-
-.page.active {
-  display:block;
-  animation:fade .2s;
-}
-
-@keyframes fade {
-  from {opacity:.4;transform:translateY(5px)}
-  to {opacity:1;transform:none}
-}
-
-.welcome {
+.welcome{
   display:flex;
   justify-content:space-between;
   gap:15px;
   margin-bottom:23px;
 }
-
-.welcome h1 {
-  font-size:clamp(23px,3vw,30px);
-  margin:0 0 5px;
-}
-
-.welcome p {
-  margin:0;
-  color:var(--muted);
-  font-size:13px;
-}
-
-.notice {
+.welcome h1{font-size:clamp(23px,3vw,30px);margin:0 0 5px}
+.welcome p{margin:0;color:var(--muted);font-size:13px}
+.notice{
   padding:13px 15px;
   border:1px solid #574a2e;
   background:#211f17;
@@ -268,95 +174,60 @@ main {
   font-size:12px;
   margin-bottom:18px;
 }
-
-.stats {
+.stats{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:13px;
 }
-
-.stat {
+.stat{
   padding:18px;
   border:1px solid var(--line);
   border-radius:16px;
   background:linear-gradient(145deg,#102a32,#0a1c24);
   min-height:130px;
 }
-
-.stat-head {
+.stat-head{
   display:flex;
   justify-content:space-between;
   color:#9bb3b5;
   font-size:11px;
 }
-
-.stat-icon {
-  width:31px;
-  height:31px;
+.stat-icon{
+  width:31px;height:31px;
   border-radius:10px;
-  display:grid;
-  place-items:center;
-  background:#103c34;
-  color:var(--green);
+  display:grid;place-items:center;
+  background:#103c34;color:var(--green);
 }
-
-.stat strong {
-  display:block;
-  font-size:29px;
-  margin:13px 0 2px;
+.stat strong{display:block;font-size:29px;margin:13px 0 2px}
+.stat small{color:#66848a;font-size:10px}
+.stat-foot{
+  display:block;margin-top:7px;
+  color:#56c9a7;font-size:8px;
+  font-weight:850;letter-spacing:1px;
 }
-
-.stat small {
-  color:#66848a;
-  font-size:10px;
-}
-
-.stat-foot {
-  display:block;
-  margin-top:7px;
-  color:#56c9a7;
-  font-size:8px;
-  font-weight:850;
-  letter-spacing:1px;
-}
-
-.section {
+.section{
   margin-top:19px;
   padding:18px;
   border:1px solid var(--line);
   border-radius:17px;
   background:linear-gradient(145deg,#0b2028,#091a21);
 }
-
-.section-head {
+.section-head{
   display:flex;
   justify-content:space-between;
   gap:10px;
   margin-bottom:14px;
 }
-
-.section-head h2 {
-  font-size:14px;
-  margin:0;
-}
-
-.section-head small {
-  font-size:10px;
-  color:#789398;
-}
-
-.analytics-grid {
+.section-head h2{font-size:14px;margin:0}
+.section-head small{font-size:10px;color:#789398}
+.analytics-grid{
   display:grid;
   grid-template-columns:1.7fr 1fr;
   gap:14px;
   margin-top:18px;
 }
-
-.analytics-grid .section {
-  margin-top:0;
-}
-
-.chart-grid {
+.analytics-grid .section{margin-top:0}
+.chart-grid{
   height:205px;
   position:relative;
   display:flex;
@@ -365,15 +236,13 @@ main {
   color:#58777e;
   font-size:9px;
 }
-
-.chart-grid svg {
+.chart-grid svg{
   position:absolute;
   inset:0 0 0 35px;
   width:calc(100% - 35px);
   height:100%;
 }
-
-.chart-message {
+.chart-message{
   position:absolute;
   inset:0 0 0 35px;
   display:flex;
@@ -382,85 +251,45 @@ main {
   justify-content:center;
   text-align:center;
 }
-
-.chart-message span {
-  font-size:32px;
-  color:var(--green);
-}
-
-.chart-message b {
-  font-size:12px;
-}
-
-.chart-message small {
-  font-size:10px;
-  color:#78979b;
-  margin-top:4px;
-}
-
-.chart-days {
+.chart-message span{font-size:32px;color:var(--green)}
+.chart-message b{font-size:12px}
+.chart-message small{font-size:10px;color:#78979b;margin-top:4px}
+.chart-days{
   display:flex;
   justify-content:space-between;
   margin:9px 0 0 35px;
   color:#64858a;
   font-size:8px;
 }
-
-.chart-legend {
+.chart-legend{
   display:flex;
   gap:17px;
   margin-top:15px;
   color:#8da8ad;
   font-size:10px;
 }
-
-.legend-dot {
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  display:inline-block;
+.legend-dot{
+  width:7px;height:7px;
+  border-radius:50%;display:inline-block;
 }
-
-.deposits-dot {background:#00e5a8}
-.withdrawals-dot {background:#6da8ff}
-
-.activity-row {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:13px 0;
+.deposits-dot{background:#00e5a8}
+.withdrawals-dot{background:#6da8ff}
+.activity-row{
+  display:flex;align-items:center;
+  gap:10px;padding:13px 0;
   border-bottom:1px solid #17343c;
 }
-
-.activity-row:last-child {
-  border:0;
-}
-
-.activity-row div {
-  flex:1;
-}
-
-.activity-row b {
-  display:block;
-  font-size:11px;
-}
-
-.activity-row small {
-  color:#718f94;
-  font-size:9px;
-}
-
-.activity-row>strong {
-  font-size:19px;
-}
-
-.quick {
+.activity-row:last-child{border:0}
+.activity-row div{flex:1}
+.activity-row b{display:block;font-size:11px}
+.activity-row small{color:#718f94;font-size:9px}
+.activity-row>strong{font-size:19px}
+.quick{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:10px;
 }
-
-.quick button {
+.quick button{
   min-height:84px;
   text-align:left;
   border:1px solid #1a3b43;
@@ -469,19 +298,9 @@ main {
   color:#d9e9e6;
   padding:13px;
 }
-
-.quick b {
-  display:block;
-  color:var(--green);
-  font-size:20px;
-}
-
-.quick span {
-  font-size:11px;
-  font-weight:750;
-}
-
-.empty {
+.quick b{display:block;color:var(--green);font-size:20px}
+.quick span{font-size:11px;font-weight:750}
+.empty{
   border:1px dashed #28505a;
   border-radius:14px;
   padding:24px;
@@ -489,1854 +308,1191 @@ main {
   color:#8aa4a8;
   font-size:12px;
 }
-
-.empty strong {
-  display:block;
-  color:#dcebe8;
-  font-size:14px;
-  margin-bottom:5px;
+.empty strong{
+  display:block;color:#dcebe8;
+  font-size:14px;margin-bottom:5px;
 }
-
-.module-grid {
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:13px;
-}
-
-.module-card {
+.module-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.module-card{
   padding:17px;
   border:1px solid var(--line);
   border-radius:14px;
   background:#0b2028;
 }
-
-.module-card h3 {
-  font-size:13px;
-  margin:0 0 5px;
+.module-card h3{font-size:13px;margin:0 0 5px}
+.module-card p{
+  font-size:11px;color:var(--muted);
+  margin:0;line-height:1.6;
 }
-
-.module-card p {
-  font-size:11px;
-  color:var(--muted);
-  margin:0;
-  line-height:1.6;
-}
-
-.pill {
-  display:inline-block;
-  margin-top:12px;
+.pill{
+  display:inline-block;margin-top:12px;
   padding:5px 8px;
   border:1px solid #55492c;
   border-radius:20px;
-  color:#e5c98c;
-  background:#242117;
-  font-size:9px;
-  font-weight:800;
+  color:#e5c98c;background:#242117;
+  font-size:9px;font-weight:800;
 }
-
-.brand-preview {
-  display:flex;
-  align-items:center;
-  gap:18px;
-  padding:18px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:#091b22;
+.brand-preview{
+  display:flex;align-items:center;gap:18px;
+  padding:18px;border:1px solid var(--line);
+  border-radius:14px;background:#091b22;
   margin-bottom:14px;
 }
-
-.brand-preview img {
-  width:130px;
-  height:130px;
-  object-fit:contain;
-  border-radius:16px;
-  background:#061219;
-  padding:7px;
+.brand-preview img{
+  width:130px;height:130px;
+  object-fit:contain;border-radius:16px;
+  background:#061219;padding:7px;
   border:1px solid #24434a;
 }
-
-.upload-label,.action-btn {
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
+.upload-label,.action-btn{
+  display:inline-flex;align-items:center;gap:8px;
   padding:11px 14px;
   border:1px solid #1c6655;
-  background:#0d332d;
-  color:#9af1d5;
-  border-radius:10px;
-  font-weight:750;
-  font-size:11px;
+  background:#0d332d;color:#9af1d5;
+  border-radius:10px;font-weight:750;font-size:11px;
 }
-
-.action-btn:disabled {
-  opacity:.5;
-  cursor:not-allowed;
+.action-btn:disabled{opacity:.5;cursor:not-allowed}
+.action-btn.danger{
+  border-color:#71323a;background:#35191e;color:#ff9da3;
 }
-
-.action-btn.danger {
-  border-color:#71323a;
-  background:#35191e;
-  color:#ff9da3;
-}
-
-.action-btn.save-config {
+.action-btn.save-config{
   background:linear-gradient(120deg,#00a77f,#08765f);
   color:white;
 }
-
-.hint {
-  color:#789398;
-  font-size:10px;
-  line-height:1.6;
-  margin-top:10px;
+.hint{color:#789398;font-size:10px;line-height:1.6;margin-top:10px}
+.config-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.config-field{
+  display:flex;flex-direction:column;gap:8px;
+  color:#d8e9e5;font-size:11px;font-weight:750;
 }
-
-.config-grid {
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;
+.config-field input,.config-field select{
+  width:100%;border:1px solid #24464e;
+  background:#071820;color:#e9f7f2;
+  border-radius:10px;padding:13px;
 }
-
-.config-field {
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  color:#d8e9e5;
-  font-size:11px;
-  font-weight:750;
-}
-
-.config-field input,
-.config-field select {
-  width:100%;
-  border:1px solid #24464e;
-  background:#071820;
-  color:#e9f7f2;
-  border-radius:10px;
-  padding:13px;
-}
-
-.config-check {
-  display:flex;
-  gap:10px;
-  margin-top:17px;
-  padding:13px;
-  border:1px solid #20443f;
-  background:#0a2424;
-  border-radius:11px;
+.config-check{
+  display:flex;gap:10px;margin-top:17px;
+  padding:13px;border:1px solid #20443f;
+  background:#0a2424;border-radius:11px;
   font-size:11px;
 }
-
-.config-check input {
-  accent-color:var(--green);
+.config-check input{accent-color:var(--green)}
+.config-actions{
+  display:flex;align-items:center;
+  gap:13px;flex-wrap:wrap;
 }
-
-.config-actions {
-  display:flex;
-  align-items:center;
-  gap:13px;
-  flex-wrap:wrap;
+@media(max-width:1050px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .analytics-grid{grid-template-columns:1fr}
 }
-
-@media(max-width:1050px) {
-  .stats {grid-template-columns:repeat(2,1fr)}
-  .analytics-grid {grid-template-columns:1fr}
-}
-
-@media(max-width:700px) {
-  .shell {display:block}
-  aside {
-    position:relative;
-    height:auto;
-    min-height:0;
-    padding:11px 12px;
+@media(max-width:700px){
+  .shell{display:block}
+  aside{
+    position:relative;height:auto;
+    min-height:0;padding:11px 12px;
   }
-  .brand {padding:1px 5px 10px}
-  .nav-caption,.aside-foot {display:none}
-  .nav {
-    display:flex;
-    gap:6px;
-    overflow-x:auto;
+  .brand{padding:1px 5px 10px}
+  .nav-caption,.aside-foot{display:none}
+  .nav{display:flex;gap:6px;overflow-x:auto}
+  .nav button{
+    flex:0 0 auto;white-space:nowrap;
+    padding:9px 11px;font-size:11px;
   }
-  .nav button {
-    flex:0 0 auto;
-    white-space:nowrap;
-    padding:9px 11px;
-    font-size:11px;
-  }
-  .nav button.active {
-    box-shadow:inset 0 -2px var(--green);
-  }
-  .topbar {
-    height:53px;
-    padding:0 15px;
+  .nav button.active{box-shadow:inset 0 -2px var(--green)}
+  .topbar{
+    height:53px;padding:0 15px;
     position:relative;
   }
-  .content {padding:21px 13px 35px}
-  .welcome h1 {font-size:23px}
-  .stats {
-    grid-template-columns:repeat(2,1fr);
-    gap:9px;
-  }
-  .stat {
-    min-height:115px;
-    padding:13px;
-  }
-  .stat strong {font-size:23px}
-  .analytics-grid,.module-grid {grid-template-columns:1fr}
-  .quick {grid-template-columns:repeat(2,1fr)}
-  .config-grid {grid-template-columns:1fr}
-  .brand-preview {
-    align-items:flex-start;
-    flex-direction:column;
-  }
+  .content{padding:21px 13px 35px}
+  .welcome h1{font-size:23px}
+  .stats{grid-template-columns:repeat(2,1fr);gap:9px}
+  .stat{min-height:115px;padding:13px}
+  .stat strong{font-size:23px}
+  .analytics-grid,.module-grid{grid-template-columns:1fr}
+  .quick{grid-template-columns:repeat(2,1fr)}
+  .config-grid{grid-template-columns:1fr}
+  .brand-preview{align-items:flex-start;flex-direction:column}
 }
 </style>
 </head>
-
 <body>
+ 
+<div class="app" id="adminApp">
 
-<div id="authChecking"
-style="position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#06131a;color:#00e5a8;font:700 15px system-ui">
-Verifying Owner Access…
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-logo">S</div>
+      <div>
+        <h2>SwiftPays</h2>
+        <small>ADMIN PANEL</small>
+      </div>
+    </div>
+
+    <nav class="nav-menu">
+      <p class="nav-label">MAIN MENU</p>
+
+      <button class="nav-item active" data-page="dashboard">
+        <span>▦</span> Dashboard
+      </button>
+
+      <button class="nav-item" data-page="users">
+        <span>♙</span> Users
+      </button>
+
+      <button class="nav-item" data-page="deposits">
+        <span>＋</span> Deposits
+      </button>
+
+      <button class="nav-item" data-page="withdrawals">
+        <span>↗</span> Withdrawals
+      </button>
+
+      <button class="nav-item" data-page="transactions">
+        <span>⇄</span> Transactions
+      </button>
+
+      <p class="nav-label">MANAGEMENT</p>
+
+      <button class="nav-item" data-page="branding">
+        <span>◈</span> Branding & Logo
+      </button>
+
+      <button class="nav-item" data-page="security">
+        <span>♧</span> Security
+      </button>
+
+      <button class="nav-item" data-page="configuration">
+        <span>⚙</span> Configuration
+      </button>
+
+      <button class="nav-item" data-page="settings">
+        <span>☷</span> Settings
+      </button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="admin-profile">
+        <div class="avatar">A</div>
+        <div>
+          <strong>Administrator</strong>
+          <small id="adminRole">Admin</small>
+        </div>
+      </div>
+
+      <button class="nav-item logout-btn" id="logoutBtn">
+        <span>⇥</span> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <div>
+          <h2 id="pageTitle">Dashboard</h2>
+          <p id="pageSubtitle">Welcome to SwiftPays Admin Panel</p>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <span class="online-status">
+          <i></i> System Online
+        </span>
+        <div class="top-avatar">A</div>
+      </div>
+    </header>
+
+    <!-- DASHBOARD PAGE -->
+    <section class="page active" id="page-dashboard">
+
+      <div class="welcome-section">
+        <div>
+          <h2>Welcome Back, Admin!</h2>
+          <p>Here is what's happening with your platform.</p>
+        </div>
+        <button class="refresh-btn" id="refreshDashboard">
+          ↻ Refresh Data
+        </button>
+      </div>
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <div class="stat-icon blue">♙</div>
+          <div>
+            <p>Total Users</p>
+            <h2 id="totalUsers">0</h2>
+            <small>Registered users</small>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon green">₹</div>
+          <div>
+            <p>Total Deposits</p>
+            <h2 id="totalDeposits">₹0</h2>
+            <small>Deposit amount</small>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon orange">↗</div>
+          <div>
+            <p>Total Withdrawals</p>
+            <h2 id="totalWithdrawals">₹0</h2>
+            <small>Withdrawal amount</small>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon purple">⇄</div>
+          <div>
+            <p>Total Transactions</p>
+            <h2 id="totalTransactions">0</h2>
+            <small>All transactions</small>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="content-card">
+        <div class="card-header">
+          <div>
+            <h3>Recent Users</h3>
+            <p>Latest registered accounts</p>
+          </div>
+          <button class="text-btn" data-goto="users">
+            View All →
+          </button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>SwiftPays ID</th>
+                <th>Mobile</th>
+                <th>Balance</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="recentUsersBody">
+              <tr>
+                <td colspan="5" class="empty-state">
+                  Loading users...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- USERS PAGE -->
+    <section class="page" id="page-users">
+
+      <div class="page-heading">
+        <div>
+          <h2>User Management</h2>
+          <p>View and manage registered SwiftPays users.</p>
+        </div>
+      </div>
+
+      <div class="user-summary-grid">
+        <div class="mini-stat">
+          <span>Total Users</span>
+          <strong id="usersCount">0</strong>
+        </div>
+
+        <div class="mini-stat">
+          <span>Active Users</span>
+          <strong id="activeUsers">0</strong>
+        </div>
+
+        <div class="mini-stat">
+          <span>Blocked Users</span>
+          <strong id="blockedUsers">0</strong>
+        </div>
+      </div>
+
+      <div class="content-card">
+
+        <div class="users-toolbar">
+          <div>
+            <h3>All Users</h3>
+            <p>Search and manage user accounts</p>
+          </div>
+
+          <button class="refresh-btn" id="refreshUsers">
+            ↻ Refresh
+          </button>
+        </div>
+
+        <div class="search-row">
+          <input
+            type="search"
+            id="userSearch"
+            placeholder="Search by name, mobile or SwiftPays ID..."
+          >
+
+          <select id="userStatusFilter">
+            <option value="all">All Users</option>
+            <option value="active">Active</option>
+            <option value="blocked">Blocked</option>
+          </select>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>User Details</th>
+                <th>SwiftPays ID</th>
+                <th>Mobile Number</th>
+                <th>Balance</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody id="usersTableBody">
+              <tr>
+                <td colspan="6" class="empty-state">
+                  Loading users...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pagination">
+          <button id="prevUsers" disabled>← Previous</button>
+          <span id="usersPageInfo">Page 1</span>
+          <button id="nextUsers">Next →</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- DEPOSITS PAGE -->
+    <section class="page" id="page-deposits">
+      <div class="page-heading">
+        <h2>Deposits</h2>
+        <p>Manage user deposit requests.</p>
+      </div>
+
+      <div class="content-card">
+        <div class="card-header">
+          <h3>Deposit Requests</h3>
+          <button class="refresh-btn" id="refreshDeposits">↻ Refresh</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>User</th>
+                <th>Amount</th>
+                <th>Method</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="depositsTableBody">
+              <tr><td colspan="6" class="empty-state">No data loaded.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- WITHDRAWALS PAGE -->
+    <section class="page" id="page-withdrawals">
+      <div class="page-heading">
+        <h2>Withdrawals</h2>
+        <p>Review and manage withdrawal requests.</p>
+      </div>
+
+      <div class="content-card">
+        <div class="card-header">
+          <h3>Withdrawal Requests</h3>
+          <button class="refresh-btn" id="refreshWithdrawals">↻ Refresh</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Request ID</th>
+                <th>User</th>
+                <th>Amount</th>
+                <th>Method</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="withdrawalsTableBody">
+              <tr><td colspan="7" class="empty-state">No data loaded.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRANSACTIONS PAGE -->
+    <section class="page" id="page-transactions">
+      <div class="page-heading">
+        <h2>Transactions</h2>
+        <p>View platform transaction records.</p>
+      </div>
+
+      <div class="content-card">
+        <div class="card-header">
+          <h3>Transaction History</h3>
+          <button class="refresh-btn" id="refreshTransactions">↻ Refresh</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>User</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="transactionsTableBody">
+              <tr><td colspan="6" class="empty-state">No data loaded.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- BRANDING PAGE -->
+    <section class="page" id="page-branding">
+      <div class="page-heading">
+        <h2>Branding & Logo</h2>
+        <p>Manage your website branding.</p>
+      </div>
+
+      <div class="content-card">
+        <h3>Website Branding</h3>
+
+        <label>Website Name</label>
+        <input type="text" id="brandName" placeholder="SwiftPays">
+
+        <label>Logo URL</label>
+        <input type="url" id="brandLogo" placeholder="https://example.com/logo.png">
+
+        <button class="primary-btn" id="saveBranding">
+          Save Branding
+        </button>
+      </div>
+    </section>
+
+    <!-- SECURITY PAGE -->
+    <section class="page" id="page-security">
+      <div class="page-heading">
+        <h2>Security</h2>
+        <p>Review administrative security settings.</p>
+      </div>
+
+      <div class="content-card">
+        <h3>Admin Security</h3>
+        <p>Admin access must be verified by the backend.</p>
+        <div class="security-info" id="securityInfo">
+          Security information will load here.
+        </div>
+      </div>
+    </section>
+
+    <!-- CONFIGURATION PAGE -->
+    <section class="page" id="page-configuration">
+      <div class="page-heading">
+        <h2>Configuration</h2>
+        <p>Manage platform configuration.</p>
+      </div>
+
+      <div class="content-card">
+        <h3>Platform Configuration</h3>
+
+        <label>Minimum Deposit (₹)</label>
+        <input type="number" id="minimumDeposit" min="0">
+
+        <label>Minimum Withdrawal (₹)</label>
+        <input type="number" id="minimumWithdrawal" min="0">
+
+        <label>Support Username</label>
+        <input type="text" id="supportUsername" placeholder="@support">
+
+        <button class="primary-btn" id="saveConfiguration">
+          Save Configuration
+        </button>
+      </div>
+    </section>
+
+    <!-- SETTINGS PAGE -->
+    <section class="page" id="page-settings">
+      <div class="page-heading">
+        <h2>Settings</h2>
+        <p>Admin dashboard preferences.</p>
+      </div>
+
+      <div class="content-card">
+        <h3>Dashboard Settings</h3>
+        <p>Additional settings will be connected in Part 3.</p>
+      </div>
+    </section>
+
+  </main>
 </div>
 
-<div class="shell" id="dashboardApp" style="visibility:hidden">
-
-<aside>
-
-  <div class="brand">
-    <div class="mark" id="sidebarMark">ϟ</div>
-    <div>
-      <div class="brand-name">SwiftPays</div>
-      <div class="brand-sub">OWNER CONTROL</div>
+<!-- USER ACTION MODAL -->
+<div class="modal-overlay" id="userModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>User Details</h3>
+      <button class="modal-close" id="closeUserModal">×</button>
     </div>
+
+    <div id="userModalContent"></div>
   </div>
-
-  <div class="nav-caption">WORKSPACE</div>
-
-  <nav class="nav">
-    <button data-page="home" class="active"><span class="ico">⌂</span>Dashboard</button>
-    <button data-page="users"><span class="ico">♙</span>Users</button>
-    <button data-page="deposits"><span class="ico">＋</span>Deposits</button>
-    <button data-page="withdrawals"><span class="ico">↗</span>Withdrawals</button>
-    <button data-page="transactions"><span class="ico">▤</span>Transactions</button>
-    <button data-page="branding"><span class="ico">▧</span>Branding & Logo</button>
-    <button data-page="security"><span class="ico">♢</span>Security</button>
-    <button data-page="config"><span class="ico">⌘</span>Configuration</button>
-    <button data-page="settings"><span class="ico">⚙</span>Settings</button>
-    <button class="logout" id="logout"><span class="ico">⇥</span>Logout</button>
-  </nav>
-
-  <div class="aside-foot">
-    SwiftPays Admin Portal<br>
-    Restricted owner access
-  </div>
-
-</aside>
-
-<main>
-
-<header class="topbar">
-  <div class="crumb">SwiftPays / <b id="crumb">Dashboard</b></div>
-  <div class="top-right">
-    <div class="status"><i class="dot"></i>OWNER VERIFIED</div>
-    <div class="owner">
-      <div class="avatar">O</div>
-      Owner
-    </div>
-  </div>
-</header>
-
-<div class="content">
-
-<!-- DASHBOARD HOME -->
-
-<section class="page active" id="page-home">
-
-  <div class="welcome">
-    <div>
-      <h1>Dashboard Overview</h1>
-      <p>Welcome back, Owner. Your platform control center.</p>
-    </div>
-    <div class="verified">✦ PREMIUM CONTROL</div>
-  </div>
-
-  <div class="notice">
-    ⓘ <b>Live data connection pending.</b>
-    Real figures will appear after protected transaction APIs are connected.
-  </div>
-
-  <div class="stats">
-
-    <article class="stat">
-      <div class="stat-head">Total Users <span class="stat-icon">♙</span></div>
-      <strong>—</strong>
-      <small>All registered accounts</small>
-      <em class="stat-foot">LIVE DATA PENDING</em>
-    </article>
-
-    <article class="stat">
-      <div class="stat-head">Active Users <span class="stat-icon">●</span></div>
-      <strong>—</strong>
-      <small>Active accounts</small>
-      <em class="stat-foot">LIVE DATA PENDING</em>
-    </article>
-
-    <article class="stat">
-      <div class="stat-head">Today's Joined <span class="stat-icon">✚</span></div>
-      <strong>—</strong>
-      <small>New registrations today</small>
-      <em class="stat-foot">LIVE DATA PENDING</em>
-    </article>
-
-    <article class="stat">
-      <div class="stat-head">Pending Deposits <span class="stat-icon">＋</span></div>
-      <strong>—</strong>
-      <small>Awaiting review</small>
-      <em class="stat-foot">LIVE DATA PENDING</em>
-    </article>
-
-    <article class="stat">
-      <div class="stat-head">Pending Withdrawals <span class="stat-icon">↗</span></div>
-      <strong>—</strong>
-      <small>Awaiting payout</small>
-      <em class="stat-foot">LIVE DATA PENDING</em>
-    </article>
-
-    <article class="stat">
-      <div class="stat-head">Total Transactions <span class="stat-icon">▤</span></div>
-      <strong>—</strong>
-      <small>Recorded transactions</small>
-      <em class="stat-foot">LIVE DATA PENDING</em>
-    </article>
-
-  </div>
-
-  <div class="analytics-grid">
-
-    <div class="section">
-      <div class="section-head">
-        <div>
-          <h2>✧ Transaction Analytics</h2>
-          <small>Deposits & withdrawals</small>
-        </div>
-        <span class="pill">LAST 7 DAYS</span>
-      </div>
-
-      <div class="chart-grid">
-        <span>₹ —</span>
-        <span>₹ —</span>
-        <span>₹ —</span>
-        <span>₹ —</span>
-
-        <svg viewBox="0 0 700 190" preserveAspectRatio="none">
-          <path d="M0 150H700M0 105H700M0 60H700M0 15H700"
-          fill="none" stroke="#193943" stroke-dasharray="4 7"/>
-        </svg>
-
-        <div class="chart-message">
-          <span>⌁</span>
-          <b>Analytics awaiting live data</b>
-          <small>Connect transaction API to display real graph.</small>
-        </div>
-      </div>
-
-      <div class="chart-days">
-        <span>MON</span><span>TUE</span><span>WED</span>
-        <span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
-      </div>
-
-      <div class="chart-legend">
-        <span><i class="legend-dot deposits-dot"></i>Deposits</span>
-        <span><i class="legend-dot withdrawals-dot"></i>Withdrawals</span>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-head">
-        <h2>✧ Today's Activity</h2>
-        <small>LIVE OVERVIEW</small>
-      </div>
-
-      <div class="activity-row">
-        <span>♙</span>
-        <div><b>New users</b><small>Registrations today</small></div>
-        <strong>—</strong>
-      </div>
-
-      <div class="activity-row">
-        <span>＋</span>
-        <div><b>Deposit requests</b><small>Awaiting review</small></div>
-        <strong>—</strong>
-      </div>
-
-      <div class="activity-row">
-        <span>↗</span>
-        <div><b>Withdrawal requests</b><small>Awaiting review</small></div>
-        <strong>—</strong>
-      </div>
-
-      <div class="activity-row">
-        <span>▤</span>
-        <div><b>Transactions</b><small>Processed today</small></div>
-        <strong>—</strong>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="section">
-    <div class="section-head">
-      <h2>✦ Quick Actions</h2>
-      <small>OWNER SHORTCUTS</small>
-    </div>
-
-    <div class="quick">
-      <button data-open="users"><b>♙</b><span>Manage Users</span></button>
-      <button data-open="deposits"><b>＋</b><span>Review Deposits</span></button>
-      <button data-open="withdrawals"><b>↗</b><span>Review Withdrawals</span></button>
-      <button data-open="branding"><b>▧</b><span>Website Branding</span></button>
-    </div>
-  </div>
-
-</section>
-
-<!-- PART 2 STARTS HERE -->
-
-<!-- USERS -->
-<section class="page" id="page-users">
-
-  <div class="welcome">
-    <div>
-      <h1>♙ User Management</h1>
-      <p>Manage registered SwiftPays users.</p>
-    </div>
-  </div>
-
-  <div class="notice">
-    User records will appear after protected Users API integration.
-  </div>
-
-  <div class="section">
-    <div class="section-head">
-      <h2>All Users</h2>
-      <small>USER DIRECTORY</small>
-    </div>
-    <div class="empty">
-      <strong>No user data connected</strong>
-      Users API integration is pending.
-    </div>
-  </div>
-
-</section>
-
-<!-- DEPOSITS -->
-<section class="page" id="page-deposits">
-
-  <div class="welcome">
-    <div>
-      <h1>＋ Deposit Management</h1>
-      <p>Review incoming UPI payment requests.</p>
-    </div>
-  </div>
-
-  <div class="notice">
-    Deposits require manual transaction verification and Owner/Admin approval.
-  </div>
-
-  <div class="section">
-    <div class="section-head">
-      <h2>Pending Deposits</h2>
-      <small>PAYMENT REVIEW</small>
-    </div>
-
-    <div class="empty">
-      <strong>No deposit records connected</strong>
-      Deposit API integration is pending.
-    </div>
-  </div>
-
-</section>
-
-<!-- WITHDRAWALS -->
-<section class="page" id="page-withdrawals">
-
-  <div class="welcome">
-    <div>
-      <h1>↗ Withdrawal Management</h1>
-      <p>Review and process payout requests.</p>
-    </div>
-  </div>
-
-  <div class="notice">
-    Verify every payout before approving it.
-  </div>
-
-  <div class="section">
-    <div class="section-head">
-      <h2>Pending Withdrawals</h2>
-      <small>PAYOUT CONTROL</small>
-    </div>
-
-    <div class="empty">
-      <strong>No withdrawal records connected</strong>
-      Withdrawal API integration is pending.
-    </div>
-  </div>
-
-</section>
-
-<!-- TRANSACTIONS -->
-<section class="page" id="page-transactions">
-
-  <div class="welcome">
-    <div>
-      <h1>▤ Transactions</h1>
-      <p>Monitor deposits, withdrawals and payment activity.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-head">
-      <h2>Transaction History</h2>
-      <small>PAYMENT LEDGER</small>
-    </div>
-
-    <div class="empty">
-      <strong>No transaction data connected</strong>
-      Transactions API integration is pending.
-    </div>
-  </div>
-
-</section>
-
-<!-- BRANDING & LOGO -->
-<section class="page" id="page-branding">
-
-  <div class="welcome">
-    <div>
-      <h1>▧ Branding & Logo Studio</h1>
-      <p>Manage the visual identity of SwiftPays.</p>
-    </div>
-  </div>
-
-  <div class="notice">
-    Upload your logo to GitHub first, then paste its public HTTPS image URL.
-  </div>
-
-  <div class="section">
-
-    <div class="section-head">
-      <h2>Website Logo</h2>
-      <small>BRAND IDENTITY</small>
-    </div>
-
-    <div class="brand-preview">
-      <img id="logoPreview"
-           alt="SwiftPays Logo"
-           src="https://swiftpays.pages.dev/logo.png">
-
-      <div>
-        <b id="logoName">SwiftPays Logo</b>
-        <p class="hint">
-          Recommended: transparent PNG or WebP, square format.
-        </p>
-      </div>
-    </div>
-
-    <label class="config-field">
-      Logo Image URL
-      <input
-        id="logoUrlInput"
-        type="url"
-        placeholder="https://swiftpays.pages.dev/logo.png"
-        value="https://swiftpays.pages.dev/logo.png">
-    </label>
-
-    <div class="config-actions" style="margin-top:15px">
-      <button class="action-btn" id="previewLogo" type="button">
-        ◉ Preview Logo
-      </button>
-
-      <button class="action-btn" id="saveLogo" type="button">
-        ✓ Save & Publish Logo
-      </button>
-
-      <button class="action-btn danger" id="removeLogo" type="button">
-        ✕ Remove Logo
-      </button>
-    </div>
-
-    <p class="hint" id="logoStatus">
-      Paste a public image URL and preview it before saving.
-    </p>
-
-  </div>
-
-</section>
-
-<!-- SECURITY -->
-<section class="page" id="page-security">
-
-  <div class="welcome">
-    <div>
-      <h1>♢ Security Center</h1>
-      <p>Owner access and platform protection.</p>
-    </div>
-  </div>
-
-  <div class="module-grid">
-
-    <div class="module-card">
-      <h3>✦ Owner Authentication</h3>
-      <p>
-        Admin access is checked through Firebase Authentication
-        and backend Owner verification.
-      </p>
-      <span class="pill">SERVER VERIFICATION</span>
-    </div>
-
-    <div class="module-card">
-      <h3>☁ Cloudflare Turnstile</h3>
-      <p>
-        Public Site Key is configurable. Secret Key remains
-        protected in Render Environment Variables.
-      </p>
-      <span class="pill">BACKEND PROTECTION</span>
-    </div>
-
-    <div class="module-card">
-      <h3>⌑ Protected Admin APIs</h3>
-      <p>
-        Sensitive operations must independently verify the
-        Firebase ID token and Owner UID.
-      </p>
-      <span class="pill">OWNER ONLY</span>
-    </div>
-
-    <div class="module-card">
-      <h3>✧ Session Protection</h3>
-      <p>
-        Admin pages require an authenticated Owner session.
-      </p>
-      <span class="pill">FIREBASE AUTH</span>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- CONFIGURATION -->
-<section class="page" id="page-config">
-
-  <div class="welcome">
-    <div>
-      <h1>⌘ Platform Configuration</h1>
-      <p>Manage all SwiftPays platform settings.</p>
-    </div>
-  </div>
-
-  <div class="notice">
-    Settings are saved through the Owner-only backend API.
-    Telegram Bot Token and Cloudflare Secret Key must remain
-    in Render Environment Variables.
-  </div>
-
-  <!-- GENERAL SETTINGS -->
-  <div class="section">
-
-    <div class="section-head">
-      <h2>✦ General Settings</h2>
-      <small>PLATFORM</small>
-    </div>
-
-    <div class="config-grid">
-
-      <label class="config-field">
-        Website Name
-        <input id="website_name" type="text" maxlength="80">
-      </label>
-
-      <label class="config-field">
-        Support Email
-        <input id="support_email" type="email" maxlength="150">
-      </label>
-
-      <label class="config-field">
-        Support Link
-        <input id="support_link" type="url" placeholder="https://">
-      </label>
-
-      <label class="config-field">
-        Currency
-        <input id="currency" value="INR" readonly>
-      </label>
-
-      <label class="config-field">
-        Timezone
-        <input id="timezone" value="Asia/Kolkata">
-      </label>
-
-      <label class="config-field">
-        Support Bot Username
-        <input id="support_bot_username" placeholder="@YourSupportBot">
-      </label>
-
-    </div>
-
-  </div>
-
-  <!-- TELEGRAM SETTINGS -->
-  <div class="section">
-
-    <div class="section-head">
-      <h2>✦ Telegram Bot Configuration</h2>
-      <small>BOT INTEGRATION</small>
-    </div>
-
-    <label class="config-field">
-      Support Bot Username
-      <input id="telegram_support_username"
-             placeholder="@YourSupportBot">
-    </label>
-
-    <p class="hint">
-      Bot Token is managed securely in Render Environment Variables.
-      Do not paste your Bot Token here.
-    </p>
-
-  </div>
-
-  <!-- CLOUDFLARE -->
-  <div class="section">
-
-    <div class="section-head">
-      <h2>☁ Cloudflare Protection</h2>
-      <small>TURNSTILE</small>
-    </div>
-
-    <label class="config-field">
-      Public Site Key
-      <input id="turnstile_site_key" type="text">
-    </label>
-
-    <label class="config-check">
-      <input id="turnstile_enabled" type="checkbox">
-      Enable Turnstile on public website
-    </label>
-
-    <p class="hint">
-      Secret Key remains in Render Environment Variables.
-      Admin Login is excluded from Turnstile.
-    </p>
-
-  </div>
-
-  <!-- UPI SETTINGS -->
-  <div class="section">
-
-    <div class="section-head">
-      <h2>💳 UPI Payment Settings</h2>
-      <small>MANUAL PAYMENT</small>
-    </div>
-
-    <div class="config-grid">
-
-      <label class="config-field">
-        UPI ID
-        <input id="upi_id" placeholder="example@upi">
-      </label>
-
-      <label class="config-field">
-        Payee Name
-        <input id="upi_payee_name">
-      </label>
-
-      <label class="config-field">
-        UPI QR Image URL
-        <input id="upi_qr_url" type="url" placeholder="https://">
-      </label>
-
-    </div>
-
-    <p class="hint">
-      Users submit payment screenshot and transaction ID.
-      Owner/Admin manually verifies the payment.
-    </p>
-
-  </div>
-
-  <!-- DEPOSIT SETTINGS -->
-  <div class="section">
-
-    <div class="section-head">
-      <h2>＋ Deposit Settings</h2>
-      <small>DEPOSIT LIMITS</small>
-    </div>
-
-    <label class="config-check">
-      <input id="deposit_enabled" type="checkbox">
-      Enable Deposits
-    </label>
-
-    <div class="config-grid">
-
-      <label class="config-field">
-        Minimum Deposit (₹)
-        <input id="min_deposit" type="number" min="1">
-      </label>
-
-      <label class="config-field">
-        Maximum Deposit (₹)
-        <input id="max_deposit" type="number" min="1">
-      </label>
-
-    </div>
-
-  </div>
-
-  <!-- WITHDRAWAL SETTINGS -->
-  <div class="section">
-
-    <div class="section-head">
-      <h2>↗ Withdrawal Settings</h2>
-      <small>WITHDRAWAL LIMITS</small>
-    </div>
-
-    <label class="config-check">
-      <input id="withdrawal_enabled" type="checkbox">
-      Enable Withdrawals
-    </label>
-
-    <div class="config-grid">
-
-      <label class="config-field">
-        Minimum Withdrawal (₹)
-        <input id="min_withdrawal" type="number" min="1">
-      </label>
-
-      <label class="config-field">
-        Maximum Withdrawal (₹)
-        <input id="max_withdrawal" type="number" min="1">
-      </label>
-
-      <label class="config-field">
-        Withdrawal Tax (%)
-        <input id="withdrawal_tax_percent"
-               type="number" min="0" max="100" step="0.01">
-      </label>
-
-      <label class="config-field">
-        Fixed Tax (₹)
-        <input id="withdrawal_fixed_tax"
-               type="number" min="0" step="0.01">
-      </label>
-
-      <label class="config-field">
-        Daily Withdrawal Limit (₹)
-        <input id="daily_withdrawal_limit"
-               type="number" min="1">
-      </label>
-
-    </div>
-
-    <label class="config-check">
-      <input id="withdrawal_upi_enabled" type="checkbox">
-      Allow UPI Withdrawals
-    </label>
-
-    <label class="config-check">
-      <input id="withdrawal_mobile_enabled" type="checkbox">
-      Allow Mobile Withdrawals
-    </label>
-
-    <label class="config-check">
-      <input id="withdrawal_verification_required" type="checkbox">
-      Require User Verification
-    </label>
-
-  </div>
-
-  <!-- WEBSITE CONTROLS -->
-  <div class="section">
-
-    <div class="section-head">
-      <h2>⚙ Website Controls</h2>
-      <small>ACCESS CONTROL</small>
-    </div>
-
-    <label class="config-check">
-      <input id="registration_enabled" type="checkbox">
-      Allow New Registrations
-    </label>
-
-    <label class="config-check">
-      <input id="maintenance_mode" type="checkbox">
-      Enable Maintenance Mode
-    </label>
-
-  </div>
-
-  <!-- SAVE SETTINGS -->
-  <div class="section">
-
-    <div class="section-head">
-      <h2>✦ Save Platform Settings</h2>
-      <small>OWNER ONLY</small>
-    </div>
-
-    <div class="config-actions">
-
-      <button class="action-btn" id="loadConfig" type="button">
-        ↻ Reload Settings
-      </button>
-
-      <button class="action-btn save-config" id="saveConfig" type="button">
-        ✓ Save All Settings
-      </button>
-
-    </div>
-
-    <p class="hint" id="configStatus">
-      Waiting for backend connection...
-    </p>
-
-  </div>
-
-</section>
-
-<!-- SETTINGS -->
-<section class="page" id="page-settings">
-
-  <div class="welcome">
-    <div>
-      <h1>⚙ General Settings</h1>
-      <p>Platform preferences and account controls.</p>
-    </div>
-  </div>
-
-  <div class="module-grid">
-
-    <div class="module-card">
-      <h3>Platform Branding</h3>
-      <p>Manage your website logo from Branding & Logo.</p>
-      <span class="pill">AVAILABLE</span>
-    </div>
-
-    <div class="module-card">
-      <h3>Owner Account</h3>
-      <p>Owner authentication is managed by Firebase Authentication.</p>
-      <span class="pill">FIREBASE AUTH</span>
-    </div>
-
-    <div class="module-card">
-      <h3>Payment Mode</h3>
-      <p>UPI Manual Payment with manual verification.</p>
-      <span class="pill">MANUAL APPROVAL</span>
-    </div>
-
-    <div class="module-card">
-      <h3>Platform Currency</h3>
-      <p>Indian Rupee (INR).</p>
-      <span class="pill">INR</span>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- PART 3 STARTS HERE -->
-  
+</div>
+
+<!-- NOTIFICATION -->
+<div class="toast" id="toast"></div>
+                  
 <script type="module">
-
-// ==========================================
-// SWIFTPAYS FIREBASE IMPORTS
-// ==========================================
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getAuth,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signOut
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-
-
-// ==========================================
-// FIREBASE CONFIGURATION
-// ==========================================
+/* =====================================
+   SWIFTPAYS FIREBASE CONFIGURATION
+===================================== */
 
 const firebaseConfig = {
   apiKey: "AIzaSyA_KW4G3pdXu2VKTqa2-Sk9xE4hzDIWU9I",
   authDomain: "swiftpay-d0bd2.firebaseapp.com",
-  databaseURL: "https://swiftpay-d0bd2-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "swiftpay-d0bd2",
   storageBucket: "swiftpay-d0bd2.firebasestorage.app",
   messagingSenderId: "83327557267",
-  appId: "1:83327557267:web:a5605f47bc72ae4190f766",
-  measurementId: "G-2Y21LJQTRZ"
+  appId: "1:83327557267:web:a5605f47bc72ae4190f766"
 };
-
-const API_BASE = "https://swiftpay-api-6azu.onrender.com";
-
-const OWNER_UID = "Vvkmab68NFfLno80Yu7ZLyAd3kF3";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
 
-const brandingRef = doc(db, "siteSettings", "branding");
+const API_BASE = "https://swiftpay-api-6azu.onrender.com";
 
-let ownerAuthorized = false;
-let currentLogoUrl = null;
+let currentUsers = [];
+let usersPage = 0;
+const USERS_LIMIT = 20;
+let hasMoreUsers = false;
+let adminVerified = false;
 
+/* =====================================
+   COMMON HELPERS
+===================================== */
 
-// ==========================================
-// PAGE NAMES
-// ==========================================
+const $ = id => document.getElementById(id);
 
-const pageNames = {
-  home: "Dashboard",
-  users: "Users",
-  deposits: "Deposits",
-  withdrawals: "Withdrawals",
-  transactions: "Transactions",
-  branding: "Branding & Logo",
-  security: "Security",
-  config: "Configuration",
-  settings: "Settings"
-};
-
-
-// ==========================================
-// PAGE NAVIGATION
-// ==========================================
-
-function pageFromPath() {
-  const page = location.hash.replace("#", "").trim();
-  return pageNames[page] ? page : "home";
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
 }
 
-function showPage(page, updateUrl = true) {
-
-  if (!ownerAuthorized) return;
-
-  if (!pageNames[page]) page = "home";
-
-  document.querySelectorAll(".page").forEach(section => {
-    section.classList.toggle(
-      "active",
-      section.id === "page-" + page
-    );
-  });
-
-  document.querySelectorAll(".nav button[data-page]").forEach(button => {
-    button.classList.toggle(
-      "active",
-      button.dataset.page === page
-    );
-  });
-
-  document.getElementById("crumb").textContent = pageNames[page];
-
-  if (updateUrl && location.hash !== "#" + page) {
-    history.pushState({ page }, "", "#" + page);
-  }
+function money(value) {
+  return "₹" + (Number(value || 0) / 100).toFixed(2);
 }
 
-document.querySelectorAll(".nav button[data-page]").forEach(button => {
-  button.addEventListener("click", () => {
-    showPage(button.dataset.page);
-  });
-});
+function showToast(message) {
+  const toast = $("toast");
+  if (!toast) return;
 
-document.querySelectorAll("[data-open]").forEach(button => {
-  button.addEventListener("click", () => {
-    showPage(button.dataset.open);
-  });
-});
+  toast.textContent = message;
+  toast.classList.add("show");
 
-window.addEventListener("popstate", () => {
-  if (ownerAuthorized) {
-    showPage(pageFromPath(), false);
-  }
-});
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
+}
 
+async function api(path, options = {}) {
+  const user = auth.currentUser;
 
-// ==========================================
-// BACKEND OWNER AUTHENTICATION
-// ==========================================
-
-async function verifyOwner(user) {
-
-  if (user.uid !== OWNER_UID) {
-    throw new Error("This Firebase account is not the configured Owner.");
+  if (!user) {
+    throw new Error("Admin login required.");
   }
 
-  const idToken = await user.getIdToken(true);
+  const idToken = await user.getIdToken();
+
+  const response = await fetch(API_BASE + path, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + idToken,
+      ...(options.headers || {})
+    }
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.detail || data.message || "API request failed.");
+  }
+
+  return data;
+}
+
+/* =====================================
+   ADMIN AUTHENTICATION
+===================================== */
+
+async function verifyAdmin(user) {
+  const idToken = await user.getIdToken();
 
   const response = await fetch(API_BASE + "/admin/login", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + idToken
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       firebase_id_token: idToken
     })
   });
 
-  const result = await response.json().catch(() => ({}));
+  const data = await response.json().catch(() => ({}));
 
-  if (
-    !response.ok ||
-    result.authorized !== true ||
-    result.role !== "owner"
-  ) {
-    throw new Error(
-      result.detail || "Backend Owner authorization failed."
-    );
+  if (!response.ok || data.authorized !== true) {
+    throw new Error(data.detail || "Admin access denied.");
   }
 
-  return true;
-}
+  adminVerified = true;
 
-
-// ==========================================
-// GET CURRENT OWNER TOKEN
-// ==========================================
-
-async function getOwnerToken() {
-
-  const user = auth.currentUser;
-
-  if (!ownerAuthorized || !user || user.uid !== OWNER_UID) {
-    throw new Error("Owner authentication required.");
+  if ($("adminRole")) {
+    $("adminRole").textContent = data.role || "Admin";
   }
-
-  return await user.getIdToken();
 }
 
+async function adminLogin() {
+  const email = prompt("Enter admin email:");
+  if (!email) return;
 
-// ==========================================
-// CONFIGURATION STATUS
-// ==========================================
-
-function setConfigStatus(message, error = false) {
-
-  const status = document.getElementById("configStatus");
-
-  status.textContent = message;
-
-  status.style.color = error
-    ? "#ff929b"
-    : "#00e5a8";
-}
-
-
-// ==========================================
-// CONFIGURATION FIELD DEFINITIONS
-// ==========================================
-
-const configFields = {
-
-  text: [
-    "website_name",
-    "support_email",
-    "support_link",
-    "currency",
-    "timezone",
-    "support_bot_username",
-    "turnstile_site_key",
-    "upi_id",
-    "upi_payee_name",
-    "upi_qr_url"
-  ],
-
-  number: [
-    "min_deposit",
-    "max_deposit",
-    "min_withdrawal",
-    "max_withdrawal",
-    "withdrawal_tax_percent",
-    "withdrawal_fixed_tax",
-    "daily_withdrawal_limit"
-  ],
-
-  checkbox: [
-    "turnstile_enabled",
-    "deposit_enabled",
-    "withdrawal_enabled",
-    "withdrawal_upi_enabled",
-    "withdrawal_mobile_enabled",
-    "withdrawal_verification_required",
-    "registration_enabled",
-    "maintenance_mode"
-  ]
-
-};
-
-
-// ==========================================
-// LOAD CONFIGURATION FROM BACKEND
-// ==========================================
-
-async function loadConfig() {
-
-  if (!ownerAuthorized) return;
-
-  const button = document.getElementById("loadConfig");
-
-  if (button) {
-    button.disabled = true;
-    button.textContent = "Loading...";
-  }
-
-  setConfigStatus("Loading settings from backend...");
+  const password = prompt("Enter admin password:");
+  if (!password) return;
 
   try {
-
-    const token = await getOwnerToken();
-
-    const response = await fetch(API_BASE + "/admin/config", {
-      method: "GET",
-      headers: {
-        "Authorization": "Bearer " + token
-      },
-      cache: "no-store"
-    });
-
-    const result = await response.json().catch(() => ({}));
-
-    if (!response.ok || result.success !== true) {
-      throw new Error(
-        result.detail || "Unable to load configuration."
-      );
-    }
-
-    const settings = result.settings || {};
-
-    configFields.text.forEach(id => {
-
-      const input = document.getElementById(id);
-
-      if (input && settings[id] !== undefined) {
-        input.value = settings[id] ?? "";
-      }
-
-    });
-
-    configFields.number.forEach(id => {
-
-      const input = document.getElementById(id);
-
-      if (input && settings[id] !== undefined) {
-        input.value = settings[id];
-      }
-
-    });
-
-    configFields.checkbox.forEach(id => {
-
-      const input = document.getElementById(id);
-
-      if (input && settings[id] !== undefined) {
-        input.checked = settings[id] === true;
-      }
-
-    });
-
-    // Keep the duplicate support username field synchronized.
-    const supportInput = document.getElementById("telegram_support_username");
-
-    if (supportInput) {
-      supportInput.value = settings.support_bot_username || "";
-    }
-
-    setConfigStatus("✓ All settings loaded successfully.");
-
+    await signInWithEmailAndPassword(auth, email.trim(), password);
   } catch (error) {
-
-    console.error("Configuration load error:", error);
-
-    setConfigStatus(
-      "Load failed: " + error.message,
-      true
-    );
-
-  } finally {
-
-    if (button) {
-      button.disabled = false;
-      button.textContent = "↻ Reload Settings";
-    }
-
+    showToast(error.message);
   }
-
 }
-
-
-// ==========================================
-// COLLECT CONFIGURATION DATA
-// ==========================================
-
-function collectConfig() {
-
-  const data = {};
-
-  configFields.text.forEach(id => {
-
-    const input = document.getElementById(id);
-
-    if (input) {
-      data[id] = input.value.trim();
-    }
-
-  });
-
-  configFields.number.forEach(id => {
-
-    const input = document.getElementById(id);
-
-    if (!input || input.value.trim() === "") {
-      throw new Error("Please fill all numeric configuration fields.");
-    }
-
-    const value = Number(input.value);
-
-    if (!Number.isFinite(value)) {
-      throw new Error("Invalid number in " + id);
-    }
-
-    data[id] = value;
-
-  });
-
-  configFields.checkbox.forEach(id => {
-
-    const input = document.getElementById(id);
-
-    data[id] = input ? input.checked : false;
-
-  });
-
-  // Currency is fixed to INR by backend.
-  data.currency = "INR";
-
-  // Both approvals remain manual.
-  data.deposit_approval = "manual";
-  data.withdrawal_approval = "manual";
-
-  return data;
-
-}
-
-
-// ==========================================
-// FRONTEND VALIDATION
-// ==========================================
-
-function validateConfig(data) {
-
-  if (data.min_deposit > data.max_deposit) {
-    throw new Error("Minimum deposit cannot exceed maximum deposit.");
-  }
-
-  if (data.min_withdrawal > data.max_withdrawal) {
-    throw new Error("Minimum withdrawal cannot exceed maximum withdrawal.");
-  }
-
-  if (data.daily_withdrawal_limit < data.min_withdrawal) {
-    throw new Error("Daily limit cannot be below minimum withdrawal.");
-  }
-
-  if (data.withdrawal_fixed_tax >= data.min_withdrawal) {
-    throw new Error("Fixed tax must be below minimum withdrawal.");
-  }
-
-  if (data.withdrawal_tax_percent < 0 || data.withdrawal_tax_percent > 100) {
-    throw new Error("Withdrawal tax must be between 0 and 100.");
-  }
-
-  if (data.upi_id && !/^[A-Za-z0-9._-]{2,256}@[A-Za-z0-9.-]{2,100}$/.test(data.upi_id)) {
-    throw new Error("Please enter a valid UPI ID.");
-  }
-
-  [data.upi_qr_url, data.support_link].forEach(url => {
-
-    if (url && !url.startsWith("https://")) {
-      throw new Error("All links must use HTTPS.");
-    }
-
-  });
-
-  if (data.withdrawal_enabled &&
-      !data.withdrawal_upi_enabled &&
-      !data.withdrawal_mobile_enabled) {
-    throw new Error("Enable at least one withdrawal method.");
-  }
-
-  return true;
-
-}
-
-
-// ==========================================
-// SAVE CONFIGURATION TO BACKEND
-// ==========================================
-
-async function saveConfig() {
-
-  if (!ownerAuthorized) {
-    setConfigStatus("Owner authentication required.", true);
-    return;
-  }
-
-  const button = document.getElementById("saveConfig");
-
-  button.disabled = true;
-  button.textContent = "Saving...";
-
-  setConfigStatus("Validating and saving settings...");
-
-  try {
-
-    const data = collectConfig();
-
-    validateConfig(data);
-
-    const token = await getOwnerToken();
-
-    const response = await fetch(API_BASE + "/admin/config", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + token
-      },
-      body: JSON.stringify(data)
-    });
-
-    const result = await response.json().catch(() => ({}));
-
-    if (!response.ok || result.success !== true) {
-      throw new Error(
-        result.detail || "Configuration could not be saved."
-      );
-    }
-
-    setConfigStatus(
-      "✓ All settings saved successfully to Firestore."
-    );
-
-    // Reload saved settings from backend.
-    await loadConfig();
-
-  } catch (error) {
-
-    console.error("Configuration save error:", error);
-
-    setConfigStatus(
-      "Save failed: " + error.message,
-      true
-    );
-
-  } finally {
-
-    button.disabled = false;
-    button.textContent = "✓ Save All Settings";
-
-  }
-
-}
-
-
-// ==========================================
-// CONFIGURATION BUTTONS
-// ==========================================
-
-document.getElementById("saveConfig").addEventListener(
-  "click",
-  saveConfig
-);
-
-document.getElementById("loadConfig").addEventListener(
-  "click",
-  loadConfig
-);
-
-
-// ==========================================
-// LOGO STATUS
-// ==========================================
-
-function setLogoStatus(message, error = false) {
-
-  const status = document.getElementById("logoStatus");
-
-  status.textContent = message;
-
-  status.style.color = error
-    ? "#ff929b"
-    : "#789398";
-
-}
-
-
-// ==========================================
-// DISPLAY LOGO
-// ==========================================
-
-function displayLogo(url, name = "SwiftPays Logo") {
-
-  const preview = document.getElementById("logoPreview");
-  const title = document.getElementById("logoName");
-  const sidebar = document.getElementById("sidebarMark");
-  const input = document.getElementById("logoUrlInput");
-
-  currentLogoUrl = url || null;
-
-  if (url) {
-
-    preview.src = url;
-    title.textContent = name;
-    input.value = url;
-
-    sidebar.innerHTML = "";
-
-    const image = document.createElement("img");
-
-    image.src = url;
-    image.alt = "SwiftPays Logo";
-
-    sidebar.appendChild(image);
-
-  } else {
-
-    preview.removeAttribute("src");
-    title.textContent = "No logo uploaded";
-    input.value = "";
-    sidebar.textContent = "ϟ";
-
-  }
-
-}
-
-
-// ==========================================
-// LOAD SAVED LOGO
-// ==========================================
-
-async function loadSavedLogo() {
-
-  try {
-
-    const snapshot = await getDoc(brandingRef);
-
-    if (snapshot.exists()) {
-
-      const data = snapshot.data();
-
-      if (data.logoUrl) {
-
-        displayLogo(
-          data.logoUrl,
-          data.logoName || "SwiftPays Logo"
-        );
-
-        setLogoStatus("Saved logo loaded successfully.");
-
-        return;
-
-      }
-
-    }
-
-    displayLogo(null);
-
-    setLogoStatus("No saved logo found. Enter a logo URL.");
-
-  } catch (error) {
-
-    console.error("Logo load error:", error);
-
-    setLogoStatus(
-      "Could not load logo: " + error.message,
-      true
-    );
-
-  }
-
-}
-
-
-// ==========================================
-// VALIDATE LOGO URL
-// ==========================================
-
-function getValidLogoUrl() {
-
-  const value = document.getElementById("logoUrlInput").value.trim();
-
-  if (!value) {
-    throw new Error("Please enter a logo image URL.");
-  }
-
-  let parsed;
-
-  try {
-    parsed = new URL(value);
-  } catch {
-    throw new Error("Please enter a valid logo URL.");
-  }
-
-  if (parsed.protocol !== "https:") {
-    throw new Error("Logo URL must use HTTPS.");
-  }
-
-  return parsed.href;
-
-}
-
-
-// ==========================================
-// PREVIEW LOGO
-// ==========================================
-
-document.getElementById("previewLogo").addEventListener("click", () => {
-
-  try {
-
-    const url = getValidLogoUrl();
-
-    const preview = document.getElementById("logoPreview");
-
-    preview.onload = () => {
-
-      document.getElementById("logoName").textContent = "Logo Preview";
-
-      setLogoStatus("Logo preview loaded successfully.");
-
-    };
-
-    preview.onerror = () => {
-
-      setLogoStatus(
-        "Image could not be loaded. Check the URL.",
-        true
-      );
-
-    };
-
-    preview.src = url;
-
-  } catch (error) {
-
-    setLogoStatus(error.message, true);
-
-  }
-
-});
-
-
-// ==========================================
-// SAVE LOGO URL TO FIRESTORE
-// ==========================================
-
-document.getElementById("saveLogo").addEventListener("click", async () => {
-
-  if (!ownerAuthorized || !auth.currentUser) {
-    setLogoStatus("Owner authentication required.", true);
-    return;
-  }
-
-  const button = document.getElementById("saveLogo");
-
-  button.disabled = true;
-  button.textContent = "Saving...";
-
-  try {
-
-    const url = getValidLogoUrl();
-
-    await new Promise((resolve, reject) => {
-
-      const image = new Image();
-
-      image.onload = resolve;
-
-      image.onerror = () => reject(
-        new Error("Image URL is not accessible. Check your GitHub image URL.")
-      );
-
-      image.src = url;
-
-    });
-
-    await setDoc(brandingRef, {
-
-      logoUrl: url,
-      logoName: "SwiftPays Logo",
-      updatedAt: new Date().toISOString(),
-      updatedBy: auth.currentUser.uid
-
-    }, { merge: true });
-
-    displayLogo(url, "SwiftPays Logo");
-
-    setLogoStatus("✓ Logo URL saved successfully in Firestore.");
-
-  } catch (error) {
-
-    console.error("Logo save error:", error);
-
-    setLogoStatus(
-      "Could not save logo: " + error.message,
-      true
-    );
-
-  } finally {
-
-    button.disabled = false;
-    button.textContent = "✓ Save & Publish Logo";
-
-  }
-
-});
-
-
-// ==========================================
-// REMOVE SAVED LOGO
-// ==========================================
-
-document.getElementById("removeLogo").addEventListener("click", async () => {
-
-  if (!ownerAuthorized || !auth.currentUser) {
-    setLogoStatus("Owner authentication required.", true);
-    return;
-  }
-
-  if (!confirm("Are you sure you want to remove the saved SwiftPays logo?")) {
-    return;
-  }
-
-  const button = document.getElementById("removeLogo");
-
-  button.disabled = true;
-
-  try {
-
-    await setDoc(brandingRef, {
-
-      logoUrl: null,
-      logoName: null,
-      updatedAt: new Date().toISOString(),
-      updatedBy: auth.currentUser.uid
-
-    }, { merge: true });
-
-    displayLogo(null);
-
-    setLogoStatus("Saved logo removed successfully.");
-
-  } catch (error) {
-
-    console.error("Logo removal error:", error);
-
-    setLogoStatus(
-      "Could not remove logo: " + error.message,
-      true
-    );
-
-  } finally {
-
-    button.disabled = false;
-
-  }
-
-});
-
-
-// ==========================================
-// OWNER SESSION
-// ==========================================
 
 onAuthStateChanged(auth, async user => {
-
-  const gate = document.getElementById("authChecking");
-
   if (!user) {
-
-    ownerAuthorized = false;
-
-    location.replace("/admin.html");
-
+    adminVerified = false;
+    await adminLogin();
     return;
-
   }
 
   try {
-
-    await verifyOwner(user);
-
-    ownerAuthorized = true;
-
-    document.getElementById("dashboardApp").style.visibility = "visible";
-
-    gate.style.display = "none";
-
-    showPage(pageFromPath(), false);
-
-    // Load branding and configuration.
-    await Promise.all([
-      loadSavedLogo(),
-      loadConfig()
-    ]);
-
+    await verifyAdmin(user);
+    showToast("Admin verified successfully.");
+    loadDashboard();
+    loadUsers();
   } catch (error) {
-
-    ownerAuthorized = false;
-
-    console.error("Owner verification:", error);
-
-    gate.textContent = "Owner verification failed. Redirecting...";
-
-    await signOut(auth).catch(() => {});
-
-    location.replace("/admin.html");
-
+    adminVerified = false;
+    showToast(error.message);
+    await signOut(auth);
   }
-
 });
 
+/* =====================================
+   PAGE NAVIGATION
+===================================== */
 
-// ==========================================
-// LOGOUT
-// ==========================================
+const pageNames = {
+  dashboard: ["Dashboard", "Welcome to SwiftPays Admin Panel"],
+  users: ["Users", "Manage registered users"],
+  deposits: ["Deposits", "Manage deposit requests"],
+  withdrawals: ["Withdrawals", "Manage withdrawal requests"],
+  transactions: ["Transactions", "View transaction records"],
+  branding: ["Branding & Logo", "Manage website branding"],
+  security: ["Security", "Manage admin security"],
+  configuration: ["Configuration", "Manage platform settings"],
+  settings: ["Settings", "Dashboard preferences"]
+};
 
-document.getElementById("logout").addEventListener("click", async () => {
+function openPage(name) {
+  if (!adminVerified) return;
 
-  if (!ownerAuthorized) return;
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
 
-  ownerAuthorized = false;
+  document.querySelectorAll(".nav-item[data-page]").forEach(button => {
+    button.classList.remove("active");
+  });
 
-  await signOut(auth).catch(() => {});
+  const page = $("page-" + name);
+  const nav = document.querySelector(
+    '.nav-item[data-page="' + name + '"]'
+  );
 
-  location.replace("/admin.html");
+  if (page) page.classList.add("active");
+  if (nav) nav.classList.add("active");
 
+  if (pageNames[name]) {
+    $("pageTitle").textContent = pageNames[name][0];
+    $("pageSubtitle").textContent = pageNames[name][1];
+  }
+
+  $("sidebar")?.classList.remove("open");
+
+  if (name === "users") loadUsers();
+  if (name === "deposits") loadDeposits();
+  if (name === "withdrawals") loadWithdrawals();
+  if (name === "transactions") loadTransactions();
+  if (name === "configuration") loadConfiguration();
+}
+
+document.querySelectorAll(".nav-item[data-page]").forEach(button => {
+  button.addEventListener("click", () => {
+    openPage(button.dataset.page);
+  });
+});
+
+document.querySelectorAll("[data-goto]").forEach(button => {
+  button.addEventListener("click", () => {
+    openPage(button.dataset.goto);
+  });
+});
+
+$("menuToggle")?.addEventListener("click", () => {
+  $("sidebar")?.classList.toggle("open");
+});
+
+/* =====================================
+   DASHBOARD DATA
+===================================== */
+
+async function loadDashboard() {
+  if (!adminVerified) return;
+
+  try {
+    const data = await api("/admin/stats");
+
+    $("totalUsers").textContent = data.total_users ?? 0;
+    $("totalDeposits").textContent =
+      money(data.total_deposits_paise);
+    $("totalWithdrawals").textContent =
+      money(data.total_withdrawals_paise);
+    $("totalTransactions").textContent =
+      data.total_transactions ?? 0;
+
+    loadRecentUsers();
+
+  } catch (error) {
+    showToast("Dashboard: " + error.message);
+  }
+}
+
+async function loadRecentUsers() {
+  try {
+    const data = await api("/admin/users?limit=5&offset=0");
+    const users = data.users || [];
+
+    $("recentUsersBody").innerHTML = users.length
+      ? users.map(user => `
+        <tr>
+          <td>${escapeHTML(user.name)}</td>
+          <td>${escapeHTML(user.user_id)}</td>
+          <td>${escapeHTML(user.mobile)}</td>
+          <td>${money(user.balance_paise)}</td>
+          <td>${escapeHTML(user.status || "active")}</td>
+        </tr>
+      `).join("")
+      : `<tr><td colspan="5" class="empty-state">No users found.</td></tr>`;
+
+  } catch (error) {
+    $("recentUsersBody").innerHTML =
+      `<tr><td colspan="5" class="empty-state">Unable to load users.</td></tr>`;
+  }
+}
+
+$("refreshDashboard")?.addEventListener("click", loadDashboard);
+
+/* =====================================
+   USER MANAGEMENT
+===================================== */
+
+async function loadUsers() {
+  if (!adminVerified) return;
+
+  const query = $("userSearch")?.value.trim() || "";
+
+  const offset = usersPage * USERS_LIMIT;
+
+  $("usersTableBody").innerHTML =
+    `<tr><td colspan="6" class="empty-state">Loading users...</td></tr>`;
+
+  try {
+    const data = await api(
+      `/admin/users?limit=${USERS_LIMIT}&offset=${offset}&q=${encodeURIComponent(query)}`
+    );
+
+    currentUsers = data.users || [];
+    hasMoreUsers = Boolean(data.has_more);
+
+    renderUsers();
+
+    $("usersPageInfo").textContent = "Page " + (usersPage + 1);
+    $("prevUsers").disabled = usersPage === 0;
+    $("nextUsers").disabled = !hasMoreUsers;
+
+    $("usersCount").textContent =
+      data.total_users ?? currentUsers.length;
+
+    $("activeUsers").textContent =
+      data.active_users ?? currentUsers.filter(
+        user => user.status === "active"
+      ).length;
+
+    $("blockedUsers").textContent =
+      data.blocked_users ?? currentUsers.filter(
+        user => user.status === "blocked"
+      ).length;
+
+  } catch (error) {
+    $("usersTableBody").innerHTML =
+      `<tr><td colspan="6" class="empty-state">${escapeHTML(error.message)}</td></tr>`;
+  }
+}
+
+function renderUsers() {
+  const filter = $("userStatusFilter")?.value || "all";
+
+  const users = currentUsers.filter(user => {
+    return filter === "all" || user.status === filter;
+  });
+
+  $("usersTableBody").innerHTML = users.length
+    ? users.map(user => `
+      <tr>
+        <td>
+          <strong>${escapeHTML(user.name)}</strong>
+        </td>
+        <td>${escapeHTML(user.user_id)}</td>
+        <td>${escapeHTML(user.mobile)}</td>
+        <td>${money(user.balance_paise)}</td>
+        <td>
+          <span class="status ${user.status === "active" ? "success" : "danger"}">
+            ${escapeHTML(user.status || "active")}
+          </span>
+        </td>
+        <td>
+          <button class="action-btn"
+            data-user-action="view"
+            data-user-id="${escapeHTML(user.user_id)}">
+            View
+          </button>
+        </td>
+      </tr>
+    `).join("")
+    : `<tr><td colspan="6" class="empty-state">No users found.</td></tr>`;
+}
+
+$("userSearch")?.addEventListener("input", () => {
+  usersPage = 0;
+  loadUsers();
+});
+
+$("userStatusFilter")?.addEventListener("change", renderUsers);
+$("refreshUsers")?.addEventListener("click", loadUsers);
+
+$("prevUsers")?.addEventListener("click", () => {
+  if (usersPage > 0) {
+    usersPage--;
+    loadUsers();
+  }
+});
+
+$("nextUsers")?.addEventListener("click", () => {
+  if (hasMoreUsers) {
+    usersPage++;
+    loadUsers();
+  }
+});
+
+/* =====================================
+   USER DETAILS AND ACTIONS
+===================================== */
+
+document.addEventListener("click", async event => {
+  const button = event.target.closest("[data-user-action]");
+  if (!button) return;
+
+  const user = currentUsers.find(
+    item => String(item.user_id) === button.dataset.userId
+  );
+
+  if (!user) return;
+
+  if (button.dataset.userAction === "view") {
+    $("userModalContent").innerHTML = `
+      <div class="user-detail">
+        <p><strong>Name:</strong> ${escapeHTML(user.name)}</p>
+        <p><strong>SwiftPays ID:</strong> ${escapeHTML(user.user_id)}</p>
+        <p><strong>Mobile:</strong> ${escapeHTML(user.mobile)}</p>
+        <p><strong>Balance:</strong> ${money(user.balance_paise)}</p>
+        <p><strong>Status:</strong> ${escapeHTML(user.status)}</p>
+      </div>
+
+      <div class="modal-actions">
+        <button class="primary-btn" id="editUserBtn">Edit Name</button>
+        <button class="primary-btn" id="addBalanceBtn">Add Balance</button>
+        <button class="primary-btn" id="removeBalanceBtn">Remove Balance</button>
+        <button class="danger-btn" id="toggleUserBtn">
+          ${user.status === "active" ? "Block User" : "Activate User"}
+        </button>
+      </div>
+    `;
+
+    $("userModal").classList.add("show");
+
+    $("editUserBtn").onclick = () => editUser(user);
+    $("addBalanceBtn").onclick = () => changeBalance(user, "add");
+    $("removeBalanceBtn").onclick = () => changeBalance(user, "remove");
+    $("toggleUserBtn").onclick = () => toggleUserStatus(user);
+  }
+});
+
+async function editUser(user) {
+  const name = prompt("Enter new user name:", user.name);
+  if (!name || !name.trim()) return;
+
+  try {
+    await api(`/admin/users/${encodeURIComponent(user.user_id)}`, {
+      method: "PATCH",
+      body: JSON.stringify({ name: name.trim() })
+    });
+
+    showToast("User updated.");
+    $("userModal").classList.remove("show");
+    loadUsers();
+
+  } catch (error) {
+    showToast(error.message);
+  }
+}
+
+async function changeBalance(user, action) {
+  const amount = Number(prompt("Enter amount in rupees:"));
+
+  if (!Number.isFinite(amount) || amount <= 0) {
+    showToast("Enter a valid amount.");
+    return;
+  }
+
+  const reason = prompt("Enter reason:");
+  if (!reason) return;
+
+  try {
+    await api(
+      `/admin/users/${encodeURIComponent(user.user_id)}/balance`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          action,
+          amount_rupees: amount,
+          reason
+        })
+      }
+    );
+
+    showToast("Balance updated successfully.");
+    $("userModal").classList.remove("show");
+    loadUsers();
+    loadDashboard();
+
+  } catch (error) {
+    showToast(error.message);
+  }
+}
+
+async function toggleUserStatus(user) {
+  const newStatus =
+    user.status === "active" ? "blocked" : "active";
+
+  if (!confirm(`Change user status to ${newStatus}?`)) return;
+
+  try {
+    await api(
+      `/admin/users/${encodeURIComponent(user.user_id)}/status`,
+      {
+        method: "POST",
+        body: JSON.stringify({ status: newStatus })
+      }
+    );
+
+    showToast("User status updated.");
+    $("userModal").classList.remove("show");
+    loadUsers();
+
+  } catch (error) {
+    showToast(error.message);
+  }
+}
+
+$("closeUserModal")?.addEventListener("click", () => {
+  $("userModal").classList.remove("show");
+});
+
+/* =====================================
+   DEPOSITS / WITHDRAWALS / TRANSACTIONS
+===================================== */
+
+async function loadTable(endpoint, tableId, columns) {
+  try {
+    const data = await api(endpoint);
+    const records = data.items || data.records || [];
+
+    $(tableId).innerHTML = records.length
+      ? records.map(item => `
+        <tr>
+          ${columns.map(key =>
+            `<td>${escapeHTML(item[key] ?? "-")}</td>`
+          ).join("")}
+        </tr>
+      `).join("")
+      : `<tr><td colspan="${columns.length}" class="empty-state">No records found.</td></tr>`;
+
+  } catch (error) {
+    $(tableId).innerHTML =
+      `<tr><td colspan="${columns.length}" class="empty-state">${escapeHTML(error.message)}</td></tr>`;
+  }
+}
+
+function loadDeposits() {
+  return loadTable(
+    "/admin/deposits",
+    "depositsTableBody",
+    ["transaction_id", "user_id", "amount", "method", "status", "created_at"]
+  );
+}
+
+function loadWithdrawals() {
+  return loadTable(
+    "/admin/withdrawals",
+    "withdrawalsTableBody",
+    ["request_id", "user_id", "amount", "method", "status", "created_at"]
+  );
+}
+
+function loadTransactions() {
+  return loadTable(
+    "/admin/transactions",
+    "transactionsTableBody",
+    ["transaction_id", "user_id", "type", "amount", "status", "created_at"]
+  );
+}
+
+$("refreshDeposits")?.addEventListener("click", loadDeposits);
+$("refreshWithdrawals")?.addEventListener("click", loadWithdrawals);
+$("refreshTransactions")?.addEventListener("click", loadTransactions);
+
+/* =====================================
+   BRANDING AND CONFIGURATION
+===================================== */
+
+$("saveBranding")?.addEventListener("click", async () => {
+  const payload = {
+    brand_name: $("brandName").value.trim(),
+    logo_url: $("brandLogo").value.trim()
+  };
+
+  try {
+    await api("/admin/config", {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+
+    showToast("Branding saved.");
+  } catch (error) {
+    showToast(error.message);
+  }
+});
+
+async function loadConfiguration() {
+  try {
+    const data = await api("/admin/config");
+
+    $("brandName").value = data.brand_name || "";
+    $("brandLogo").value = data.logo_url || "";
+    $("minimumDeposit").value = data.minimum_deposit ?? "";
+    $("minimumWithdrawal").value = data.minimum_withdrawal ?? "";
+    $("supportUsername").value = data.support_username || "";
+
+  } catch (error) {
+    showToast("Configuration: " + error.message);
+  }
+}
+
+$("saveConfiguration")?.addEventListener("click", async () => {
+  const payload = {
+    minimum_deposit: Number($("minimumDeposit").value),
+    minimum_withdrawal: Number($("minimumWithdrawal").value),
+    support_username: $("supportUsername").value.trim()
+  };
+
+  try {
+    await api("/admin/config", {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+
+    showToast("Configuration saved.");
+  } catch (error) {
+    showToast(error.message);
+  }
+});
+
+/* =====================================
+   LOGOUT
+===================================== */
+
+$("logoutBtn")?.addEventListener("click", async () => {
+  if (!confirm("Are you sure you want to logout?")) return;
+
+  try {
+    adminVerified = false;
+    await signOut(auth);
+    showToast("Logged out.");
+  } catch (error) {
+    showToast(error.message);
+  }
 });
 
 </script>
-
 </body>
 </html>
-  
-
-  
