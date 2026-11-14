@@ -33,7 +33,7 @@ body {
 .card {
   width: 100%;
   max-width: 650px;
-  padding: 30px 28px;
+  padding: 28px 28px;
   border: 2px solid transparent;
   border-radius: 30px;
   background:
@@ -42,35 +42,29 @@ body {
   box-shadow: 0 0 35px #078bff30, 0 24px 80px #0009;
 }
 
-/* LOGO */
+/* SWIFTPAYS ROUNDED SQUARE LOGO */
 
 .brand {
-  text-align: center;
-  margin-bottom: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 23px;
 }
 
 .logo {
-  width: 115px;
-  height: 115px;
-  object-fit: contain;
+  width: 82px;
+  height: 82px;
+  object-fit: cover;
+  border-radius: 23px;
+  background: #102b60;
+  border: 2px solid #13dff4;
+  box-shadow:
+    0 0 12px #13dff466,
+    0 0 25px #286bff33;
   display: block;
-  margin: 0 auto;
-  filter: drop-shadow(0 0 14px #16dfff66);
 }
 
-/* SHIELD */
-
-.shield {
-  width: 110px;
-  height: 115px;
-  margin: 0 auto 12px;
-  filter: drop-shadow(0 0 16px #00cfff66);
-}
-
-.shield svg {
-  width: 100%;
-  height: 100%;
-}
+/* HEADER */
 
 .hero {
   text-align: center;
@@ -89,7 +83,7 @@ h1 {
   line-height: 1.7;
 }
 
-/* FORM LABELS */
+/* FORM */
 
 label {
   display: block;
@@ -133,7 +127,7 @@ label {
   z-index: 2;
 }
 
-/* MOBILE */
+/* MOBILE NUMBER */
 
 .mobile-input {
   padding-left: 85px !important;
@@ -178,9 +172,9 @@ label {
 
 .cloudflare-box {
   width: 100%;
-  min-height: 105px;
+  min-height: 100px;
   margin-top: 26px;
-  padding: 16px 8px;
+  padding: 14px 8px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -198,11 +192,7 @@ label {
   align-items: center;
 }
 
-#turnstile-container iframe {
-  max-width: 100%;
-}
-
-/* BUTTON */
+/* CREATE ACCOUNT BUTTON */
 
 .submit {
   width: 100%;
@@ -222,6 +212,8 @@ label {
   opacity: .6;
   cursor: wait;
 }
+
+/* STATUS */
 
 .status {
   min-height: 22px;
@@ -279,8 +271,9 @@ label {
   }
 
   .logo {
-    width: 105px;
-    height: 105px;
+    width: 76px;
+    height: 76px;
+    border-radius: 21px;
   }
 }
 </style>
@@ -290,60 +283,22 @@ label {
 
 <main class="card">
 
-  <!-- SWIFTPAYS LOGO ONLY -->
+  <!-- SWIFTPAYS LOGO -->
   <header class="brand">
     <img
       class="logo"
       src="https://swiftpays.pages.dev/logo.png"
       alt="SwiftPays Logo"
-      onerror="this.style.display='none'"
     >
   </header>
 
-  <!-- SECURITY SHIELD -->
+  <!-- CREATE ACCOUNT HEADING -->
   <div class="hero">
-
-    <div class="shield">
-      <svg viewBox="0 0 120 130" fill="none">
-        <defs>
-          <linearGradient id="shieldGradient" x1="10" y1="5" x2="110" y2="125">
-            <stop stop-color="#16eaff"/>
-            <stop offset=".55" stop-color="#2777ff"/>
-            <stop offset="1" stop-color="#bd43ff"/>
-          </linearGradient>
-        </defs>
-
-        <path d="M60 7 105 25v35c0 30-18 49-45 63C33 109 15 90 15 60V25L60 7Z"
-          stroke="url(#shieldGradient)"
-          stroke-width="5"
-          fill="#0c2550"/>
-
-        <circle cx="60" cy="47" r="13" fill="url(#shieldGradient)"/>
-
-        <path d="M34 88c2-16 12-25 26-25s24 9 26 25"
-          stroke="url(#shieldGradient)"
-          stroke-width="9"
-          stroke-linecap="round"/>
-
-        <circle cx="91" cy="88" r="17"
-          fill="#06254b"
-          stroke="#13e4ef"
-          stroke-width="4"/>
-
-        <path d="m83 88 6 6 11-13"
-          stroke="#55f4e5"
-          stroke-width="4"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-      </svg>
-    </div>
-
     <h1>Create Account</h1>
 
     <p class="subtitle">
       ✨ Join SwiftPays and enjoy secure, fast and reliable payment services.
     </p>
-
   </div>
 
   <form id="registerForm" autocomplete="on">
@@ -421,12 +376,12 @@ label {
       Password must contain at least 8 characters.
     </p>
 
-    <!-- CLOUDFLARE WIDGET ONLY -->
+    <!-- CLOUDFLARE TURNSTILE -->
     <div class="cloudflare-box">
       <div id="turnstile-container"></div>
     </div>
 
-    <!-- CREATE ACCOUNT -->
+    <!-- SUBMIT BUTTON -->
     <button type="submit" class="submit" id="submitBtn">
       CREATE ACCOUNT →
     </button>
@@ -435,7 +390,7 @@ label {
 
   </form>
 
-  <!-- LOGIN -->
+  <!-- LOGIN LINK -->
   <div class="switch">
     Already have an account?
     <a href="/login">Login Now</a>
@@ -448,8 +403,9 @@ label {
 </main>
 
 <script>
+
 /* =====================================
-   SWIFTPAYS CONFIGURATION
+   SWIFTPAYS API CONFIGURATION
 ===================================== */
 
 const API_BASE = "https://swiftpay-api-6azu.onrender.com";
@@ -498,14 +454,15 @@ function showStatus(message, type = "") {
 
 async function loadCloudflare() {
 
-  const container = document.getElementById("turnstile-container");
-
   try {
 
-    const response = await fetch(API_BASE + "/public/config", {
-      method: "GET",
-      cache: "no-store"
-    });
+    const response = await fetch(
+      API_BASE + "/public/config",
+      {
+        method: "GET",
+        cache: "no-store"
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Security configuration unavailable.");
@@ -566,7 +523,7 @@ function waitForTurnstile(siteKey) {
 }
 
 /* =====================================
-   RENDER CLOUDFLARE
+   RENDER CLOUDFLARE WIDGET
 ===================================== */
 
 function renderTurnstile(siteKey) {
@@ -607,7 +564,6 @@ function renderTurnstile(siteKey) {
           );
 
         }
-
       }
     );
 
@@ -666,38 +622,13 @@ document.getElementById("registerForm").addEventListener(
     try {
 
       /*
+        IMPORTANT:
         Backend must verify the Turnstile token
-        using the Cloudflare Secret Key.
+        using Cloudflare Siteverify API before
+        creating the account.
       */
 
-      const verifyResponse = await fetch(
-        API_BASE + "/verify-turnstile",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            token: cloudflareToken
-          })
-        }
-      );
-
-      const verifyResult = await verifyResponse.json().catch(() => ({}));
-
-      if (!verifyResponse.ok || verifyResult.success !== true) {
-        throw new Error(
-          verifyResult.detail ||
-          verifyResult.message ||
-          "Cloudflare verification failed."
-        );
-      }
-
-      /*
-        Registration API
-      */
-
-      const registerResponse = await fetch(
+      const response = await fetch(
         API_BASE + "/auth/register",
         {
           method: "POST",
@@ -707,19 +638,22 @@ document.getElementById("registerForm").addEventListener(
           body: JSON.stringify({
             name: name,
             mobile: mobile,
-            password: password
+            password: password,
+            turnstile_token: cloudflareToken
           })
         }
       );
 
-      const result = await registerResponse.json().catch(() => ({}));
+      const result = await response.json().catch(() => ({}));
 
-      if (!registerResponse.ok || result.success !== true) {
+      if (!response.ok || result.success !== true) {
+
         throw new Error(
           result.detail ||
           result.message ||
-          "Registration failed."
+          "Registration failed. Please try again."
         );
+
       }
 
       showStatus(
@@ -728,8 +662,8 @@ document.getElementById("registerForm").addEventListener(
       );
 
       /*
-        Backend must establish a secure one-time
-        PIN setup session before redirecting.
+        Backend must create a secure, one-time
+        PIN setup session before this redirect.
       */
 
       window.location.replace("/create-pin");
@@ -756,7 +690,7 @@ document.getElementById("registerForm").addEventListener(
 );
 
 /* =====================================
-   START
+   START CLOUDFLARE
 ===================================== */
 
 loadCloudflare();
@@ -764,5 +698,5 @@ loadCloudflare();
 </script>
 
 </body>
-          </html>
-          
+      </html>
+      
