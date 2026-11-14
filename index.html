@@ -3,364 +3,460 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#07111a">
-<title>SwiftPays - Security Verification</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071326">
+
+<title>SwiftPays | Security Verification</title>
 
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 
 <style>
-:root {
-  --bg:#061226;
-  --panel:#09182d;
-  --muted:#9aacca;
-  --blue:#2856e9;
-  --cyan:#22b8df;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-
-* { box-sizing:border-box; }
 
 body {
-  margin:0;
-  min-height:100vh;
-  padding:22px;
-  background:radial-gradient(
-    ellipse at 50% 0%,
-    #102c5b 0%,
-    #09182f 48%,
-    #050d1e 100%
-  );
-  font-family:Inter,system-ui,Arial,sans-serif;
-  color:#f7faff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #fff;
+    background:
+        radial-gradient(circle at top, #173b70 0%, transparent 48%),
+        linear-gradient(145deg, #040b19, #0a1930, #080e20);
 }
 
-.shell {
-  width:min(100%,590px);
-  padding:42px 30px 34px;
-  border:2px solid transparent;
-  border-radius:34px;
-  text-align:center;
-  background:
-    linear-gradient(145deg,#07172b,#0c1028) padding-box,
-    linear-gradient(135deg,#238cf3,#25c9e9 48%,#9346dc) border-box;
-  box-shadow:0 24px 80px #0008;
+.container {
+    width: 100%;
+    max-width: 510px;
+    padding: 38px 25px;
+    text-align: center;
+    border-radius: 27px;
+    background: linear-gradient(145deg, #0d1c34, #10142b);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+    box-shadow: 0 20px 65px #0009;
+}
+
+.container::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 28px;
+    padding: 2px;
+    background: linear-gradient(130deg, #238cff, #22d3ee, #9a50ef);
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
 }
 
 .logo {
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:14px;
-  margin-bottom:36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 35px;
 }
 
-.logo b {
-  font-size:clamp(32px,8vw,43px);
-  letter-spacing:2px;
-  color:#35b9ef;
+.logo-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #2468f2, #21c5e8);
+    box-shadow: 0 5px 22px #168bff55;
+    font-size: 25px;
 }
 
-.logo span {
-  font-size:clamp(19px,5vw,25px);
-  font-weight:850;
-  letter-spacing:3px;
-  border-left:1px solid #51617c;
-  padding-left:15px;
+.logo-text {
+    font-size: 29px;
+    font-weight: 900;
+    letter-spacing: 1px;
 }
 
-.icon {
-  width:88px;
-  height:88px;
-  margin:0 auto 24px;
-  border-radius:25px;
-  background:linear-gradient(135deg,#2856e9,#22b8df);
-  display:grid;
-  place-items:center;
-  font-size:42px;
-  box-shadow:0 14px 36px #0878e744;
+.logo-text span {
+    color: #29b9ef;
+}
+
+.security-icon {
+    width: 82px;
+    height: 82px;
+    margin: 0 auto 23px;
+    border-radius: 24px;
+    display: grid;
+    place-items: center;
+    font-size: 39px;
+    background: linear-gradient(135deg, #285be9, #20bce0);
+    box-shadow: 0 10px 30px #168bff44;
 }
 
 h1 {
-  font-size:clamp(27px,7vw,35px);
-  margin:0 0 12px;
-  font-weight:850;
+    font-size: 29px;
+    font-weight: 850;
+    margin-bottom: 13px;
 }
 
-.muted {
-  color:var(--muted);
-  line-height:1.6;
-  margin:0 auto 30px;
-  max-width:440px;
+.description {
+    color: #a6b7d0;
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 380px;
+    margin: 0 auto 28px;
 }
 
-.captcha {
-  min-height:82px;
-  padding:10px;
-  border-radius:10px;
-  background:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
+.security-label {
+    color: #35c7ee;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 13px;
 }
 
-.turnstile-slot {
-  min-height:65px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.captcha-box {
+    width: 100%;
+    min-height: 78px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    border-radius: 12px;
+    background: #fff;
+    overflow: hidden;
 }
 
-button {
-  width:100%;
-  min-height:76px;
-  margin-top:25px;
-  border:0;
-  border-radius:17px;
-  background:linear-gradient(105deg,#2856e9,#22b8df);
-  color:#fff;
-  font-size:18px;
-  font-weight:850;
-  cursor:pointer;
-  box-shadow:0 12px 28px #0878e733;
+#turnstile-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+    width: 100%;
 }
 
-button:disabled {
-  opacity:.48;
-  cursor:not-allowed;
+.verify-btn {
+    width: 100%;
+    min-height: 62px;
+    margin-top: 24px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(100deg, #2859eb, #21bde1);
+    color: white;
+    font-size: 17px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 9px 24px #137ee944;
+    transition: .2s;
+}
+
+.verify-btn:disabled {
+    opacity: .48;
+    cursor: not-allowed;
+}
+
+.verify-btn:not(:disabled):active {
+    transform: scale(.98);
 }
 
 .status {
-  min-height:22px;
-  margin-top:18px;
-  font-size:13px;
-  line-height:1.5;
-  color:#9aacca;
+    min-height: 23px;
+    margin-top: 17px;
+    font-size: 13px;
+    color: #a5b5cf;
+    line-height: 1.5;
 }
 
-.status.error { color:#ff8585; }
-.status.success { color:#38e9a8; }
-
-.foot {
-  margin-top:30px;
-  color:#7185a5;
-  font-size:12px;
+.status.error {
+    color: #ff8585;
 }
 
-.foot strong {
-  display:block;
-  color:#35b9ef;
-  font-size:16px;
-  letter-spacing:2px;
-  margin-top:6px;
+.status.success {
+    color: #35e6a4;
 }
 
-@media(max-width:430px) {
-  body { padding:14px; }
-  .shell {
-    padding:34px 20px 28px;
-    border-radius:30px;
-  }
-  .muted { font-size:14px; }
-  .captcha { padding:6px; }
+.footer {
+    border-top: 1px solid #ffffff15;
+    margin-top: 29px;
+    padding-top: 21px;
+    color: #788da9;
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.footer strong {
+    display: block;
+    color: #32bce9;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+
+@media(max-width: 420px) {
+    .container {
+        padding: 32px 17px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    .logo-text {
+        font-size: 25px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<main class="shell">
+<main class="container">
 
-  <div class="logo">
-    <b>SWIFT</b>
-    <span>PAYS</span>
-  </div>
+    <!-- SWIFTPAYS LOGO -->
+    <div class="logo">
+        <div class="logo-icon">⚡</div>
+        <div class="logo-text">
+            SWIFT<span>PAYS</span>
+        </div>
+    </div>
 
-  <div class="icon">🛡️</div>
+    <!-- SECURITY ICON -->
+    <div class="security-icon">🛡️</div>
 
-  <h1>Security Verification</h1>
+    <h1>Security Verification</h1>
 
-  <p class="muted">
-    Before creating your SwiftPays account,
-    please complete this quick security check.
-  </p>
+    <p class="description">
+        Welcome to SwiftPays! Please complete the
+        security verification below to continue
+        creating your account.
+    </p>
 
-  <div class="captcha">
-    <div id="turnstile-box" class="turnstile-slot"></div>
-  </div>
+    <div class="security-label">
+        HUMAN VERIFICATION
+    </div>
 
-  <button id="continueBtn" type="button" disabled>
-    Verify & Continue ➜
-  </button>
+    <!-- CLOUDFLARE TURNSTILE -->
+    <div class="captcha-box">
+        <div id="turnstile-box"></div>
+    </div>
 
-  <p id="status" class="status">
-    Loading security verification...
-  </p>
+    <button
+        class="verify-btn"
+        id="continueBtn"
+        disabled
+        type="button"
+    >
+        Verify & Continue →
+    </button>
 
-  <div class="foot">
-    Secure Signup • Protected Account • Fast Access
-    <strong>SWIFTPAYS</strong>
-    © 2026 SwiftPays
-  </div>
+    <div class="status" id="status">
+        Loading security verification...
+    </div>
+
+    <div class="footer">
+        Protected by Cloudflare Security
+        <strong>SWIFTPAYS</strong>
+        © 2026 SwiftPays. All rights reserved.
+    </div>
 
 </main>
 
 <script>
-const API_BASE = "https://swiftpay-api-6azu.onrender.com";
+const API_BASE =
+    "https://swiftpay-api-6azu.onrender.com";
 
-const statusEl = document.getElementById("status");
-const continueBtn = document.getElementById("continueBtn");
+const statusBox =
+    document.getElementById("status");
+
+const continueBtn =
+    document.getElementById("continueBtn");
 
 let siteKey = "";
 let widgetId = null;
-let verifiedToken = "";
+let verificationToken = "";
 
-function showStatus(message, type = "") {
-  statusEl.textContent = message;
-  statusEl.className = "status " + type;
+function status(message, type = "") {
+    statusBox.textContent = message;
+    statusBox.className = "status " + type;
 }
 
 async function loadConfig() {
-  try {
-    const response = await fetch(
-      API_BASE + "/public/config",
-      { cache: "no-store" }
-    );
+    try {
+        const response = await fetch(
+            API_BASE + "/public/config",
+            { cache: "no-store" }
+        );
 
-    const config = await response.json();
+        if (!response.ok) {
+            throw new Error(
+                "Could not load security settings."
+            );
+        }
 
-    if (!response.ok) {
-      throw new Error("Security configuration unavailable.");
+        const config = await response.json();
+
+        if (config.turnstile_enabled === false) {
+            throw new Error(
+                "Security verification is currently disabled."
+            );
+        }
+
+        siteKey = String(
+            config.turnstile_site_key || ""
+        ).trim();
+
+        if (!siteKey) {
+            throw new Error(
+                "Cloudflare Site Key is missing."
+            );
+        }
+
+        waitForTurnstile();
+
+    } catch (error) {
+        status(error.message, "error");
     }
-
-    if (config.turnstile_enabled === false) {
-      throw new Error("Security verification is disabled.");
-    }
-
-    siteKey = String(config.turnstile_site_key || "").trim();
-
-    if (!siteKey) {
-      throw new Error("Cloudflare Site Key is not configured.");
-    }
-
-    waitForTurnstile();
-
-  } catch (error) {
-    showStatus(error.message, "error");
-  }
 }
 
 function waitForTurnstile() {
-  if (!window.turnstile) {
-    setTimeout(waitForTurnstile, 250);
-    return;
-  }
 
-  try {
-    widgetId = turnstile.render("#turnstile-box", {
-      sitekey: siteKey,
-      theme: "light",
+    if (!window.turnstile) {
+        setTimeout(waitForTurnstile, 300);
+        return;
+    }
 
-      callback: (token) => {
-        verifiedToken = token;
-        continueBtn.disabled = false;
+    try {
+        widgetId = turnstile.render(
+            "#turnstile-box",
+            {
+                sitekey: siteKey,
+                theme: "light",
+                callback: function(token) {
 
-        showStatus(
-          "✓ Verification complete. Continue to registration.",
-          "success"
+                    verificationToken = token;
+
+                    continueBtn.disabled = false;
+
+                    status(
+                        "✓ Human verification completed.",
+                        "success"
+                    );
+                },
+
+                "expired-callback": function() {
+
+                    verificationToken = "";
+                    continueBtn.disabled = true;
+
+                    status(
+                        "Verification expired. Please try again."
+                    );
+                },
+
+                "error-callback": function() {
+
+                    verificationToken = "";
+                    continueBtn.disabled = true;
+
+                    status(
+                        "Verification error. Refresh the page.",
+                        "error"
+                    );
+                }
+            }
         );
-      },
 
-      "expired-callback": () => {
-        verifiedToken = "";
-        continueBtn.disabled = true;
-        showStatus("Verification expired. Please verify again.");
-      },
-
-      "error-callback": () => {
-        verifiedToken = "";
-        continueBtn.disabled = true;
-
-        showStatus(
-          "Verification could not load. Refresh and try again.",
-          "error"
+        status(
+            "Please complete the Cloudflare verification."
         );
-      }
-    });
 
-    showStatus("Complete the Cloudflare check to continue.");
-
-  } catch (error) {
-    showStatus(
-      "Cloudflare verification could not be displayed.",
-      "error"
-    );
-  }
+    } catch (error) {
+        status(
+            "Unable to load Cloudflare verification.",
+            "error"
+        );
+    }
 }
 
-continueBtn.addEventListener("click", async () => {
+continueBtn.addEventListener("click", async function() {
 
-  if (!verifiedToken) {
-    showStatus("Please complete the security check first.", "error");
-    return;
-  }
-
-  continueBtn.disabled = true;
-  continueBtn.textContent = "Verifying...";
-
-  showStatus("Checking your verification securely...");
-
-  try {
-    const response = await fetch(
-      API_BASE + "/verify-turnstile",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          token: verifiedToken
-        })
-      }
-    );
-
-    const result = await response.json().catch(() => ({}));
-
-    if (!response.ok || !result.success) {
-      throw new Error(
-        result.detail || "Verification failed. Please try again."
-      );
+    if (!verificationToken) {
+        status(
+            "Please complete verification first.",
+            "error"
+        );
+        return;
     }
 
-    sessionStorage.setItem(
-      "swiftpays_entry_verified",
-      "1"
-    );
+    continueBtn.disabled = true;
+    continueBtn.textContent = "Verifying...";
 
-    showStatus(
-      "Verification successful. Opening registration...",
-      "success"
-    );
+    status("Checking your security verification...");
 
-    location.replace("/register");
+    try {
+        const response = await fetch(
+            API_BASE + "/verify-turnstile",
+            {
+                method: "POST",
 
-  } catch (error) {
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-    verifiedToken = "";
-    continueBtn.textContent = "Verify & Continue ➜";
+                body: JSON.stringify({
+                    token: verificationToken
+                })
+            }
+        );
 
-    if (widgetId !== null && window.turnstile) {
-      turnstile.reset(widgetId);
+        const result = await response.json();
+
+        if (!response.ok || result.success !== true) {
+            throw new Error(
+                result.detail ||
+                "Security verification failed."
+            );
+        }
+
+        sessionStorage.setItem(
+            "swiftpays_entry_verified",
+            "1"
+        );
+
+        status(
+            "✓ Verification successful! Redirecting...",
+            "success"
+        );
+
+        setTimeout(function() {
+            window.location.replace("/register");
+        }, 500);
+
+    } catch (error) {
+
+        verificationToken = "";
+
+        continueBtn.textContent =
+            "Verify & Continue →";
+
+        if (
+            widgetId !== null &&
+            window.turnstile
+        ) {
+            turnstile.reset(widgetId);
+        }
+
+        status(
+            error.message || "Please try again.",
+            "error"
+        );
     }
-
-    showStatus(
-      error.message || "Could not verify. Please try again.",
-      "error"
-    );
-  }
 });
 
 window.addEventListener("load", loadConfig);
