@@ -1,11 +1,1 @@
-# Admin Login
-/admin/login /admin.html 200
 
-# Admin Dashboard
-/admin/dashboard /admin-dashboard.html 200
-
-# Default Admin Route
-/admin /admin.html 200
-
-# Main Website
-/ /index.html 200
