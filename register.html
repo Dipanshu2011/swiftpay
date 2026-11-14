@@ -11,266 +11,276 @@
 
 <style>
 * {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  min-height:100vh;
-  padding:20px 14px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-family:Arial, sans-serif;
-  color:#fff;
+  min-height: 100vh;
+  padding: 20px 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  color: #fff;
   background:
-    radial-gradient(ellipse at 0% 10%,#0756a955,transparent 38%),
-    radial-gradient(ellipse at 100% 85%,#7015a955,transparent 38%),
+    radial-gradient(ellipse at 0% 10%, #0756a955, transparent 38%),
+    radial-gradient(ellipse at 100% 85%, #7015a955, transparent 38%),
     #030719;
 }
 
 .card {
-  width:100%;
-  max-width:650px;
-  padding:30px 28px;
-  border:2px solid transparent;
-  border-radius:30px;
+  width: 100%;
+  max-width: 650px;
+  padding: 30px 28px;
+  border: 2px solid transparent;
+  border-radius: 30px;
   background:
-    linear-gradient(145deg,#06132cf5,#080b25f8) padding-box,
-    linear-gradient(135deg,#13dff4,#286bff 50%,#b23cff) border-box;
-  box-shadow:0 0 35px #078bff30,0 24px 80px #0009;
+    linear-gradient(145deg, #06132cf5, #080b25f8) padding-box,
+    linear-gradient(135deg, #13dff4, #286bff 50%, #b23cff) border-box;
+  box-shadow: 0 0 35px #078bff30, 0 24px 80px #0009;
 }
 
+/* LOGO */
+
 .brand {
-  text-align:center;
-  margin-bottom:22px;
+  text-align: center;
+  margin-bottom: 22px;
 }
 
 .logo {
-  width:76px;
-  height:76px;
-  object-fit:contain;
-  display:block;
-  margin:0 auto 10px;
-  filter:drop-shadow(0 0 14px #16dfff66);
+  width: 115px;
+  height: 115px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 14px #16dfff66);
 }
 
-.brand-name {
-  font-size:23px;
-  font-weight:900;
-  letter-spacing:2px;
-  background:linear-gradient(90deg,#15e5f5,#648cff,#c05bff);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-}
+/* SHIELD */
 
 .shield {
-  width:110px;
-  height:115px;
-  margin:0 auto 12px;
-  filter:drop-shadow(0 0 16px #00cfff66);
+  width: 110px;
+  height: 115px;
+  margin: 0 auto 12px;
+  filter: drop-shadow(0 0 16px #00cfff66);
 }
 
 .shield svg {
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
 }
 
 .hero {
-  text-align:center;
-  margin-bottom:28px;
+  text-align: center;
+  margin-bottom: 28px;
 }
 
 h1 {
-  font-size:34px;
-  font-weight:900;
-  margin-bottom:10px;
+  font-size: 34px;
+  font-weight: 900;
+  margin-bottom: 10px;
 }
 
 .subtitle {
-  color:#bdcbed;
-  font-size:14px;
-  line-height:1.7;
+  color: #bdcbed;
+  font-size: 14px;
+  line-height: 1.7;
 }
 
+/* FORM LABELS */
+
 label {
-  display:block;
-  margin:20px 0 9px;
-  color:#e1eaff;
-  font-size:15px;
-  font-weight:800;
+  display: block;
+  margin: 20px 0 9px;
+  color: #e1eaff;
+  font-size: 15px;
+  font-weight: 800;
 }
 
 .field {
-  position:relative;
+  position: relative;
 }
 
 .field input {
-  width:100%;
-  height:64px;
-  padding:0 18px 0 58px;
-  border:1.5px solid #247fc9;
-  border-radius:17px;
-  background:linear-gradient(110deg,#10274a,#101534);
-  color:white;
-  font-size:16px;
-  outline:none;
+  width: 100%;
+  height: 64px;
+  padding: 0 18px 0 58px;
+  border: 1.5px solid #247fc9;
+  border-radius: 17px;
+  background: linear-gradient(110deg, #10274a, #101534);
+  color: white;
+  font-size: 16px;
+  outline: none;
 }
 
 .field input:focus {
-  border-color:#13dff4;
-  box-shadow:0 0 0 3px #12dff422;
+  border-color: #13dff4;
+  box-shadow: 0 0 0 3px #12dff422;
 }
 
 .field input::placeholder {
-  color:#a7b8d7;
+  color: #a7b8d7;
 }
 
 .field-icon {
-  position:absolute;
-  left:17px;
-  top:50%;
-  transform:translateY(-50%);
-  font-size:21px;
-  z-index:2;
+  position: absolute;
+  left: 17px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 21px;
+  z-index: 2;
 }
 
+/* MOBILE */
+
 .mobile-input {
-  padding-left:85px !important;
+  padding-left: 85px !important;
 }
 
 .country-code {
-  position:absolute;
-  left:17px;
-  top:50%;
-  transform:translateY(-50%);
-  z-index:2;
-  font-size:15px;
-  font-weight:800;
+  position: absolute;
+  left: 17px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  font-size: 15px;
+  font-weight: 800;
 }
 
+/* PASSWORD */
+
 .password-input {
-  padding-right:65px !important;
+  padding-right: 65px !important;
 }
 
 .toggle {
-  position:absolute;
-  right:12px;
-  top:50%;
-  transform:translateY(-50%);
-  border:0;
-  background:transparent;
-  font-size:23px;
-  cursor:pointer;
-  padding:7px;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  font-size: 23px;
+  cursor: pointer;
+  padding: 7px;
 }
 
 .hint {
-  margin:8px 2px 0;
-  color:#91a6ca;
-  font-size:12px;
-  line-height:1.5;
+  margin: 8px 2px 0;
+  color: #91a6ca;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
+/* CLOUDFLARE */
+
 .cloudflare-box {
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100px;
-  margin-top:26px;
-  padding:15px 8px;
-  border:1px solid #247fc9;
-  border-radius:17px;
-  background:#101534;
-  overflow:hidden;
+  width: 100%;
+  min-height: 105px;
+  margin-top: 26px;
+  padding: 16px 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #247fc9;
+  border-radius: 17px;
+  background: #101534;
+  overflow: hidden;
 }
 
 #turnstile-container {
-  min-height:65px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  width: 100%;
+  min-height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+#turnstile-container iframe {
+  max-width: 100%;
+}
+
+/* BUTTON */
+
 .submit {
-  width:100%;
-  min-height:68px;
-  margin-top:25px;
-  border:0;
-  border-radius:18px;
-  background:linear-gradient(105deg,#08d9e8,#1768f5 55%,#a52dff);
-  color:white;
-  font-size:18px;
-  font-weight:900;
-  cursor:pointer;
-  box-shadow:0 10px 32px #1768f555;
+  width: 100%;
+  min-height: 68px;
+  margin-top: 25px;
+  border: 0;
+  border-radius: 18px;
+  background: linear-gradient(105deg, #08d9e8, #1768f5 55%, #a52dff);
+  color: white;
+  font-size: 18px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 10px 32px #1768f555;
 }
 
 .submit:disabled {
-  opacity:.6;
-  cursor:wait;
+  opacity: .6;
+  cursor: wait;
 }
 
 .status {
-  min-height:22px;
-  margin-top:15px;
-  text-align:center;
-  font-size:13px;
-  line-height:1.5;
-  color:#bdcbed;
+  min-height: 22px;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #bdcbed;
 }
 
 .status.error {
-  color:#ff8585;
+  color: #ff8585;
 }
 
 .status.success {
-  color:#43eab0;
+  color: #43eab0;
 }
 
-.secure-note {
-  margin-top:24px;
-  text-align:center;
-  color:#d1def5;
-  font-size:13px;
-}
+/* LOGIN */
 
 .switch {
-  margin-top:25px;
-  padding-top:22px;
-  border-top:1px solid #ffffff24;
-  text-align:center;
-  color:#c2cee8;
-  font-size:14px;
+  margin-top: 25px;
+  padding-top: 22px;
+  border-top: 1px solid #ffffff24;
+  text-align: center;
+  color: #c2cee8;
+  font-size: 14px;
 }
 
 .switch a {
-  color:#24e0f2;
-  font-weight:900;
-  text-decoration:none;
-  margin-left:5px;
+  color: #24e0f2;
+  font-weight: 900;
+  text-decoration: none;
+  margin-left: 5px;
 }
 
 .footer {
-  text-align:center;
-  margin-top:23px;
-  color:#879abd;
-  font-size:11px;
+  text-align: center;
+  margin-top: 23px;
+  color: #879abd;
+  font-size: 11px;
 }
 
 @media(max-width:480px) {
   .card {
-    padding:27px 18px;
+    padding: 27px 18px;
   }
 
   h1 {
-    font-size:29px;
+    font-size: 29px;
   }
 
   .field input {
-    height:62px;
+    height: 62px;
+  }
+
+  .logo {
+    width: 105px;
+    height: 105px;
   }
 }
 </style>
@@ -280,7 +290,7 @@ label {
 
 <main class="card">
 
-  <!-- SWIFTPAYS BRAND LOGO -->
+  <!-- SWIFTPAYS LOGO ONLY -->
   <header class="brand">
     <img
       class="logo"
@@ -288,7 +298,6 @@ label {
       alt="SwiftPays Logo"
       onerror="this.style.display='none'"
     >
-    <div class="brand-name">SWIFTPAYS</div>
   </header>
 
   <!-- SECURITY SHIELD -->
@@ -305,22 +314,32 @@ label {
         </defs>
 
         <path d="M60 7 105 25v35c0 30-18 49-45 63C33 109 15 90 15 60V25L60 7Z"
-          stroke="url(#shieldGradient)" stroke-width="5" fill="#0c2550"/>
+          stroke="url(#shieldGradient)"
+          stroke-width="5"
+          fill="#0c2550"/>
 
         <circle cx="60" cy="47" r="13" fill="url(#shieldGradient)"/>
 
         <path d="M34 88c2-16 12-25 26-25s24 9 26 25"
-          stroke="url(#shieldGradient)" stroke-width="9" stroke-linecap="round"/>
+          stroke="url(#shieldGradient)"
+          stroke-width="9"
+          stroke-linecap="round"/>
 
-        <circle cx="91" cy="88" r="17" fill="#06254b"
-          stroke="#13e4ef" stroke-width="4"/>
+        <circle cx="91" cy="88" r="17"
+          fill="#06254b"
+          stroke="#13e4ef"
+          stroke-width="4"/>
 
-        <path d="m83 88 6 6 11-13" stroke="#55f4e5"
-          stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="m83 88 6 6 11-13"
+          stroke="#55f4e5"
+          stroke-width="4"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
       </svg>
     </div>
 
     <h1>Create Account</h1>
+
     <p class="subtitle">
       ✨ Join SwiftPays and enjoy secure, fast and reliable payment services.
     </p>
@@ -334,6 +353,7 @@ label {
 
     <div class="field">
       <span class="field-icon">👤</span>
+
       <input
         type="text"
         id="name"
@@ -345,11 +365,12 @@ label {
       >
     </div>
 
-    <!-- MOBILE -->
+    <!-- MOBILE NUMBER -->
     <label for="mobile">📱 Mobile Number</label>
 
     <div class="field">
       <span class="country-code">🇮🇳 +91</span>
+
       <input
         type="tel"
         id="mobile"
@@ -364,7 +385,9 @@ label {
       >
     </div>
 
-    <p class="hint">Enter your active 10-digit Indian mobile number.</p>
+    <p class="hint">
+      Enter your active 10-digit Indian mobile number.
+    </p>
 
     <!-- PASSWORD -->
     <label for="password">🔐 Password</label>
@@ -394,16 +417,16 @@ label {
 
     </div>
 
-    <p class="hint">Password must contain at least 8 characters.</p>
+    <p class="hint">
+      Password must contain at least 8 characters.
+    </p>
 
-    <!-- CLOUDFLARE TURNSTILE -->
+    <!-- CLOUDFLARE WIDGET ONLY -->
     <div class="cloudflare-box">
-      <div id="turnstile-container">
-        <span class="hint">⏳ Loading Cloudflare Security...</span>
-      </div>
+      <div id="turnstile-container"></div>
     </div>
 
-    <!-- SUBMIT -->
+    <!-- CREATE ACCOUNT -->
     <button type="submit" class="submit" id="submitBtn">
       CREATE ACCOUNT →
     </button>
@@ -412,10 +435,7 @@ label {
 
   </form>
 
-  <div class="secure-note">
-    🛡️ Protected by Cloudflare Security
-  </div>
-
+  <!-- LOGIN -->
   <div class="switch">
     Already have an account?
     <a href="/login">Login Now</a>
@@ -436,7 +456,6 @@ const API_BASE = "https://swiftpay-api-6azu.onrender.com";
 
 let cloudflareToken = "";
 let turnstileWidgetId = null;
-let turnstileReady = false;
 
 /* =====================================
    PASSWORD SHOW / HIDE
@@ -450,6 +469,7 @@ togglePassword.addEventListener("click", function() {
   const isHidden = passwordInput.type === "password";
 
   passwordInput.type = isHidden ? "text" : "password";
+
   togglePassword.textContent = isHidden ? "👁️" : "🙈";
 
   togglePassword.setAttribute(
@@ -460,18 +480,20 @@ togglePassword.addEventListener("click", function() {
 });
 
 /* =====================================
-   STATUS
+   STATUS MESSAGE
 ===================================== */
 
 function showStatus(message, type = "") {
+
   const status = document.getElementById("status");
+
   status.textContent = message;
   status.className = "status " + type;
+
 }
 
 /* =====================================
    LOAD CLOUDFLARE SITE KEY
-   SAME KEY FROM PUBLIC CONFIG
 ===================================== */
 
 async function loadCloudflare() {
@@ -486,27 +508,34 @@ async function loadCloudflare() {
     });
 
     if (!response.ok) {
-      throw new Error("Unable to load security configuration.");
+      throw new Error("Security configuration unavailable.");
     }
 
     const config = await response.json();
 
-    const siteKey = config.turnstile_site_key || config.site_key;
+    const siteKey =
+      config.turnstile_site_key || config.site_key;
 
     if (!siteKey) {
-      throw new Error("Cloudflare Site Key is missing from public config.");
+      throw new Error("Cloudflare Site Key not found.");
     }
 
     waitForTurnstile(siteKey);
 
   } catch (error) {
 
-    container.textContent = "⚠️ " + error.message;
-    showStatus("Cloudflare configuration could not be loaded.", "error");
+    showStatus(
+      "Cloudflare configuration could not be loaded. Please refresh.",
+      "error"
+    );
 
   }
 
 }
+
+/* =====================================
+   WAIT FOR CLOUDFLARE SCRIPT
+===================================== */
 
 function waitForTurnstile(siteKey) {
 
@@ -525,8 +554,10 @@ function waitForTurnstile(siteKey) {
 
       clearInterval(timer);
 
-      document.getElementById("turnstile-container").textContent =
-        "⚠️ Cloudflare could not be loaded. Refresh the page.";
+      showStatus(
+        "Cloudflare could not be loaded. Please refresh.",
+        "error"
+      );
 
     }
 
@@ -535,166 +566,194 @@ function waitForTurnstile(siteKey) {
 }
 
 /* =====================================
-   RENDER TURNSTILE
+   RENDER CLOUDFLARE
 ===================================== */
 
 function renderTurnstile(siteKey) {
 
+  const container = document.getElementById("turnstile-container");
+
+  container.innerHTML = "";
+
   try {
 
     turnstileWidgetId = window.turnstile.render(
-      "#turnstile-container",
+      container,
       {
         sitekey: siteKey,
         theme: "dark",
         size: "normal",
 
         callback: function(token) {
+
           cloudflareToken = token;
-          turnstileReady = true;
           showStatus("");
+
         },
 
         "expired-callback": function() {
+
           cloudflareToken = "";
-          turnstileReady = false;
+
         },
 
         "error-callback": function() {
+
           cloudflareToken = "";
-          turnstileReady = false;
-          showStatus("Cloudflare verification failed. Please retry.", "error");
+
+          showStatus(
+            "Cloudflare verification failed. Please retry.",
+            "error"
+          );
+
         }
+
       }
     );
 
   } catch (error) {
 
-    showStatus("Unable to display Cloudflare verification.", "error");
+    showStatus(
+      "Unable to display Cloudflare verification.",
+      "error"
+    );
 
   }
 
 }
 
 /* =====================================
-   REGISTRATION
+   REGISTRATION SUBMIT
 ===================================== */
 
-document.getElementById("registerForm").addEventListener("submit", async function(event) {
+document.getElementById("registerForm").addEventListener(
+  "submit",
+  async function(event) {
 
-  event.preventDefault();
+    event.preventDefault();
 
-  const name = document.getElementById("name").value.trim();
-  const mobile = document.getElementById("mobile").value.trim();
-  const password = passwordInput.value;
+    const name = document.getElementById("name").value.trim();
+    const mobile = document.getElementById("mobile").value.trim();
+    const password = passwordInput.value;
 
-  const submitBtn = document.getElementById("submitBtn");
+    const submitBtn = document.getElementById("submitBtn");
 
-  if (!name) {
-    showStatus("Please enter your full name.", "error");
-    return;
-  }
+    if (!name) {
+      showStatus("Please enter your full name.", "error");
+      return;
+    }
 
-  if (!/^[6-9][0-9]{9}$/.test(mobile)) {
-    showStatus("Please enter a valid 10-digit mobile number.", "error");
-    return;
-  }
+    if (!/^[6-9][0-9]{9}$/.test(mobile)) {
+      showStatus("Please enter a valid 10-digit mobile number.", "error");
+      return;
+    }
 
-  if (password.length < 8) {
-    showStatus("Password must contain at least 8 characters.", "error");
-    return;
-  }
+    if (password.length < 8) {
+      showStatus("Password must contain at least 8 characters.", "error");
+      return;
+    }
 
-  if (!cloudflareToken) {
-    showStatus("Please complete Cloudflare verification first.", "error");
-    return;
-  }
+    if (!cloudflareToken) {
+      showStatus("Please complete Cloudflare verification first.", "error");
+      return;
+    }
 
-  submitBtn.disabled = true;
-  submitBtn.textContent = "CREATING ACCOUNT...";
+    submitBtn.disabled = true;
+    submitBtn.textContent = "CREATING ACCOUNT...";
 
-  showStatus("🔐 Verifying your registration...");
+    showStatus("Verifying your registration...");
 
-  try {
+    try {
 
-    /*
-      Verify Turnstile token on backend.
-      Backend must validate it using Cloudflare Secret Key.
-    */
+      /*
+        Backend must verify the Turnstile token
+        using the Cloudflare Secret Key.
+      */
 
-    const verifyResponse = await fetch(API_BASE + "/verify-turnstile", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        token: cloudflareToken
-      })
-    });
-
-    const verifyResult = await verifyResponse.json().catch(() => ({}));
-
-    if (!verifyResponse.ok || verifyResult.success !== true) {
-
-      throw new Error(
-        verifyResult.detail || verifyResult.message ||
-        "Cloudflare verification failed."
+      const verifyResponse = await fetch(
+        API_BASE + "/verify-turnstile",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            token: cloudflareToken
+          })
+        }
       );
 
-    }
+      const verifyResult = await verifyResponse.json().catch(() => ({}));
 
-    /*
-      Register after successful verification.
-    */
+      if (!verifyResponse.ok || verifyResult.success !== true) {
+        throw new Error(
+          verifyResult.detail ||
+          verifyResult.message ||
+          "Cloudflare verification failed."
+        );
+      }
 
-    const registerResponse = await fetch(API_BASE + "/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name: name,
-        mobile: mobile,
-        password: password
-      })
-    });
+      /*
+        Registration API
+      */
 
-    const result = await registerResponse.json().catch(() => ({}));
-
-    if (!registerResponse.ok || result.success !== true) {
-
-      throw new Error(
-        result.detail || result.message || "Registration failed."
+      const registerResponse = await fetch(
+        API_BASE + "/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name: name,
+            mobile: mobile,
+            password: password
+          })
+        }
       );
 
+      const result = await registerResponse.json().catch(() => ({}));
+
+      if (!registerResponse.ok || result.success !== true) {
+        throw new Error(
+          result.detail ||
+          result.message ||
+          "Registration failed."
+        );
+      }
+
+      showStatus(
+        "Account created successfully! Redirecting...",
+        "success"
+      );
+
+      /*
+        Backend must establish a secure one-time
+        PIN setup session before redirecting.
+      */
+
+      window.location.replace("/create-pin");
+
+    } catch (error) {
+
+      showStatus(
+        error.message || "Something went wrong.",
+        "error"
+      );
+
+      cloudflareToken = "";
+
+      if (window.turnstile && turnstileWidgetId !== null) {
+        window.turnstile.reset(turnstileWidgetId);
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = "CREATE ACCOUNT →";
+
     }
-
-    showStatus("✅ Account created successfully! Redirecting...", "success");
-
-    /*
-      Backend should establish a secure one-time
-      PIN setup session before this redirect.
-    */
-
-    window.location.replace("/create-pin");
-
-  } catch (error) {
-
-    showStatus(error.message || "Something went wrong.", "error");
-
-    cloudflareToken = "";
-    turnstileReady = false;
-
-    if (window.turnstile && turnstileWidgetId !== null) {
-      window.turnstile.reset(turnstileWidgetId);
-    }
-
-    submitBtn.disabled = false;
-    submitBtn.textContent = "CREATE ACCOUNT →";
 
   }
-
-});
+);
 
 /* =====================================
    START
@@ -705,4 +764,5 @@ loadCloudflare();
 </script>
 
 </body>
-</html>
+          </html>
+          
