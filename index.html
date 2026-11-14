@@ -1,1 +1,370 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#07111a"><title>SwiftPays — Secure Payments</title><style>*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:22px;background:radial-gradient(ellipse at top,#102c5b,#09182f 48%,#050d1e);font-family:Inter,system-ui,Arial;color:#f7faff}.card{width:min(100%,560px);padding:38px 28px;border:2px solid transparent;border-radius:30px;text-align:center;background:linear-gradient(145deg,#07172b,#0c1028) padding-box,linear-gradient(135deg,#238cf3,#25c9e9 48%,#9346dc) border-box;box-shadow:0 24px 80px #0008}.logo{font-size:38px;font-weight:900;letter-spacing:3px;color:#35b9ef}.logo span{color:white;border-left:1px solid #51617c;padding-left:12px;margin-left:8px;font-size:25px}.muted{color:#9aacca;line-height:1.6}.btn{display:block;margin:16px 0;padding:18px;border-radius:15px;text-decoration:none;font-weight:800;background:linear-gradient(105deg,#2856e9,#22b8df);color:white}.link{color:#35c8e8;text-decoration:none;font-weight:800}</style></head><body><main class="card"><div class="logo">SWIFT<span>PAYS</span></div><h1>Welcome to SwiftPays</h1><p class="muted">Secure digital payments and account management.</p><a class="btn" href="/register">Create Account</a><a class="link" href="/login">Already registered? Login</a></main></body></html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07111a">
+<title>SwiftPays - Security Verification</title>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+
+<style>
+:root {
+  --bg:#061226;
+  --panel:#09182d;
+  --muted:#9aacca;
+  --blue:#2856e9;
+  --cyan:#22b8df;
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  min-height:100vh;
+  padding:22px;
+  background:radial-gradient(
+    ellipse at 50% 0%,
+    #102c5b 0%,
+    #09182f 48%,
+    #050d1e 100%
+  );
+  font-family:Inter,system-ui,Arial,sans-serif;
+  color:#f7faff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.shell {
+  width:min(100%,590px);
+  padding:42px 30px 34px;
+  border:2px solid transparent;
+  border-radius:34px;
+  text-align:center;
+  background:
+    linear-gradient(145deg,#07172b,#0c1028) padding-box,
+    linear-gradient(135deg,#238cf3,#25c9e9 48%,#9346dc) border-box;
+  box-shadow:0 24px 80px #0008;
+}
+
+.logo {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:14px;
+  margin-bottom:36px;
+}
+
+.logo b {
+  font-size:clamp(32px,8vw,43px);
+  letter-spacing:2px;
+  color:#35b9ef;
+}
+
+.logo span {
+  font-size:clamp(19px,5vw,25px);
+  font-weight:850;
+  letter-spacing:3px;
+  border-left:1px solid #51617c;
+  padding-left:15px;
+}
+
+.icon {
+  width:88px;
+  height:88px;
+  margin:0 auto 24px;
+  border-radius:25px;
+  background:linear-gradient(135deg,#2856e9,#22b8df);
+  display:grid;
+  place-items:center;
+  font-size:42px;
+  box-shadow:0 14px 36px #0878e744;
+}
+
+h1 {
+  font-size:clamp(27px,7vw,35px);
+  margin:0 0 12px;
+  font-weight:850;
+}
+
+.muted {
+  color:var(--muted);
+  line-height:1.6;
+  margin:0 auto 30px;
+  max-width:440px;
+}
+
+.captcha {
+  min-height:82px;
+  padding:10px;
+  border-radius:10px;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.turnstile-slot {
+  min-height:65px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+button {
+  width:100%;
+  min-height:76px;
+  margin-top:25px;
+  border:0;
+  border-radius:17px;
+  background:linear-gradient(105deg,#2856e9,#22b8df);
+  color:#fff;
+  font-size:18px;
+  font-weight:850;
+  cursor:pointer;
+  box-shadow:0 12px 28px #0878e733;
+}
+
+button:disabled {
+  opacity:.48;
+  cursor:not-allowed;
+}
+
+.status {
+  min-height:22px;
+  margin-top:18px;
+  font-size:13px;
+  line-height:1.5;
+  color:#9aacca;
+}
+
+.status.error { color:#ff8585; }
+.status.success { color:#38e9a8; }
+
+.foot {
+  margin-top:30px;
+  color:#7185a5;
+  font-size:12px;
+}
+
+.foot strong {
+  display:block;
+  color:#35b9ef;
+  font-size:16px;
+  letter-spacing:2px;
+  margin-top:6px;
+}
+
+@media(max-width:430px) {
+  body { padding:14px; }
+  .shell {
+    padding:34px 20px 28px;
+    border-radius:30px;
+  }
+  .muted { font-size:14px; }
+  .captcha { padding:6px; }
+}
+</style>
+</head>
+
+<body>
+
+<main class="shell">
+
+  <div class="logo">
+    <b>SWIFT</b>
+    <span>PAYS</span>
+  </div>
+
+  <div class="icon">🛡️</div>
+
+  <h1>Security Verification</h1>
+
+  <p class="muted">
+    Before creating your SwiftPays account,
+    please complete this quick security check.
+  </p>
+
+  <div class="captcha">
+    <div id="turnstile-box" class="turnstile-slot"></div>
+  </div>
+
+  <button id="continueBtn" type="button" disabled>
+    Verify & Continue ➜
+  </button>
+
+  <p id="status" class="status">
+    Loading security verification...
+  </p>
+
+  <div class="foot">
+    Secure Signup • Protected Account • Fast Access
+    <strong>SWIFTPAYS</strong>
+    © 2026 SwiftPays
+  </div>
+
+</main>
+
+<script>
+const API_BASE = "https://swiftpay-api-6azu.onrender.com";
+
+const statusEl = document.getElementById("status");
+const continueBtn = document.getElementById("continueBtn");
+
+let siteKey = "";
+let widgetId = null;
+let verifiedToken = "";
+
+function showStatus(message, type = "") {
+  statusEl.textContent = message;
+  statusEl.className = "status " + type;
+}
+
+async function loadConfig() {
+  try {
+    const response = await fetch(
+      API_BASE + "/public/config",
+      { cache: "no-store" }
+    );
+
+    const config = await response.json();
+
+    if (!response.ok) {
+      throw new Error("Security configuration unavailable.");
+    }
+
+    if (config.turnstile_enabled === false) {
+      throw new Error("Security verification is disabled.");
+    }
+
+    siteKey = String(config.turnstile_site_key || "").trim();
+
+    if (!siteKey) {
+      throw new Error("Cloudflare Site Key is not configured.");
+    }
+
+    waitForTurnstile();
+
+  } catch (error) {
+    showStatus(error.message, "error");
+  }
+}
+
+function waitForTurnstile() {
+  if (!window.turnstile) {
+    setTimeout(waitForTurnstile, 250);
+    return;
+  }
+
+  try {
+    widgetId = turnstile.render("#turnstile-box", {
+      sitekey: siteKey,
+      theme: "light",
+
+      callback: (token) => {
+        verifiedToken = token;
+        continueBtn.disabled = false;
+
+        showStatus(
+          "✓ Verification complete. Continue to registration.",
+          "success"
+        );
+      },
+
+      "expired-callback": () => {
+        verifiedToken = "";
+        continueBtn.disabled = true;
+        showStatus("Verification expired. Please verify again.");
+      },
+
+      "error-callback": () => {
+        verifiedToken = "";
+        continueBtn.disabled = true;
+
+        showStatus(
+          "Verification could not load. Refresh and try again.",
+          "error"
+        );
+      }
+    });
+
+    showStatus("Complete the Cloudflare check to continue.");
+
+  } catch (error) {
+    showStatus(
+      "Cloudflare verification could not be displayed.",
+      "error"
+    );
+  }
+}
+
+continueBtn.addEventListener("click", async () => {
+
+  if (!verifiedToken) {
+    showStatus("Please complete the security check first.", "error");
+    return;
+  }
+
+  continueBtn.disabled = true;
+  continueBtn.textContent = "Verifying...";
+
+  showStatus("Checking your verification securely...");
+
+  try {
+    const response = await fetch(
+      API_BASE + "/verify-turnstile",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          token: verifiedToken
+        })
+      }
+    );
+
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok || !result.success) {
+      throw new Error(
+        result.detail || "Verification failed. Please try again."
+      );
+    }
+
+    sessionStorage.setItem(
+      "swiftpays_entry_verified",
+      "1"
+    );
+
+    showStatus(
+      "Verification successful. Opening registration...",
+      "success"
+    );
+
+    location.replace("/register");
+
+  } catch (error) {
+
+    verifiedToken = "";
+    continueBtn.textContent = "Verify & Continue ➜";
+
+    if (widgetId !== null && window.turnstile) {
+      turnstile.reset(widgetId);
+    }
+
+    showStatus(
+      error.message || "Could not verify. Please try again.",
+      "error"
+    );
+  }
+});
+
+window.addEventListener("load", loadConfig);
+</script>
+
+</body>
+</html>
