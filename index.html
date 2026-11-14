@@ -1,22 +1,16 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#05091e">
-
-<title>SwiftPays - Device Verification</title>
+<title>SwiftPays | Device Verification</title>
 
 <link rel="preconnect" href="https://challenges.cloudflare.com">
 <link rel="preconnect" href="https://swiftpay-api-6azu.onrender.com">
-<link rel="preconnect" href="https://swiftpays.pages.dev">
 
-<script
-  src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
-  defer>
-</script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
 
 <style>
 * {
@@ -27,351 +21,248 @@
 
 body {
     min-height: 100vh;
-    padding: 20px;
+    padding: 18px 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: Inter, Arial, sans-serif;
-    color: #fff;
+    font-family: Arial, sans-serif;
+    color: white;
     background:
-        radial-gradient(ellipse at 10% 50%, #10105b55, transparent 45%),
-        radial-gradient(ellipse at 90% 50%, #063c7655, transparent 45%),
-        #030719;
-    overflow-x: hidden;
+      radial-gradient(ellipse at 0% 50%, #102d6b55, transparent 45%),
+      radial-gradient(ellipse at 100% 50%, #5513a655, transparent 45%),
+      #030719;
 }
 
 .container {
     width: 100%;
-    max-width: 760px;
-    padding: 35px 28px 30px;
+    max-width: 650px;
+    padding: 42px 25px 30px;
     text-align: center;
     border: 2px solid transparent;
-    border-radius: 38px;
+    border-radius: 35px;
     background:
-        linear-gradient(145deg, #050d2c, #080b27) padding-box,
-        linear-gradient(130deg, #00d9ff, #6545ff, #c02aff, #00d9ff) border-box;
+      linear-gradient(145deg,#050d29,#080b27) padding-box,
+      linear-gradient(130deg,#00d9ff,#6545ff,#c02aff,#00d9ff) border-box;
     box-shadow:
-        0 0 20px #00cfff44,
-        0 0 55px #762cff33,
-        inset 0 0 35px #172d6b22;
+      0 0 25px #00cfff33,
+      0 0 55px #762cff22,
+      inset 0 0 35px #172d6b22;
+}
+
+.fingerprint {
+    width: 125px;
+    height: 125px;
+    margin: 0 auto 30px;
     position: relative;
+    display: grid;
+    place-items: center;
 }
 
-.logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-.logo img {
-    width: 235px;
-    height: 85px;
-    max-width: 85%;
-    object-fit: contain;
-}
-
-.scan-icon {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.scan-icon svg {
-    width: 100px;
-    height: 100px;
-    filter: drop-shadow(0 0 12px #00bfff);
-    animation: pulse 2s ease-in-out infinite;
-}
-
-.scan-ring {
-    position: absolute;
-    inset: 0;
-    border: 2px solid transparent;
-    border-radius: 50%;
-    border-top-color: #00d9ff;
-    border-right-color: #7b45ff;
-    animation: spin 2.5s linear infinite;
-}
-
-.scan-ring::after {
+.fingerprint::before {
     content: "";
     position: absolute;
-    inset: 10px;
-    border: 1px solid #1b8cff77;
+    inset: 0;
     border-radius: 50%;
+    border: 2px solid #263b79;
+    border-top-color: #00e5ff;
+    border-right-color: #9345ff;
+    box-shadow: 0 0 22px #008cff55;
+    animation: rotate 3s linear infinite;
 }
 
-@keyframes spin {
+.fingerprint svg {
+    width: 94px;
+    height: 94px;
+    filter: drop-shadow(0 0 9px #00cfff);
+    animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes rotate {
     to { transform: rotate(360deg); }
 }
 
-@keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    50% {
-        opacity: .75;
-        transform: scale(.94);
-    }
+@keyframes glow {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .72; transform: scale(.95); }
 }
 
 h1 {
-    font-size: clamp(27px, 5vw, 39px);
+    font-size: clamp(27px,6vw,37px);
     font-weight: 850;
-    margin-bottom: 15px;
+    margin-bottom: 14px;
     text-shadow: 0 0 20px #238cff55;
 }
 
 .description {
-    color: #bdc9e8;
-    font-size: 16px;
-    line-height: 1.7;
-    max-width: 570px;
-    margin: 0 auto 35px;
+    max-width: 500px;
+    margin: 0 auto 28px;
+    color: #b9c8e8;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.security-title {
+    color: #43d5ff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.turnstile-card {
+    width: 100%;
+    min-height: 95px;
+    padding: 15px 8px;
+    border: 1px solid #354a84;
+    border-radius: 17px;
+    background: linear-gradient(110deg,#101f42,#11152f);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    overflow: hidden;
+}
+
+#turnstile-box {
+    min-height: 65px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cf-caption {
+    color: #b9c9e9;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .progress {
+    max-width: 480px;
+    margin: 34px auto;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px;
-    max-width: 550px;
-    margin: 0 auto 40px;
     position: relative;
 }
 
 .progress-line {
     position: absolute;
     height: 4px;
+    top: 15px;
     left: 16%;
     right: 16%;
-    top: 15px;
-    background: #28315e;
-    z-index: 0;
+    background: #29335e;
 }
 
 .progress-fill {
     height: 100%;
-    width: 50%;
-    background: linear-gradient(90deg, #00d9ff, #9b43ff);
-    transition: width .35s ease;
+    width: 0%;
+    background: linear-gradient(90deg,#00d9ff,#9b43ff);
+    transition: width .3s;
 }
 
 .step {
     position: relative;
     z-index: 1;
     display: flex;
-    align-items: center;
     flex-direction: column;
-    gap: 12px;
-    color: #8794b9;
-    font-size: 14px;
+    align-items: center;
+    gap: 11px;
+    color: #8998bb;
+    font-size: 13px;
     font-weight: 600;
 }
 
 .circle {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: #090e2b;
-    border: 3px solid #5740c7;
+    width: 33px;
+    height: 33px;
     display: grid;
     place-items: center;
+    border-radius: 50%;
+    border: 3px solid #5740c7;
+    background: #080d29;
     color: white;
 }
 
 .step.active .circle,
 .step.done .circle {
-    background: #13caff;
-    border-color: #fff;
+    background: #14c9f5;
+    color: #07132d;
+    border-color: white;
     box-shadow: 0 0 15px #00cfff;
-    color: #07142c;
 }
 
 .step.active {
-    color: #fff;
-}
-
-.cloudflare-box {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 17px 20px;
-    border: 2px solid transparent;
-    border-radius: 20px;
-    background:
-        linear-gradient(120deg, #10224b, #10132d) padding-box,
-        linear-gradient(110deg, #00d9ff, #9a42ff) border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    box-shadow: 0 0 22px #007bff22;
-}
-
-.protected {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    font-size: 15px;
-    font-weight: 600;
-    color: #e5edff;
-}
-
-.protected svg {
-    width: 30px;
-    height: 30px;
-    color: #4acbff;
-}
-
-.separator {
-    width: 1px;
-    height: 35px;
-    background: #45608e;
-}
-
-.cf-logo {
-    text-align: center;
-    color: #fff;
-    font-weight: 900;
-    font-size: 13px;
-    letter-spacing: 1px;
-}
-
-.cf-cloud {
-    color: #ff922e;
-    font-size: 27px;
-    line-height: 1;
+    color: white;
 }
 
 .status {
     min-height: 25px;
-    margin: 25px 0 18px;
-    color: #aebde0;
+    margin: 20px 0;
+    color: #b8c7e7;
     font-size: 14px;
     line-height: 1.6;
 }
 
-.status.success {
-    color: #37e8ad;
-}
-
-.status.error {
-    color: #ff8989;
-}
+.status.success { color: #36e9aa; }
+.status.error { color: #ff8989; }
 
 .retry {
     display: none;
-    padding: 13px 32px;
-    margin: 5px auto 20px;
-    border: 1px solid #16c9ff;
-    border-radius: 30px;
-    background: linear-gradient(100deg, #0758b9, #7029d7);
-    color: #fff;
+    border: 0;
+    border-radius: 12px;
+    padding: 13px 27px;
+    background: linear-gradient(100deg,#2859eb,#21bde1);
+    color: white;
+    font-size: 14px;
     font-weight: 800;
-    font-size: 15px;
-    cursor: pointer;
 }
 
 .features {
     border-top: 1px solid #ffffff20;
-    margin-top: 30px;
-    padding-top: 24px;
+    margin-top: 35px;
+    padding-top: 25px;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    gap: 14px;
+    gap: 15px;
 }
 
 .feature {
+    color: #c6d5f2;
+    font-size: 12px;
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #c8d8f7;
-    font-size: 13px;
 }
 
-.feature-icon {
-    color: #22caff;
-    font-size: 20px;
+.feature span {
+    color: #35d5ff;
+    font-size: 19px;
 }
 
 .footer {
-    color: #9caed2;
-    font-size: 13px;
-    margin-top: 25px;
+    margin-top: 27px;
+    color: #98a9cb;
+    font-size: 12px;
 }
 
-#turnstile-box {
-    position: fixed;
-    left: -10000px;
-    top: 0;
-}
-
-@media(max-width: 520px) {
-    body {
-        padding: 12px;
-    }
-
+@media(max-width:430px) {
     .container {
-        padding: 30px 16px 25px;
-        border-radius: 28px;
+        padding: 35px 15px 27px;
+        border-radius: 29px;
     }
 
-    .logo img {
-        width: 205px;
-        height: 75px;
-    }
-
-    .scan-icon {
-        width: 105px;
-        height: 105px;
-    }
-
-    .scan-icon svg {
-        width: 85px;
-        height: 85px;
-    }
-
-    .description {
-        font-size: 14px;
-    }
-
-    .step {
-        font-size: 12px;
-    }
-
-    .cloudflare-box {
-        padding: 14px 9px;
-        gap: 9px;
-    }
-
-    .protected {
-        font-size: 12px;
-    }
-
-    .cf-logo {
-        font-size: 10px;
-    }
-
-    .features {
-        gap: 12px;
-    }
-
-    .feature {
-        font-size: 11px;
-    }
+    .description { font-size: 14px; }
+    .feature { font-size: 10px; }
+    .turnstile-card { padding: 12px 3px; }
 }
 
-@media(prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation-duration: .01ms !important;
-        transition-duration: .01ms !important;
+@media(prefers-reduced-motion:reduce) {
+    *,*::before,*::after {
+        animation: none !important;
+        transition: none !important;
     }
 }
 </style>
@@ -381,56 +272,57 @@ h1 {
 
 <main class="container">
 
-    <!-- OFFICIAL SWIFTPAYS LOGO -->
-    <div class="logo">
-        <img
-            src="https://swiftpays.pages.dev/logo.png"
-            alt="SwiftPays Payment Gateway"
-            fetchpriority="high"
-        >
-    </div>
-
-    <!-- FINGERPRINT SCANNER -->
-    <div class="scan-icon">
-
-        <div class="scan-ring"></div>
-
+    <!-- ANIMATED FINGERPRINT -->
+    <div class="fingerprint">
         <svg viewBox="0 0 100 100" fill="none"
-             stroke="url(#fingerGradient)"
+             stroke="url(#fingerColor)"
              stroke-width="3.2"
              stroke-linecap="round">
 
             <defs>
-                <linearGradient id="fingerGradient"
+                <linearGradient id="fingerColor"
                     x1="10" y1="10" x2="90" y2="90">
-                    <stop stop-color="#00E5FF"/>
-                    <stop offset="1" stop-color="#A64CFF"/>
+                    <stop stop-color="#00eaff"/>
+                    <stop offset=".55" stop-color="#168bff"/>
+                    <stop offset="1" stop-color="#bb54ff"/>
                 </linearGradient>
             </defs>
 
-            <path d="M50 13 C28 13 16 29 16 49"/>
-            <path d="M50 23 C34 23 25 35 25 51"/>
-            <path d="M50 33 C40 33 35 41 35 52"/>
-            <path d="M50 13 C72 13 84 29 84 49"/>
-            <path d="M50 23 C66 23 75 35 75 51"/>
-            <path d="M50 33 C60 33 65 41 65 52"/>
-            <path d="M50 42 C50 42 50 64 39 79"/>
-            <path d="M50 42 C50 42 50 71 50 84"/>
-            <path d="M50 42 C50 42 50 64 61 79"/>
-            <path d="M25 57 C25 68 21 75 16 81"/>
-            <path d="M75 57 C75 68 79 75 84 81"/>
-
+            <path d="M50 12 C28 12 14 28 14 49"/>
+            <path d="M50 22 C34 22 24 35 24 52"/>
+            <path d="M50 32 C40 32 34 41 34 53"/>
+            <path d="M50 12 C72 12 86 28 86 49"/>
+            <path d="M50 22 C66 22 76 35 76 52"/>
+            <path d="M50 32 C60 32 66 41 66 53"/>
+            <path d="M50 41 C50 41 50 67 39 83"/>
+            <path d="M50 41 C50 41 50 75 50 88"/>
+            <path d="M50 41 C50 41 50 67 61 83"/>
+            <path d="M24 59 C24 70 20 78 15 84"/>
+            <path d="M76 59 C76 70 80 78 85 84"/>
         </svg>
     </div>
 
     <h1>Verifying Your Device</h1>
 
     <p class="description">
-        Please wait while we verify your browser
-        for secure access to SwiftPays.
+        🔐 Please complete the Cloudflare security check
+        below to verify your browser and continue safely
+        to your SwiftPays account.
     </p>
 
-    <!-- THREE STEP PROGRESS -->
+    <div class="security-title">
+        🛡️ CLOUDFLARE HUMAN VERIFICATION
+    </div>
+
+    <!-- REAL CLOUDFLARE TURNSTILE WIDGET -->
+    <div class="turnstile-card">
+        <div id="turnstile-box"></div>
+        <div class="cf-caption">
+            ☁️ Protected by Cloudflare Turnstile
+        </div>
+    </div>
+
+    <!-- PROGRESS -->
     <div class="progress">
 
         <div class="progress-line">
@@ -454,53 +346,24 @@ h1 {
 
     </div>
 
-    <!-- CLOUDFLARE PROTECTION -->
-    <div class="cloudflare-box">
-
-        <div class="protected">
-            <svg viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2">
-                <path d="M12 2 21 6v6c0 5-4 9-9 11-5-2-9-6-9-11V6z"/>
-                <path d="m8 12 3 3 5-6"/>
-            </svg>
-            <span>Protected by Cloudflare</span>
-        </div>
-
-        <div class="separator"></div>
-
-        <div class="cf-logo">
-            <div class="cf-cloud">☁</div>
-            CLOUDFLARE
-        </div>
-
-    </div>
-
     <div class="status" id="status">
-        Connecting to security service...
+        ⚡ Loading Cloudflare verification...
     </div>
 
     <button class="retry" id="retryBtn" type="button">
         ↻ Try Again
     </button>
 
-    <!-- SECURITY FEATURES -->
     <div class="features">
-
         <div class="feature">
-            <span class="feature-icon">♢</span>
-            Secure Signup
+            <span>◇</span> Secure Signup
         </div>
-
         <div class="feature">
-            <span class="feature-icon">ϟ</span>
-            Protected Account
+            <span>⚡</span> Protected Account
         </div>
-
         <div class="feature">
-            <span class="feature-icon">▣</span>
-            Fast Access
+            <span>🔒</span> Fast Access
         </div>
-
     </div>
 
     <div class="footer">
@@ -509,9 +372,6 @@ h1 {
 
 </main>
 
-<!-- REAL CLOUDFLARE WIDGET -->
-<div id="turnstile-box"></div>
-
 <script>
 (() => {
     "use strict";
@@ -519,14 +379,9 @@ h1 {
     const API =
         "https://swiftpay-api-6azu.onrender.com";
 
-    const statusEl =
-        document.getElementById("status");
-
-    const retryBtn =
-        document.getElementById("retryBtn");
-
-    const progressFill =
-        document.getElementById("progressFill");
+    const statusEl = document.getElementById("status");
+    const retryBtn = document.getElementById("retryBtn");
+    const progressFill = document.getElementById("progressFill");
 
     const steps = [
         document.getElementById("step1"),
@@ -534,14 +389,13 @@ h1 {
         document.getElementById("step3")
     ];
 
-    let siteKey = "";
     let widgetId = null;
+    let siteKey = "";
     let completed = false;
-    let rendering = false;
-    let attempts = 0;
+    let configLoaded = false;
 
-    function setStatus(text, type = "") {
-        statusEl.textContent = text;
+    function setStatus(message, type = "") {
+        statusEl.textContent = message;
         statusEl.className = "status " + type;
     }
 
@@ -564,19 +418,15 @@ h1 {
             number === 2 ? "50%" : "100%";
     }
 
-    function showFailure(message) {
-        completed = false;
-        rendering = false;
-
-        setStatus(message, "error");
-
-        retryBtn.style.display = "block";
+    function fail(message) {
+        setStatus("⚠️ " + message, "error");
+        retryBtn.style.display = "inline-block";
     }
 
     async function verifyToken(token) {
         if (completed) return;
 
-        setStatus("Validating your security verification...");
+        setStatus("🔐 Verifying your security token...");
         retryBtn.style.display = "none";
 
         try {
@@ -587,9 +437,7 @@ h1 {
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({
-                        token: token
-                    })
+                    body: JSON.stringify({ token })
                 }
             );
 
@@ -597,89 +445,29 @@ h1 {
 
             if (!response.ok || result.success !== true) {
                 throw new Error(
-                    result.detail || "Verification failed."
+                    result.detail || "Cloudflare verification failed."
                 );
             }
 
             completed = true;
-
             setStep(3);
 
             setStatus(
-                "✓ Security verified! Redirecting to registration...",
+                "✅ Verification successful! Redirecting...",
                 "success"
             );
 
-            document.querySelector("h1").textContent =
-                "Security Check Passed";
-
             setTimeout(() => {
                 window.location.replace("/register");
-            }, 650);
+            }, 700);
 
         } catch (error) {
-            showFailure(
-                error.message || "Verification failed. Please retry."
-            );
+            fail(error.message || "Please try again.");
         }
     }
 
-    async function loadConfig() {
-        setStep(1);
-        setStatus("Connecting to security service...");
-
-        try {
-            const response = await fetch(
-                API + "/public/config",
-                {
-                    cache: "no-store"
-                }
-            );
-
-            if (!response.ok) {
-                throw new Error(
-                    "Security service is unavailable."
-                );
-            }
-
-            const config = await response.json();
-
-            if (config.turnstile_enabled === false) {
-                throw new Error(
-                    "Cloudflare verification is disabled."
-                );
-            }
-
-            siteKey = String(
-                config.turnstile_site_key || ""
-            ).trim();
-
-            if (!siteKey) {
-                throw new Error(
-                    "Cloudflare Site Key is not configured."
-                );
-            }
-
-            setStep(2);
-            setStatus("Verifying your browser...");
-
-            startTurnstile();
-
-        } catch (error) {
-            showFailure(error.message);
-        }
-    }
-
-    function startTurnstile() {
-        if (rendering || completed) return;
-
-        if (!window.turnstile) {
-            setTimeout(startTurnstile, 150);
-            return;
-        }
-
-        rendering = true;
-        retryBtn.style.display = "none";
+    function renderWidget() {
+        if (!window.turnstile || !siteKey) return;
 
         try {
             if (widgetId !== null) {
@@ -687,65 +475,97 @@ h1 {
                 widgetId = null;
             }
 
+            completed = false;
+            retryBtn.style.display = "none";
+            setStep(2);
+
             widgetId = turnstile.render(
                 "#turnstile-box",
                 {
                     sitekey: siteKey,
-                    size: "invisible",
-                    execution: "render",
+                    theme: "dark",
+                    size: "normal",
 
                     callback: function(token) {
-                        rendering = false;
                         verifyToken(token);
                     },
 
                     "expired-callback": function() {
-                        rendering = false;
-
-                        if (!completed) {
-                            showFailure(
-                                "Verification expired. Please try again."
-                            );
-                        }
+                        fail("Verification expired. Please try again.");
                     },
 
                     "error-callback": function() {
-                        rendering = false;
-
-                        if (!completed) {
-                            showFailure(
-                                "Cloudflare verification error."
-                            );
-                        }
+                        fail("Cloudflare error. Please retry.");
                     }
                 }
             );
 
-            attempts++;
+            setStatus(
+                "☁️ Complete the Cloudflare Turnstile check."
+            );
 
         } catch (error) {
-            rendering = false;
-
-            showFailure(
-                "Unable to start Cloudflare verification."
-            );
+            fail("Unable to display Cloudflare verification.");
         }
     }
 
-    retryBtn.addEventListener("click", function() {
-        retryBtn.style.display = "none";
-        setStatus("Restarting security verification...");
+    async function loadConfig() {
+        try {
+            const response = await fetch(
+                API + "/public/config",
+                { cache: "no-store" }
+            );
 
+            if (!response.ok) {
+                throw new Error("Security settings unavailable.");
+            }
+
+            const config = await response.json();
+
+            if (config.turnstile_enabled === false) {
+                throw new Error("Turnstile is disabled.");
+            }
+
+            siteKey = String(
+                config.turnstile_site_key || ""
+            ).trim();
+
+            if (!siteKey) {
+                throw new Error("Cloudflare Site Key is missing.");
+            }
+
+            configLoaded = true;
+            setStep(2);
+
+            waitForWidget();
+
+        } catch (error) {
+            fail(error.message);
+        }
+    }
+
+    function waitForWidget() {
+        if (!configLoaded || !window.turnstile) {
+            setTimeout(waitForWidget, 150);
+            return;
+        }
+
+        renderWidget();
+    }
+
+    retryBtn.addEventListener("click", () => {
         if (widgetId !== null && window.turnstile) {
+            retryBtn.style.display = "none";
+            setStatus("🔄 Restarting verification...");
+
             try {
+                completed = false;
                 turnstile.reset(widgetId);
-                rendering = true;
-            } catch (error) {
-                rendering = false;
-                startTurnstile();
+            } catch {
+                renderWidget();
             }
         } else {
-            startTurnstile();
+            loadConfig();
         }
     });
 
