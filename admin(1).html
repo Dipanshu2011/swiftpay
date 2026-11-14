@@ -1,0 +1,1505 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#06131a">
+<title>SwiftPays | Owner Dashboard</title>
+
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#06131a;
+  --panel:#0b2028;
+  --line:#173943;
+  --text:#effaf8;
+  --muted:#8da8ad;
+  --green:#00e5a8;
+  --red:#ff7885;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:radial-gradient(ellipse at 70% -20%,#0d3834,transparent 38%),var(--bg);
+  color:var(--text);
+  font:14px/1.5 system-ui,sans-serif;
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.shell{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:248px minmax(0,1fr);
+}
+aside{
+  background:#081a21;
+  border-right:1px solid var(--line);
+  padding:20px 14px;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  position:sticky;
+  top:0;
+  height:100vh;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:3px 9px 25px;
+}
+.mark{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:#123b37;
+  border:1px solid #20534a;
+  color:var(--green);
+  font-size:27px;
+  font-weight:900;
+  overflow:hidden;
+}
+.mark img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+.brand-name{font-weight:850;font-size:19px}
+.brand-sub{
+  font-size:9px;
+  color:#6f9998;
+  letter-spacing:2px;
+  font-weight:800;
+}
+.nav-caption{
+  padding:7px 11px;
+  color:#55747b;
+  font-size:9px;
+  letter-spacing:2px;
+  font-weight:850;
+}
+.nav{display:grid;gap:5px}
+.nav button{
+  border:1px solid transparent;
+  background:transparent;
+  color:#a5bec0;
+  text-align:left;
+  border-radius:11px;
+  padding:11px 12px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:650;
+  font-size:13px;
+}
+.nav button:hover{background:#0d292e;color:white}
+.nav button.active{
+  background:#0d3b35;
+  border-color:#176456;
+  color:var(--green);
+  box-shadow:inset 3px 0 var(--green);
+}
+.ico{width:19px;text-align:center;font-size:16px}
+.nav .logout{margin-top:12px;color:#ff929b}
+.aside-foot{
+  margin-top:auto;
+  padding:14px 10px;
+  color:#648087;
+  font-size:10px;
+  border-top:1px solid #16333a;
+}
+main{min-width:0}
+.topbar{
+  height:68px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 30px;
+  background:#071820dc;
+  position:sticky;
+  top:0;
+  z-index:5;
+}
+.crumb{color:#779398;font-size:12px}
+.crumb b{color:#d9e9e6}
+.top-right{display:flex;align-items:center;gap:12px}
+.status,.verified{
+  border:1px solid #1b5549;
+  background:#0a2a25;
+  color:#82eacb;
+  padding:7px 10px;
+  border-radius:30px;
+  font-size:10px;
+  font-weight:800;
+}
+.dot{
+  display:inline-block;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+  margin-right:6px;
+}
+.owner{display:flex;align-items:center;gap:8px;font-size:12px}
+.avatar{
+  width:31px;height:31px;border-radius:50%;
+  display:grid;place-items:center;
+  background:#123b35;color:var(--green);
+}
+.content{max-width:1500px;margin:auto;padding:30px}
+.page{display:none}
+.page.active{display:block;animation:fade .2s}
+@keyframes fade{
+  from{opacity:.4;transform:translateY(5px)}
+  to{opacity:1;transform:none}
+}
+.welcome{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:23px;
+}
+.welcome h1{font-size:clamp(23px,3vw,30px);margin:0 0 5px}
+.welcome p{margin:0;color:var(--muted);font-size:13px}
+.notice{
+  padding:13px 15px;
+  border:1px solid #574a2e;
+  background:#211f17;
+  color:#e5cf9d;
+  border-radius:13px;
+  font-size:12px;
+  margin-bottom:18px;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:13px;
+}
+.stat{
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:linear-gradient(145deg,#102a32,#0a1c24);
+  min-height:130px;
+}
+.stat-head{
+  display:flex;
+  justify-content:space-between;
+  color:#9bb3b5;
+  font-size:11px;
+}
+.stat-icon{
+  width:31px;height:31px;
+  border-radius:10px;
+  display:grid;place-items:center;
+  background:#103c34;color:var(--green);
+}
+.stat strong{display:block;font-size:29px;margin:13px 0 2px}
+.stat small{color:#66848a;font-size:10px}
+.stat-foot{
+  display:block;margin-top:7px;
+  color:#56c9a7;font-size:8px;
+  font-weight:850;letter-spacing:1px;
+}
+.section{
+  margin-top:19px;
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:17px;
+  background:linear-gradient(145deg,#0b2028,#091a21);
+}
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:14px;
+}
+.section-head h2{font-size:14px;margin:0}
+.section-head small{font-size:10px;color:#789398}
+.analytics-grid{
+  display:grid;
+  grid-template-columns:1.7fr 1fr;
+  gap:14px;
+  margin-top:18px;
+}
+.analytics-grid .section{margin-top:0}
+.chart-grid{
+  height:205px;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  color:#58777e;
+  font-size:9px;
+}
+.chart-grid svg{
+  position:absolute;
+  inset:0 0 0 35px;
+  width:calc(100% - 35px);
+  height:100%;
+}
+.chart-message{
+  position:absolute;
+  inset:0 0 0 35px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.chart-message span{font-size:32px;color:var(--green)}
+.chart-message b{font-size:12px}
+.chart-message small{font-size:10px;color:#78979b;margin-top:4px}
+.chart-days{
+  display:flex;
+  justify-content:space-between;
+  margin:9px 0 0 35px;
+  color:#64858a;
+  font-size:8px;
+}
+.chart-legend{
+  display:flex;
+  gap:17px;
+  margin-top:15px;
+  color:#8da8ad;
+  font-size:10px;
+}
+.legend-dot{
+  width:7px;height:7px;
+  border-radius:50%;display:inline-block;
+}
+.deposits-dot{background:#00e5a8}
+.withdrawals-dot{background:#6da8ff}
+.activity-row{
+  display:flex;align-items:center;
+  gap:10px;padding:13px 0;
+  border-bottom:1px solid #17343c;
+}
+.activity-row:last-child{border:0}
+.activity-row div{flex:1}
+.activity-row b{display:block;font-size:11px}
+.activity-row small{color:#718f94;font-size:9px}
+.activity-row>strong{font-size:19px}
+.quick{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+.quick button{
+  min-height:84px;
+  text-align:left;
+  border:1px solid #1a3b43;
+  background:#0a1d24;
+  border-radius:12px;
+  color:#d9e9e6;
+  padding:13px;
+}
+.quick b{display:block;color:var(--green);font-size:20px}
+.quick span{font-size:11px;font-weight:750}
+.empty{
+  border:1px dashed #28505a;
+  border-radius:14px;
+  padding:24px;
+  text-align:center;
+  color:#8aa4a8;
+  font-size:12px;
+}
+.empty strong{
+  display:block;color:#dcebe8;
+  font-size:14px;margin-bottom:5px;
+}
+.module-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.module-card{
+  padding:17px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#0b2028;
+}
+.module-card h3{font-size:13px;margin:0 0 5px}
+.module-card p{
+  font-size:11px;color:var(--muted);
+  margin:0;line-height:1.6;
+}
+.pill{
+  display:inline-block;margin-top:12px;
+  padding:5px 8px;
+  border:1px solid #55492c;
+  border-radius:20px;
+  color:#e5c98c;background:#242117;
+  font-size:9px;font-weight:800;
+}
+.brand-preview{
+  display:flex;align-items:center;gap:18px;
+  padding:18px;border:1px solid var(--line);
+  border-radius:14px;background:#091b22;
+  margin-bottom:14px;
+}
+.brand-preview img{
+  width:130px;height:130px;
+  object-fit:contain;border-radius:16px;
+  background:#061219;padding:7px;
+  border:1px solid #24434a;
+}
+.upload-label,.action-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 14px;
+  border:1px solid #1c6655;
+  background:#0d332d;color:#9af1d5;
+  border-radius:10px;font-weight:750;font-size:11px;
+}
+.action-btn:disabled{opacity:.5;cursor:not-allowed}
+.action-btn.danger{
+  border-color:#71323a;background:#35191e;color:#ff9da3;
+}
+.action-btn.save-config{
+  background:linear-gradient(120deg,#00a77f,#08765f);
+  color:white;
+}
+.hint{color:#789398;font-size:10px;line-height:1.6;margin-top:10px}
+.config-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.config-field{
+  display:flex;flex-direction:column;gap:8px;
+  color:#d8e9e5;font-size:11px;font-weight:750;
+}
+.config-field input,.config-field select{
+  width:100%;border:1px solid #24464e;
+  background:#071820;color:#e9f7f2;
+  border-radius:10px;padding:13px;
+}
+.config-check{
+  display:flex;gap:10px;margin-top:17px;
+  padding:13px;border:1px solid #20443f;
+  background:#0a2424;border-radius:11px;
+  font-size:11px;
+}
+.config-check input{accent-color:var(--green)}
+.config-actions{
+  display:flex;align-items:center;
+  gap:13px;flex-wrap:wrap;
+}
+@media(max-width:1050px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .analytics-grid{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  .shell{display:block}
+  aside{
+    position:relative;height:auto;
+    min-height:0;padding:11px 12px;
+  }
+  .brand{padding:1px 5px 10px}
+  .nav-caption,.aside-foot{display:none}
+  .nav{display:flex;gap:6px;overflow-x:auto}
+  .nav button{
+    flex:0 0 auto;white-space:nowrap;
+    padding:9px 11px;font-size:11px;
+  }
+  .nav button.active{box-shadow:inset 0 -2px var(--green)}
+  .topbar{
+    height:53px;padding:0 15px;
+    position:relative;
+  }
+  .content{padding:21px 13px 35px}
+  .welcome h1{font-size:23px}
+  .stats{grid-template-columns:repeat(2,1fr);gap:9px}
+  .stat{min-height:115px;padding:13px}
+  .stat strong{font-size:23px}
+  .analytics-grid,.module-grid{grid-template-columns:1fr}
+  .quick{grid-template-columns:repeat(2,1fr)}
+  .config-grid{grid-template-columns:1fr}
+  .brand-preview{align-items:flex-start;flex-direction:column}
+}
+</style>
+</head>
+<body>
+ 
+<div class="app" id="adminApp">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-logo">S</div>
+      <div>
+        <h2>SwiftPays</h2>
+        <small>ADMIN PANEL</small>
+      </div>
+    </div>
+
+    <nav class="nav-menu">
+      <p class="nav-label">MAIN MENU</p>
+
+      <button class="nav-item active" data-page="dashboard">
+        <span>▦</span> Dashboard
+      </button>
+
+      <button class="nav-item" data-page="users">
+        <span>♙</span> Users
+      </button>
+
+      <button class="nav-item" data-page="deposits">
+        <span>＋</span> Deposits
+      </button>
+
+      <button class="nav-item" data-page="withdrawals">
+        <span>↗</span> Withdrawals
+      </button>
+
+      <button class="nav-item" data-page="transactions">
+        <span>⇄</span> Transactions
+      </button>
+
+      <p class="nav-label">MANAGEMENT</p>
+
+      <button class="nav-item" data-page="branding">
+        <span>◈</span> Branding & Logo
+      </button>
+
+      <button class="nav-item" data-page="security">
+        <span>♧</span> Security
+      </button>
+
+      <button class="nav-item" data-page="configuration">
+        <span>⚙</span> Configuration
+      </button>
+
+      <button class="nav-item" data-page="settings">
+        <span>☷</span> Settings
+      </button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="admin-profile">
+        <div class="avatar">A</div>
+        <div>
+          <strong>Administrator</strong>
+          <small id="adminRole">Admin</small>
+        </div>
+      </div>
+
+      <button class="nav-item logout-btn" id="logoutBtn">
+        <span>⇥</span> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <div>
+          <h2 id="pageTitle">Dashboard</h2>
+          <p id="pageSubtitle">Welcome to SwiftPays Admin Panel</p>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <span class="online-status">
+          <i></i> System Online
+        </span>
+        <div class="top-avatar">A</div>
+      </div>
+    </header>
+
+    <!-- DASHBOARD PAGE -->
+    <section class="page active" id="page-dashboard">
+
+      <div class="welcome-section">
+        <div>
+          <h2>Welcome Back, Admin!</h2>
+          <p>Here is what's happening with your platform.</p>
+        </div>
+        <button class="refresh-btn" id="refreshDashboard">
+          ↻ Refresh Data
+        </button>
+      </div>
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <div class="stat-icon blue">♙</div>
+          <div>
+            <p>Total Users</p>
+            <h2 id="totalUsers">0</h2>
+            <small>Registered users</small>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon green">₹</div>
+          <div>
+            <p>Total Deposits</p>
+            <h2 id="totalDeposits">₹0</h2>
+            <small>Deposit amount</small>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon orange">↗</div>
+          <div>
+            <p>Total Withdrawals</p>
+            <h2 id="totalWithdrawals">₹0</h2>
+            <small>Withdrawal amount</small>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon purple">⇄</div>
+          <div>
+            <p>Total Transactions</p>
+            <h2 id="totalTransactions">0</h2>
+            <small>All transactions</small>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="content-card">
+        <div class="card-header">
+          <div>
+            <h3>Recent Users</h3>
+            <p>Latest registered accounts</p>
+          </div>
+          <button class="text-btn" data-goto="users">
+            View All →
+          </button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>SwiftPays ID</th>
+                <th>Mobile</th>
+                <th>Balance</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="recentUsersBody">
+              <tr>
+                <td colspan="5" class="empty-state">
+                  Loading users...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- USERS PAGE -->
+    <section class="page" id="page-users">
+
+      <div class="page-heading">
+        <div>
+          <h2>User Management</h2>
+          <p>View and manage registered SwiftPays users.</p>
+        </div>
+      </div>
+
+      <div class="user-summary-grid">
+        <div class="mini-stat">
+          <span>Total Users</span>
+          <strong id="usersCount">0</strong>
+        </div>
+
+        <div class="mini-stat">
+          <span>Active Users</span>
+          <strong id="activeUsers">0</strong>
+        </div>
+
+        <div class="mini-stat">
+          <span>Blocked Users</span>
+          <strong id="blockedUsers">0</strong>
+        </div>
+      </div>
+
+      <div class="content-card">
+
+        <div class="users-toolbar">
+          <div>
+            <h3>All Users</h3>
+            <p>Search and manage user accounts</p>
+          </div>
+
+          <button class="refresh-btn" id="refreshUsers">
+            ↻ Refresh
+          </button>
+        </div>
+
+        <div class="search-row">
+          <input
+            type="search"
+            id="userSearch"
+            placeholder="Search by name, mobile or SwiftPays ID..."
+          >
+
+          <select id="userStatusFilter">
+            <option value="all">All Users</option>
+            <option value="active">Active</option>
+            <option value="blocked">Blocked</option>
+          </select>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>User Details</th>
+                <th>SwiftPays ID</th>
+                <th>Mobile Number</th>
+                <th>Balance</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody id="usersTableBody">
+              <tr>
+                <td colspan="6" class="empty-state">
+                  Loading users...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pagination">
+          <button id="prevUsers" disabled>← Previous</button>
+          <span id="usersPageInfo">Page 1</span>
+          <button id="nextUsers">Next →</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- DEPOSITS PAGE -->
+    <section class="page" id="page-deposits">
+      <div class="page-heading">
+        <h2>Deposits</h2>
+        <p>Manage user deposit requests.</p>
+      </div>
+
+      <div class="content-card">
+        <div class="card-header">
+          <h3>Deposit Requests</h3>
+          <button class="refresh-btn" id="refreshDeposits">↻ Refresh</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>User</th>
+                <th>Amount</th>
+                <th>Method</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="depositsTableBody">
+              <tr><td colspan="6" class="empty-state">No data loaded.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- WITHDRAWALS PAGE -->
+    <section class="page" id="page-withdrawals">
+      <div class="page-heading">
+        <h2>Withdrawals</h2>
+        <p>Review and manage withdrawal requests.</p>
+      </div>
+
+      <div class="content-card">
+        <div class="card-header">
+          <h3>Withdrawal Requests</h3>
+          <button class="refresh-btn" id="refreshWithdrawals">↻ Refresh</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Request ID</th>
+                <th>User</th>
+                <th>Amount</th>
+                <th>Method</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="withdrawalsTableBody">
+              <tr><td colspan="7" class="empty-state">No data loaded.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRANSACTIONS PAGE -->
+    <section class="page" id="page-transactions">
+      <div class="page-heading">
+        <h2>Transactions</h2>
+        <p>View platform transaction records.</p>
+      </div>
+
+      <div class="content-card">
+        <div class="card-header">
+          <h3>Transaction History</h3>
+          <button class="refresh-btn" id="refreshTransactions">↻ Refresh</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>User</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="transactionsTableBody">
+              <tr><td colspan="6" class="empty-state">No data loaded.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- BRANDING PAGE -->
+    <section class="page" id="page-branding">
+      <div class="page-heading">
+        <h2>Branding & Logo</h2>
+        <p>Manage your website branding.</p>
+      </div>
+
+      <div class="content-card">
+        <h3>Website Branding</h3>
+
+        <label>Website Name</label>
+        <input type="text" id="brandName" placeholder="SwiftPays">
+
+        <label>Logo URL</label>
+        <input type="url" id="brandLogo" placeholder="https://example.com/logo.png">
+
+        <button class="primary-btn" id="saveBranding">
+          Save Branding
+        </button>
+      </div>
+    </section>
+
+    <!-- SECURITY PAGE -->
+    <section class="page" id="page-security">
+      <div class="page-heading">
+        <h2>Security</h2>
+        <p>Review administrative security settings.</p>
+      </div>
+
+      <div class="content-card">
+        <h3>Admin Security</h3>
+        <p>Admin access must be verified by the backend.</p>
+        <div class="security-info" id="securityInfo">
+          Security information will load here.
+        </div>
+      </div>
+    </section>
+
+    <!-- CONFIGURATION PAGE -->
+    <section class="page" id="page-configuration">
+      <div class="page-heading">
+        <h2>Configuration</h2>
+        <p>Manage platform configuration.</p>
+      </div>
+
+      <div class="content-card">
+        <h3>Platform Configuration</h3>
+
+        <label>Minimum Deposit (₹)</label>
+        <input type="number" id="minimumDeposit" min="0">
+
+        <label>Minimum Withdrawal (₹)</label>
+        <input type="number" id="minimumWithdrawal" min="0">
+
+        <label>Support Username</label>
+        <input type="text" id="supportUsername" placeholder="@support">
+
+        <button class="primary-btn" id="saveConfiguration">
+          Save Configuration
+        </button>
+      </div>
+    </section>
+
+    <!-- SETTINGS PAGE -->
+    <section class="page" id="page-settings">
+      <div class="page-heading">
+        <h2>Settings</h2>
+        <p>Admin dashboard preferences.</p>
+      </div>
+
+      <div class="content-card">
+        <h3>Dashboard Settings</h3>
+        <p>Additional settings will be connected in Part 3.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- USER ACTION MODAL -->
+<div class="modal-overlay" id="userModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>User Details</h3>
+      <button class="modal-close" id="closeUserModal">×</button>
+    </div>
+
+    <div id="userModalContent"></div>
+  </div>
+</div>
+
+<!-- NOTIFICATION -->
+<div class="toast" id="toast"></div>
+                  
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+/* =====================================
+   SWIFTPAYS FIREBASE CONFIGURATION
+===================================== */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA_KW4G3pdXu2VKTqa2-Sk9xE4hzDIWU9I",
+  authDomain: "swiftpay-d0bd2.firebaseapp.com",
+  projectId: "swiftpay-d0bd2",
+  storageBucket: "swiftpay-d0bd2.firebasestorage.app",
+  messagingSenderId: "83327557267",
+  appId: "1:83327557267:web:a5605f47bc72ae4190f766"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const API_BASE = "https://swiftpay-api-6azu.onrender.com";
+
+let currentUsers = [];
+let usersPage = 0;
+const USERS_LIMIT = 20;
+let hasMoreUsers = false;
+let adminVerified = false;
+
+/* =====================================
+   COMMON HELPERS
+===================================== */
+
+const $ = id => document.getElementById(id);
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
+}
+
+function money(value) {
+  return "₹" + (Number(value || 0) / 100).toFixed(2);
+}
+
+function showToast(message) {
+  const toast = $("toast");
+  if (!toast) return;
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
+}
+
+async function api(path, options = {}) {
+  const user = auth.currentUser;
+
+  if (!user) {
+    throw new Error("Admin login required.");
+  }
+
+  const idToken = await user.getIdToken();
+
+  const response = await fetch(API_BASE + path, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + idToken,
+      ...(options.headers || {})
+    }
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.detail || data.message || "API request failed.");
+  }
+
+  return data;
+}
+
+/* =====================================
+   ADMIN AUTHENTICATION
+===================================== */
+
+async function verifyAdmin(user) {
+  const idToken = await user.getIdToken();
+
+  const response = await fetch(API_BASE + "/admin/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      firebase_id_token: idToken
+    })
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok || data.authorized !== true) {
+    throw new Error(data.detail || "Admin access denied.");
+  }
+
+  adminVerified = true;
+
+  window.swiftPaysAdminRole = data.role || "admin";
+  window.swiftPaysAdminPermissions = data.permissions || [];
+  if ($("adminRole")) $("adminRole").textContent = data.role || "Admin";
+  if (data.role === "admin") {
+    document.querySelectorAll('[data-page="configuration"], [data-page="settings"]').forEach(el => el.style.display = "none");
+    if (!data.permissions.includes("users")) document.querySelectorAll('[data-page="users"]').forEach(el => el.style.display = "none");
+    if (!data.permissions.includes("deposits")) document.querySelectorAll('[data-page="deposits"]').forEach(el => el.style.display = "none");
+    if (!data.permissions.includes("withdrawals")) document.querySelectorAll('[data-page="withdrawals"]').forEach(el => el.style.display = "none");
+    if (!data.permissions.includes("reports")) document.querySelectorAll('[data-page="transactions"]').forEach(el => el.style.display = "none");
+  }
+}
+
+async function adminLogin() {
+  const email = prompt("Enter admin email:");
+  if (!email) return;
+
+  const password = prompt("Enter admin password:");
+  if (!password) return;
+
+  try {
+    await signInWithEmailAndPassword(auth, email.trim(), password);
+  } catch (error) {
+    showToast(error.message);
+  }
+}
+
+onAuthStateChanged(auth, async user => {
+  if (!user) {
+    adminVerified = false;
+    await adminLogin();
+    return;
+  }
+
+  try {
+    await verifyAdmin(user);
+    showToast("Admin verified successfully.");
+    loadDashboard();
+    loadUsers();
+  } catch (error) {
+    adminVerified = false;
+    showToast(error.message);
+    await signOut(auth);
+  }
+});
+
+/* =====================================
+   PAGE NAVIGATION
+===================================== */
+
+const pageNames = {
+  dashboard: ["Dashboard", "Welcome to SwiftPays Admin Panel"],
+  users: ["Users", "Manage registered users"],
+  deposits: ["Deposits", "Manage deposit requests"],
+  withdrawals: ["Withdrawals", "Manage withdrawal requests"],
+  transactions: ["Transactions", "View transaction records"],
+  branding: ["Branding & Logo", "Manage website branding"],
+  security: ["Security", "Manage admin security"],
+  configuration: ["Configuration", "Manage platform settings"],
+  settings: ["Settings", "Dashboard preferences"]
+};
+
+function openPage(name) {
+  if (!adminVerified) return;
+
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
+
+  document.querySelectorAll(".nav-item[data-page]").forEach(button => {
+    button.classList.remove("active");
+  });
+
+  const page = $("page-" + name);
+  const nav = document.querySelector(
+    '.nav-item[data-page="' + name + '"]'
+  );
+
+  if (page) page.classList.add("active");
+  if (nav) nav.classList.add("active");
+
+  if (pageNames[name]) {
+    $("pageTitle").textContent = pageNames[name][0];
+    $("pageSubtitle").textContent = pageNames[name][1];
+  }
+
+  $("sidebar")?.classList.remove("open");
+
+  if (name === "users") loadUsers();
+  if (name === "deposits") loadDeposits();
+  if (name === "withdrawals") loadWithdrawals();
+  if (name === "transactions") loadTransactions();
+  if (name === "configuration") loadConfiguration();
+}
+
+document.querySelectorAll(".nav-item[data-page]").forEach(button => {
+  button.addEventListener("click", () => {
+    openPage(button.dataset.page);
+  });
+});
+
+document.querySelectorAll("[data-goto]").forEach(button => {
+  button.addEventListener("click", () => {
+    openPage(button.dataset.goto);
+  });
+});
+
+$("menuToggle")?.addEventListener("click", () => {
+  $("sidebar")?.classList.toggle("open");
+});
+
+/* =====================================
+   DASHBOARD DATA
+===================================== */
+
+async function loadDashboard() {
+  if (!adminVerified) return;
+
+  try {
+    const data = await api("/admin/stats");
+
+    $("totalUsers").textContent = data.total_users ?? 0;
+    $("totalDeposits").textContent =
+      money(data.total_deposits_paise);
+    $("totalWithdrawals").textContent =
+      money(data.total_withdrawals_paise);
+    $("totalTransactions").textContent =
+      data.total_transactions ?? 0;
+
+    loadRecentUsers();
+
+  } catch (error) {
+    showToast("Dashboard: " + error.message);
+  }
+}
+
+async function loadRecentUsers() {
+  try {
+    const data = await api("/admin/users?limit=5&offset=0");
+    const users = data.users || [];
+
+    $("recentUsersBody").innerHTML = users.length
+      ? users.map(user => `
+        <tr>
+          <td>${escapeHTML(user.name)}</td>
+          <td>${escapeHTML(user.user_id)}</td>
+          <td>${escapeHTML(user.mobile)}</td>
+          <td>${money(user.balance_paise)}</td>
+          <td>${escapeHTML(user.status || "active")}</td>
+        </tr>
+      `).join("")
+      : `<tr><td colspan="5" class="empty-state">No users found.</td></tr>`;
+
+  } catch (error) {
+    $("recentUsersBody").innerHTML =
+      `<tr><td colspan="5" class="empty-state">Unable to load users.</td></tr>`;
+  }
+}
+
+$("refreshDashboard")?.addEventListener("click", loadDashboard);
+
+/* =====================================
+   USER MANAGEMENT
+===================================== */
+
+async function loadUsers() {
+  if (!adminVerified) return;
+
+  const query = $("userSearch")?.value.trim() || "";
+
+  const offset = usersPage * USERS_LIMIT;
+
+  $("usersTableBody").innerHTML =
+    `<tr><td colspan="6" class="empty-state">Loading users...</td></tr>`;
+
+  try {
+    const data = await api(
+      `/admin/users?limit=${USERS_LIMIT}&offset=${offset}&q=${encodeURIComponent(query)}`
+    );
+
+    currentUsers = data.users || [];
+    hasMoreUsers = Boolean(data.has_more);
+
+    renderUsers();
+
+    $("usersPageInfo").textContent = "Page " + (usersPage + 1);
+    $("prevUsers").disabled = usersPage === 0;
+    $("nextUsers").disabled = !hasMoreUsers;
+
+    $("usersCount").textContent =
+      data.total_users ?? currentUsers.length;
+
+    $("activeUsers").textContent =
+      data.active_users ?? currentUsers.filter(
+        user => user.status === "active"
+      ).length;
+
+    $("blockedUsers").textContent =
+      data.blocked_users ?? currentUsers.filter(
+        user => user.status === "blocked"
+      ).length;
+
+  } catch (error) {
+    $("usersTableBody").innerHTML =
+      `<tr><td colspan="6" class="empty-state">${escapeHTML(error.message)}</td></tr>`;
+  }
+}
+
+function renderUsers() {
+  const filter = $("userStatusFilter")?.value || "all";
+
+  const users = currentUsers.filter(user => {
+    return filter === "all" || user.status === filter;
+  });
+
+  $("usersTableBody").innerHTML = users.length
+    ? users.map(user => `
+      <tr>
+        <td>
+          <strong>${escapeHTML(user.name)}</strong>
+        </td>
+        <td>${escapeHTML(user.user_id)}</td>
+        <td>${escapeHTML(user.mobile)}</td>
+        <td>${money(user.balance_paise)}</td>
+        <td>
+          <span class="status ${user.status === "active" ? "success" : "danger"}">
+            ${escapeHTML(user.status || "active")}
+          </span>
+        </td>
+        <td>
+          <button class="action-btn"
+            data-user-action="view"
+            data-user-id="${escapeHTML(user.user_id)}">
+            View
+          </button>
+        </td>
+      </tr>
+    `).join("")
+    : `<tr><td colspan="6" class="empty-state">No users found.</td></tr>`;
+}
+
+$("userSearch")?.addEventListener("input", () => {
+  usersPage = 0;
+  loadUsers();
+});
+
+$("userStatusFilter")?.addEventListener("change", renderUsers);
+$("refreshUsers")?.addEventListener("click", loadUsers);
+
+$("prevUsers")?.addEventListener("click", () => {
+  if (usersPage > 0) {
+    usersPage--;
+    loadUsers();
+  }
+});
+
+$("nextUsers")?.addEventListener("click", () => {
+  if (hasMoreUsers) {
+    usersPage++;
+    loadUsers();
+  }
+});
+
+/* =====================================
+   USER DETAILS AND ACTIONS
+===================================== */
+
+document.addEventListener("click", async event => {
+  const button = event.target.closest("[data-user-action]");
+  if (!button) return;
+
+  const user = currentUsers.find(
+    item => String(item.user_id) === button.dataset.userId
+  );
+
+  if (!user) return;
+
+  if (button.dataset.userAction === "view") {
+    $("userModalContent").innerHTML = `
+      <div class="user-detail">
+        <p><strong>Name:</strong> ${escapeHTML(user.name)}</p>
+        <p><strong>SwiftPays ID:</strong> ${escapeHTML(user.user_id)}</p>
+        <p><strong>Mobile:</strong> ${escapeHTML(user.mobile)}</p>
+        <p><strong>Balance:</strong> ${money(user.balance_paise)}</p>
+        <p><strong>Status:</strong> ${escapeHTML(user.status)}</p>
+      </div>
+
+      <div class="modal-actions">
+        <button class="primary-btn" id="editUserBtn">Edit Name</button>
+        <button class="primary-btn" id="addBalanceBtn">Add Balance</button>
+        <button class="primary-btn" id="removeBalanceBtn">Remove Balance</button>
+        <button class="danger-btn" id="toggleUserBtn">
+          ${user.status === "active" ? "Block User" : "Activate User"}
+        </button>
+      </div>
+    `;
+
+    $("userModal").classList.add("show");
+
+    $("editUserBtn").onclick = () => editUser(user);
+    $("addBalanceBtn").onclick = () => changeBalance(user, "add");
+    $("removeBalanceBtn").onclick = () => changeBalance(user, "remove");
+    $("toggleUserBtn").onclick = () => toggleUserStatus(user);
+  }
+});
+
+async function editUser(user) {
+  const name = prompt("Enter new user name:", user.name);
+  if (!name || !name.trim()) return;
+
+  try {
+    await api(`/admin/users/${encodeURIComponent(user.user_id)}`, {
+      method: "PATCH",
+      body: JSON.stringify({ name: name.trim() })
+    });
+
+    showToast("User updated.");
+    $("userModal").classList.remove("show");
+    loadUsers();
+
+  } catch (error) {
+    showToast(error.message);
+  }
+}
+
+async function changeBalance(user, action) {
+  const amount = Number(prompt("Enter amount in rupees:"));
+
+  if (!Number.isFinite(amount) || amount <= 0) {
+    showToast("Enter a valid amount.");
+    return;
+  }
+
+  const reason = prompt("Enter reason:");
+  if (!reason) return;
+
+  try {
+    await api(
+      `/admin/users/${encodeURIComponent(user.user_id)}/balance`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          action,
+          amount_rupees: amount,
+          reason
+        })
+      }
+    );
+
+    showToast("Balance updated successfully.");
+    $("userModal").classList.remove("show");
+    loadUsers();
+    loadDashboard();
+
+  } catch (error) {
+    showToast(error.message);
+  }
+}
+
+async function toggleUserStatus(user) {
+  const newStatus =
+    user.status === "active" ? "blocked" : "active";
+
+  if (!confirm(`Change user status to ${newStatus}?`)) return;
+
+  try {
+    await api(
+      `/admin/users/${encodeURIComponent(user.user_id)}/status`,
+      {
+        method: "POST",
+        body: JSON.stringify({ status: newStatus })
+      }
+    );
+
+    showToast("User status updated.");
+    $("userModal").classList.remove("show");
+    loadUsers();
+
+  } catch (error) {
+    showToast(error.message);
+  }
+}
+
+$("closeUserModal")?.addEventListener("click", () => {
+  $("userModal").classList.remove("show");
+});
+
+/* =====================================
+   DEPOSITS / WITHDRAWALS / TRANSACTIONS
+===================================== */
+
+async function loadTable(endpoint, tableId, columns) {
+  try {
+    const data = await api(endpoint);
+    const records = data.items || data.records || [];
+
+    $(tableId).innerHTML = records.length
+      ? records.map(item => `
+        <tr>
+          ${columns.map(key =>
+            `<td>${escapeHTML(item[key] ?? "-")}</td>`
+          ).join("")}
+        </tr>
+      `).join("")
+      : `<tr><td colspan="${columns.length}" class="empty-state">No records found.</td></tr>`;
+
+  } catch (error) {
+    $(tableId).innerHTML =
+      `<tr><td colspan="${columns.length}" class="empty-state">${escapeHTML(error.message)}</td></tr>`;
+  }
+}
+
+function loadDeposits() {
+  return loadTable(
+    "/admin/deposits",
+    "depositsTableBody",
+    ["transaction_id", "user_id", "amount", "method", "status", "created_at"]
+  );
+}
+
+function loadWithdrawals() {
+  return loadTable(
+    "/admin/withdrawals",
+    "withdrawalsTableBody",
+    ["request_id", "user_id", "amount", "method", "status", "created_at"]
+  );
+}
+
+function loadTransactions() {
+  return loadTable(
+    "/admin/transactions",
+    "transactionsTableBody",
+    ["transaction_id", "user_id", "type", "amount", "status", "created_at"]
+  );
+}
+
+$("refreshDeposits")?.addEventListener("click", loadDeposits);
+$("refreshWithdrawals")?.addEventListener("click", loadWithdrawals);
+$("refreshTransactions")?.addEventListener("click", loadTransactions);
+
+/* =====================================
+   BRANDING AND CONFIGURATION
+===================================== */
+
+$("saveBranding")?.addEventListener("click", async () => {
+  const payload = {
+    brand_name: $("brandName").value.trim(),
+    logo_url: $("brandLogo").value.trim()
+  };
+
+  try {
+    await api("/admin/config", {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+
+    showToast("Branding saved.");
+  } catch (error) {
+    showToast(error.message);
+  }
+});
+
+async function loadConfiguration() {
+  try {
+    const data = await api("/admin/config");
+
+    $("brandName").value = data.brand_name || "";
+    $("brandLogo").value = data.logo_url || "";
+    $("minimumDeposit").value = data.minimum_deposit ?? "";
+    $("minimumWithdrawal").value = data.minimum_withdrawal ?? "";
+    $("supportUsername").value = data.support_username || "";
+
+  } catch (error) {
+    showToast("Configuration: " + error.message);
+  }
+}
+
+$("saveConfiguration")?.addEventListener("click", async () => {
+  const payload = {
+    minimum_deposit: Number($("minimumDeposit").value),
+    minimum_withdrawal: Number($("minimumWithdrawal").value),
+    support_username: $("supportUsername").value.trim()
+  };
+
+  try {
+    await api("/admin/config", {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+
+    showToast("Configuration saved.");
+  } catch (error) {
+    showToast(error.message);
+  }
+});
+
+/* =====================================
+   LOGOUT
+===================================== */
+
+$("logoutBtn")?.addEventListener("click", async () => {
+  if (!confirm("Are you sure you want to logout?")) return;
+
+  try {
+    adminVerified = false;
+    await signOut(auth);
+    showToast("Logged out.");
+  } catch (error) {
+    showToast(error.message);
+  }
+});
+
+</script>
+</body>
+</html>
