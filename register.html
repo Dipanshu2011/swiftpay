@@ -1,135 +1,536 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#05091e">
-<title>Create Your Account | SwiftPays</title>
+<title>Create Account | SwiftPays</title>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 <style>
-:root{color-scheme:dark;--cyan:#13dff4;--blue:#2777ff;--purple:#b23cff;--muted:#bdcbed}
-*{box-sizing:border-box;margin:0;padding:0}
-body{min-height:100vh;padding:24px 14px;display:flex;align-items:center;justify-content:center;font-family:Inter,system-ui,-apple-system,Arial,sans-serif;color:#f8fbff;background:radial-gradient(ellipse at 0% 12%,#0756a955,transparent 38%),radial-gradient(ellipse at 100% 75%,#6015a955,transparent 38%),#030719}
-.card{width:min(100%,650px);padding:36px 30px 30px;border:2px solid transparent;border-radius:34px;background:linear-gradient(145deg,#06132cF5,#080b25F8) padding-box,linear-gradient(135deg,var(--cyan),#286bff 48%,var(--purple)) border-box;box-shadow:0 0 32px #078bff2b,0 24px 80px #0009;position:relative;overflow:hidden}
-.card:before,.card:after{content:"";position:absolute;width:210px;height:210px;border:1px solid #168eff33;border-radius:50%;pointer-events:none}.card:before{top:-145px;left:-110px;box-shadow:0 0 45px #078bff22}.card:after{right:-150px;bottom:-150px;box-shadow:0 0 50px #a52cff22}
-.hero{text-align:center;position:relative;z-index:1;margin-bottom:26px}
-.shield{width:150px;height:150px;margin:0 auto 15px;display:grid;place-items:center;position:relative;filter:drop-shadow(0 0 15px #00cfff66)}
-.shield:before{content:"";position:absolute;inset:8px;border:2px solid transparent;border-radius:34px;background:linear-gradient(#07152f,#07152f) padding-box,linear-gradient(140deg,#00eaff,#326aff,#b33cff) border-box;transform:rotate(45deg);box-shadow:0 0 28px #087dff33}
-.shield svg{width:115px;height:125px;position:relative;z-index:1}
-h1{font-size:clamp(29px,6vw,39px);font-weight:850;letter-spacing:-.7px;margin-bottom:10px}
-.intro{max-width:490px;margin:auto;color:var(--muted);font-size:15px;line-height:1.65}
-.fields{position:relative;z-index:1}
-label{display:block;margin:20px 0 9px;color:#e1eaff;font-size:14px;font-weight:750}
-.field{position:relative}
-.field input{width:100%;height:68px;padding:0 20px 0 58px;border:1.5px solid #247fc9;border-radius:17px;background:linear-gradient(110deg,#10274a,#101534);color:#fff;font-size:16px;outline:none;box-shadow:inset 0 0 18px #1879ff0b;transition:border-color .18s,box-shadow .18s}
-.field input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #12dff422,0 0 20px #078bff22}
-.field input::placeholder{color:#a7b8d7}
-.field-icon{position:absolute;left:19px;top:50%;transform:translateY(-50%);font-size:21px;color:#4bdcff;pointer-events:none}
-.mobile-wrap{display:flex;align-items:center;position:relative}
-.country{position:absolute;left:17px;z-index:2;color:#f4f8ff;font-weight:750;font-size:15px;pointer-events:none}
-.mobile-wrap input{padding-left:83px}
-.password-wrap input{padding-right:58px}
-.toggle{position:absolute;right:13px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:#9ed7ff;font-size:20px;padding:8px;cursor:pointer}
-.hint{margin:8px 2px 0;color:#91a6ca;font-size:12px;line-height:1.5}
-.submit{width:100%;min-height:72px;margin-top:29px;border:0;border-radius:18px;background:linear-gradient(105deg,#08d9e8 0%,#1768f5 55%,#a52dff 100%);color:#fff;font-size:18px;font-weight:850;letter-spacing:.1px;cursor:pointer;box-shadow:0 10px 32px #1768f555;transition:filter .2s,transform .2s}
-.submit:active{transform:scale(.99)}.submit:disabled{opacity:.62;cursor:wait}
-.status{min-height:22px;margin-top:16px;text-align:center;font-size:13px;line-height:1.55;color:#aebfdf}.status.error{color:#ff9090}.status.success{color:#43eab0}
-.secure-note{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:26px;color:#d1def5;font-size:13px;text-align:center}.secure-note span{color:#29e1f4;font-size:21px}
-.switch{margin-top:28px;padding-top:23px;border-top:1px solid #ffffff24;text-align:center;color:#c2cee8;font-size:15px}.switch a{color:#24e0f2;font-weight:850;text-decoration:none;margin-left:5px}
-.footer{text-align:center;margin-top:25px;color:#879abd;font-size:11px;letter-spacing:.2px}
-@media(max-width:480px){body{padding:13px 10px}.card{padding:29px 19px 25px;border-radius:29px}.shield{width:125px;height:125px}.shield svg{width:100px;height:110px}.field input{height:62px;font-size:15px}.submit{min-height:65px;font-size:16px}.intro{font-size:14px}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
-</style>
-</head>
-<body>
-<main class="card">
-  <header class="hero">
-    <div class="shield" aria-hidden="true">
-      <svg viewBox="0 0 120 130" fill="none">
-        <defs><linearGradient id="sg" x1="10" y1="5" x2="110" y2="125"><stop stop-color="#16eaff"/><stop offset=".55" stop-color="#2777ff"/><stop offset="1" stop-color="#bd43ff"/></linearGradient></defs>
-        <path d="M60 7 105 25v35c0 30-18 49-45 63C33 109 15 90 15 60V25L60 7Z" stroke="url(#sg)" stroke-width="5" fill="#0c2550" fill-opacity=".85"/>
-        <circle cx="60" cy="47" r="13" fill="url(#sg)"/>
-        <path d="M34 88c2-16 12-25 26-25s24 9 26 25" stroke="url(#sg)" stroke-width="9" stroke-linecap="round"/>
-        <circle cx="91" cy="88" r="17" fill="#06254b" stroke="#13e4ef" stroke-width="4"/>
-        <path d="m83 88 6 6 11-13" stroke="#55f4e5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-    <h1>Create Your Account</h1>
-    <p class="intro">Join SwiftPays and enjoy secure, fast and reliable payment services.</p>
-  </header>
-
-  <form id="registerForm" class="fields" autocomplete="on">
-    <label for="name">👤 &nbsp;Full Name</label>
-    <div class="field"><span class="field-icon">♙</span><input id="name" name="name" type="text" maxlength="80" autocomplete="name" placeholder="Enter your full name" required></div>
-
-    <label for="mobile">📱 &nbsp;Mobile Number</label>
-    <div class="field mobile-wrap"><span class="country">🇮🇳 +91</span><input id="mobile" name="mobile" type="tel" inputmode="numeric" maxlength="10" pattern="[6-9][0-9]{9}" autocomplete="tel-national" placeholder="10-digit mobile number" required></div>
-    <p class="hint">Enter your active 10-digit Indian mobile number.</p>
-
-    <label for="password">🔐 &nbsp;Password</label>
-    <div class="field password-wrap"><span class="field-icon">♙</span><input id="password" name="password" type="password" minlength="8" maxlength="128" autocomplete="new-password" placeholder="Password (minimum 8 characters)" required><button class="toggle" id="togglePassword" type="button" aria-label="Show password">◉</button></div>
-    <p class="hint">Use at least 8 characters. Keep your password private.</p>
-
-    <button class="submit" id="submit" type="submit">Create SwiftPays Account &nbsp;➜</button>
-  </form>
-
-  <p class="status" id="status" role="status" aria-live="polite"></p>
-  <div class="secure-note"><span>🛡️</span> Your data is encrypted and protected.</div>
-  <div class="switch">Already have an account? <a href="/login">Login</a></div>
-  <div class="footer">🔐 Secure Signup &nbsp;•&nbsp; ⚡ Fast Access &nbsp;•&nbsp; 🛡️ Account Protection<br>© 2026 SwiftPays. All rights reserved.</div>
-</main>
-<script>
-"use strict";
-const API="https://swiftpay-api-6azu.onrender.com";
-const form=document.getElementById("registerForm");
-const btn=document.getElementById("submit");
-const statusEl=document.getElementById("status");
-const passwordEl=document.getElementById("password");
-const ticket=sessionStorage.getItem("swiftpays_registration_ticket")||"";
-function show(message,type=""){statusEl.textContent=message;statusEl.className="status "+type;}
-
-document.getElementById("togglePassword").addEventListener("click",()=>{
-  const reveal=passwordEl.type==="password";
-  passwordEl.type=reveal?"text":"password";
-  document.getElementById("togglePassword").textContent=reveal?"◎":"◉";
-  document.getElementById("togglePassword").setAttribute("aria-label",reveal?"Hide password":"Show password");
-});
-
-if(!ticket){
-  show("Security verification is missing or expired. Please verify again.","error");
-  btn.disabled=true;
-  setTimeout(()=>location.replace("/"),2500);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-document.getElementById("mobile").addEventListener("input",e=>{
-  e.target.value=e.target.value.replace(/\\D/g,"").slice(0,10);
+body {
+  min-height: 100vh;
+  padding: 20px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  background:
+    radial-gradient(ellipse at 0% 10%, #0756a955, transparent 38%),
+    radial-gradient(ellipse at 100% 85%, #7015a955, transparent 38%),
+    #030719;
+}
+
+.card {
+  width: 100%;
+  max-width: 600px;
+  padding: 35px 28px;
+  border: 2px solid transparent;
+  border-radius: 30px;
+  background:
+    linear-gradient(145deg, #06132cf5, #080b25f8) padding-box,
+    linear-gradient(135deg, #13dff4, #286bff 50%, #b23cff) border-box;
+  box-shadow: 0 0 35px #078bff30, 0 24px 80px #0009;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.shield {
+  width: 125px;
+  height: 135px;
+  margin: 0 auto 15px;
+  filter: drop-shadow(0 0 16px #00cfff66);
+}
+
+.shield svg {
+  width: 100%;
+  height: 100%;
+}
+
+h1 {
+  font-size: 34px;
+  font-weight: 850;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #bdcbed;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+label {
+  display: block;
+  margin: 20px 0 9px;
+  color: #e1eaff;
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.field {
+  position: relative;
+}
+
+.field input {
+  width: 100%;
+  height: 64px;
+  padding: 0 18px 0 58px;
+  border: 1.5px solid #247fc9;
+  border-radius: 16px;
+  background: linear-gradient(110deg, #10274a, #101534);
+  color: #fff;
+  font-size: 15px;
+  outline: none;
+}
+
+.field input:focus {
+  border-color: #13dff4;
+  box-shadow: 0 0 0 3px #12dff422;
+}
+
+.field input::placeholder {
+  color: #a7b8d7;
+}
+
+.field-icon {
+  position: absolute;
+  left: 17px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 21px;
+  z-index: 2;
+}
+
+.mobile-input {
+  padding-left: 82px !important;
+}
+
+.country-code {
+  position: absolute;
+  left: 17px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+}
+
+.password-input {
+  padding-right: 62px !important;
+}
+
+.toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 7px;
+}
+
+.hint {
+  margin: 8px 2px 0;
+  color: #91a6ca;
+  font-size: 12px;
+}
+
+.cloudflare-box {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+  padding: 15px 8px;
+  border: 1px solid #247fc9;
+  border-radius: 15px;
+  background: #101534;
+  overflow: hidden;
+}
+
+.submit {
+  width: 100%;
+  min-height: 66px;
+  margin-top: 25px;
+  border: 0;
+  border-radius: 17px;
+  background: linear-gradient(105deg, #08d9e8, #1768f5 55%, #a52dff);
+  color: white;
+  font-size: 17px;
+  font-weight: 850;
+  cursor: pointer;
+  box-shadow: 0 10px 32px #1768f555;
+}
+
+.submit:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+.status {
+  min-height: 22px;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #bdcbed;
+}
+
+.status.error {
+  color: #ff8585;
+}
+
+.status.success {
+  color: #43eab0;
+}
+
+.secure-note {
+  margin-top: 24px;
+  text-align: center;
+  color: #d1def5;
+  font-size: 13px;
+}
+
+.switch {
+  margin-top: 25px;
+  padding-top: 22px;
+  border-top: 1px solid #ffffff24;
+  text-align: center;
+  color: #c2cee8;
+  font-size: 14px;
+}
+
+.switch a {
+  color: #24e0f2;
+  font-weight: 850;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 23px;
+  color: #879abd;
+  font-size: 11px;
+}
+
+@media(max-width:480px) {
+  .card {
+    padding: 28px 18px;
+  }
+
+  h1 {
+    font-size: 29px;
+  }
+
+  .field input {
+    height: 60px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<main class="card">
+
+  <header class="hero">
+
+    <div class="shield">
+      <svg viewBox="0 0 120 130" fill="none">
+        <defs>
+          <linearGradient id="shieldGradient" x1="10" y1="5" x2="110" y2="125">
+            <stop stop-color="#16eaff"/>
+            <stop offset=".55" stop-color="#2777ff"/>
+            <stop offset="1" stop-color="#bd43ff"/>
+          </linearGradient>
+        </defs>
+
+        <path d="M60 7 105 25v35c0 30-18 49-45 63C33 109 15 90 15 60V25L60 7Z"
+          stroke="url(#shieldGradient)" stroke-width="5" fill="#0c2550"/>
+
+        <circle cx="60" cy="47" r="13" fill="url(#shieldGradient)"/>
+
+        <path d="M34 88c2-16 12-25 26-25s24 9 26 25"
+          stroke="url(#shieldGradient)" stroke-width="9" stroke-linecap="round"/>
+
+        <circle cx="91" cy="88" r="17" fill="#06254b" stroke="#13e4ef" stroke-width="4"/>
+
+        <path d="m83 88 6 6 11-13" stroke="#55f4e5"
+          stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <h1>Create Account</h1>
+    <p class="subtitle">
+      Join SwiftPays and enjoy secure, fast and reliable payment services.
+    </p>
+
+  </header>
+
+  <form id="registerForm" autocomplete="on">
+
+    <label for="name">👤 Full Name</label>
+    <div class="field">
+      <span class="field-icon">♙</span>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        maxlength="80"
+        autocomplete="name"
+        placeholder="Enter your full name"
+        required
+      >
+    </div>
+
+    <label for="mobile">📱 Mobile Number</label>
+    <div class="field">
+      <span class="country-code">🇮🇳 +91</span>
+      <input
+        type="tel"
+        id="mobile"
+        name="mobile"
+        class="mobile-input"
+        inputmode="numeric"
+        maxlength="10"
+        pattern="[6-9][0-9]{9}"
+        autocomplete="tel-national"
+        placeholder="10-digit mobile number"
+        required
+      >
+    </div>
+    <p class="hint">Enter your active 10-digit Indian mobile number.</p>
+
+    <label for="password">🔐 Password</label>
+    <div class="field">
+
+      <span class="field-icon">🔐</span>
+
+      <input
+        type="password"
+        id="password"
+        name="password"
+        class="password-input"
+        minlength="8"
+        maxlength="128"
+        autocomplete="new-password"
+        placeholder="Enter your password"
+        required
+      >
+
+      <button
+        type="button"
+        class="toggle"
+        id="togglePassword"
+        aria-label="Show password"
+      >🙈</button>
+
+    </div>
+    <p class="hint">Password must contain at least 8 characters.</p>
+
+    <div class="cloudflare-box">
+      <div
+        class="cf-turnstile"
+        data-sitekey="YOUR_CLOUDFLARE_SITE_KEY"
+        data-theme="dark"
+        data-callback="onTurnstileSuccess"
+        data-expired-callback="onTurnstileExpired"
+        data-error-callback="onTurnstileError"
+      ></div>
+    </div>
+
+    <button type="submit" class="submit" id="submitBtn">
+      CREATE ACCOUNT →
+    </button>
+
+    <div class="status" id="status"></div>
+
+  </form>
+
+  <div class="secure-note">
+    🛡️ Protected by Cloudflare Security
+  </div>
+
+  <div class="switch">
+    Already have an account?
+    <a href="/login">Login Now</a>
+  </div>
+
+  <div class="footer">
+    © 2026 SwiftPays. All Rights Reserved.
+  </div>
+
+</main>
+
+<script>
+/* ======================================
+   SWIFTPAYS REGISTRATION CONFIGURATION
+====================================== */
+
+const API_BASE = "https://swiftpay-api-6azu.onrender.com";
+const REGISTER_ENDPOINT = "/auth/register";
+
+let cloudflareToken = "";
+
+/* ======================================
+   PASSWORD SHOW / HIDE
+====================================== */
+
+const passwordInput = document.getElementById("password");
+const togglePassword = document.getElementById("togglePassword");
+
+togglePassword.addEventListener("click", function () {
+
+  const isHidden = passwordInput.type === "password";
+
+  passwordInput.type = isHidden ? "text" : "password";
+
+  togglePassword.textContent = isHidden ? "👁️" : "🙈";
+
+  togglePassword.setAttribute(
+    "aria-label",
+    isHidden ? "Hide password" : "Show password"
+  );
+
 });
 
-form.addEventListener("submit",async e=>{
-  e.preventDefault();
-  if(!ticket){show("Please complete security verification first.","error");return;}
-  const name=document.getElementById("name").value.trim();
-  const mobile=document.getElementById("mobile").value.trim();
-  const password=passwordEl.value;
-  if(name.length<2){show("Please enter your full name.","error");return;}
-  if(!/^[6-9][0-9]{9}$/.test(mobile)){show("Enter a valid 10-digit Indian mobile number.","error");return;}
-  if(password.length<8){show("Password must be at least 8 characters.","error");return;}
-  btn.disabled=true;btn.textContent="Creating Account...";show("Creating your SwiftPays account securely...");
-  try{
-    const response=await fetch(API+"/auth/register",{
-      method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({name,mobile,password,verification_ticket:ticket})
-    });
-    const result=await response.json().catch(()=>({detail:"Invalid server response."}));
-    if(!response.ok)throw new Error(result.detail||"Registration failed. Please try again.");
-    if(!result.pin_setup_url)throw new Error("Account created, but S-PIN setup link was not returned. Please contact support.");
-    sessionStorage.removeItem("swiftpays_registration_ticket");
-    show("✅ Account created! Redirecting to create your 6-digit S-PIN...","success");
-    setTimeout(()=>location.replace(result.pin_setup_url),700);
-  }catch(error){
-    show(error.message||"Could not create account. Please try again.","error");
-    btn.disabled=false;btn.textContent="Create SwiftPays Account　➜";
+/* ======================================
+   CLOUDFLARE TURNSTILE CALLBACKS
+====================================== */
+
+function onTurnstileSuccess(token) {
+  cloudflareToken = token;
+}
+
+function onTurnstileExpired() {
+  cloudflareToken = "";
+}
+
+function onTurnstileError() {
+  cloudflareToken = "";
+  showStatus("Cloudflare verification failed. Please try again.", "error");
+}
+
+/* ======================================
+   STATUS MESSAGE
+====================================== */
+
+function showStatus(message, type = "") {
+  const status = document.getElementById("status");
+  status.textContent = message;
+  status.className = "status " + type;
+}
+
+/* ======================================
+   REGISTRATION SUBMIT
+====================================== */
+
+document.getElementById("registerForm").addEventListener("submit", async function (event) {
+
+  event.preventDefault();
+
+  const name = document.getElementById("name").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+  const password = passwordInput.value;
+  const submitBtn = document.getElementById("submitBtn");
+
+  if (!name) {
+    showStatus("Please enter your full name.", "error");
+    return;
   }
+
+  if (!/^[6-9][0-9]{9}$/.test(mobile)) {
+    showStatus("Please enter a valid 10-digit mobile number.", "error");
+    return;
+  }
+
+  if (password.length < 8) {
+    showStatus("Password must contain at least 8 characters.", "error");
+    return;
+  }
+
+  if (!cloudflareToken) {
+    showStatus("Please complete Cloudflare verification first.", "error");
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "CREATING ACCOUNT...";
+  showStatus("Please wait. Creating your account...");
+
+  try {
+
+    const response = await fetch(API_BASE + REGISTER_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: name,
+        mobile: mobile,
+        password: password,
+        turnstile_token: cloudflareToken
+      })
+    });
+
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok || result.success !== true) {
+
+      showStatus(
+        result.detail || result.message || "Registration failed. Please try again.",
+        "error"
+      );
+
+      if (window.turnstile) {
+        window.turnstile.reset();
+      }
+
+      cloudflareToken = "";
+      submitBtn.disabled = false;
+      submitBtn.textContent = "CREATE ACCOUNT →";
+      return;
+    }
+
+    showStatus("Account created successfully! Redirecting...", "success");
+
+    /*
+      If your backend returns a secure, one-time PIN setup
+      token, preserve it using your backend's intended flow.
+      Do not use an ordinary client-generated token.
+    */
+
+    window.location.replace("/create-pin");
+
+  } catch (error) {
+
+    showStatus(
+      "Unable to connect to server. Please try again.",
+      "error"
+    );
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = "CREATE ACCOUNT →";
+
+  }
+
 });
 </script>
+
 </body>
-</html>
+  </html>
+  
