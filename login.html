@@ -1,87 +1,610 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050b1b">
+<meta name="theme-color" content="#030b1c">
 <title>Login | SwiftPays</title>
+
 <style>
-:root{--navy:#08245d;--blue:#1558d6;--blue2:#2878f0;--ink:#14213d;--muted:#75829a;--line:#e2e9f4;--bg:#f4f7fd;--danger:#c62828}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(155deg,#071e50 0,#1049ae 34%,#f4f7fd 34.1%,#f4f7fd 100%);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);display:flex;justify-content:center;align-items:center;padding:22px 15px}
-.wrap{width:100%;max-width:430px}.brand{display:flex;align-items:center;justify-content:center;gap:10px;color:#fff;font-size:25px;font-weight:850;letter-spacing:-.6px;margin:0 auto 28px}.logo{width:44px;height:44px;background:#fff;color:#1558d6;border-radius:14px;display:grid;place-items:center;font-size:27px;font-weight:950;box-shadow:0 8px 20px #00174755}
-.card{background:#fff;border:1px solid #e6edf8;border-radius:25px;padding:27px 22px;box-shadow:0 18px 50px #08275c20}.welcome{text-align:center;margin-bottom:24px}.welcome h1{font-size:25px;margin:0 0 7px;letter-spacing:-.5px}.welcome p{font-size:13px;color:var(--muted);margin:0;line-height:1.5}
-.field{margin:16px 0}.field label{display:block;font-size:12px;font-weight:800;color:#53617b;margin-bottom:8px}.input-wrap{position:relative}.field input{width:100%;height:51px;border:1px solid #dce5f2;border-radius:13px;padding:0 14px;font:inherit;font-size:14px;color:var(--ink);background:#fbfcff;outline:none}.field input:focus{border-color:#3478e8;box-shadow:0 0 0 3px #3478e81a}.toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);border:0;background:none;color:#63728b;font-size:12px;font-weight:750;cursor:pointer}
-.row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:7px 0 19px;font-size:12px}.remember{display:flex;align-items:center;gap:7px;color:#59677f}.remember input{accent-color:#1558d6}.text-link{border:0;background:none;color:#1558d6;font-weight:800;text-decoration:none;font-size:12px;cursor:pointer}
-.btn{width:100%;height:51px;border:0;border-radius:13px;background:linear-gradient(110deg,#1746b2,#2474ed);color:#fff;font-size:15px;font-weight:850;box-shadow:0 9px 18px #1856ce35;cursor:pointer}.btn:disabled{opacity:.65;cursor:wait}
-.error{display:none;background:#fff0f0;border:1px solid #ffd5d5;color:#a51f1f;border-radius:11px;padding:11px 12px;font-size:12px;line-height:1.5;margin:0 0 14px}.error.show{display:block}.success{display:none;background:#eaf8f0;border:1px solid #c7ecd5;color:#167343;border-radius:11px;padding:11px 12px;font-size:12px;margin:0 0 14px}.success.show{display:block}
-.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:19px}.footer a{color:#1558d6;text-decoration:none;font-weight:850}.secure{text-align:center;color:#8a96aa;font-size:10px;margin-top:18px}
-@media(min-height:780px){.card{padding:32px 25px}.brand{margin-bottom:35px}}
-
-
-/* SwiftPays unified NEON BLUE theme */
-:root{--sp-bg:#050b1b;--sp-panel:#0b1730;--sp-panel2:#0e2042;--sp-blue:#168bff;--sp-cyan:#20d9ff;--sp-text:#eaf4ff;--sp-muted:#9bb2d2;--sp-border:#1b4d83}
-html{color-scheme:dark}
-body{background:radial-gradient(ellipse at 8% 4%,#087cff35,transparent 36%),radial-gradient(ellipse at 95% 90%,#00cfff20,transparent 34%),#050b1b!important;color:var(--sp-text)!important}
-.card,.container,.shell,.panel,.section,.modal,.box{background:linear-gradient(145deg,#0b1730f5,#081329f8)!important;border-color:#1768b8!important;box-shadow:0 0 28px #078bff20,0 18px 60px #0008!important}
-button[type=submit],.submit,.action,.btn,.primary,.button-primary{background:linear-gradient(110deg,#087cff,#00bfff)!important;color:#fff!important;border-color:#20d9ff!important;box-shadow:0 8px 26px #087cff45!important}
-input,select,textarea{background:#0b1b36!important;color:#f2f8ff!important;border-color:#285889!important}
-input:focus,select:focus,textarea:focus{border-color:#20d9ff!important;box-shadow:0 0 0 3px #20d9ff22!important}
-a{color:#45dfff}
-label{color:#d7eaff}
-hr{border-color:#1b3b64}
-:focus-visible{outline:2px solid #20d9ff;outline-offset:2px}
-.sp-brand img,.logo{filter:drop-shadow(0 0 12px #00bfff55)}
-@media(max-width:600px){body{padding-left:12px!important;padding-right:12px!important}}
-
+:root {
+    --bg:#030b1c;
+    --card:#071a35;
+    --cyan:#20d9ff;
+    --blue:#087cff;
+    --muted:#a9c2e5;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:18px 13px;
+    background:
+      radial-gradient(ellipse at top,#063b70,transparent 55%),
+      #030b1c;
+    color:#fff;
+    font-family:Arial,sans-serif;
+}
+.container{
+    width:100%;
+    max-width:440px;
+    padding:30px 23px;
+    border:1px solid #168ce9;
+    border-radius:27px;
+    background:linear-gradient(145deg,#0b1d39,#061329);
+    box-shadow:0 0 35px #087cff35,0 20px 60px #0008;
+}
+.brand{text-align:center;margin-bottom:27px}
+.logo{
+    width:105px;height:105px;
+    object-fit:contain;border-radius:24px;
+    filter:drop-shadow(0 0 16px #00bfff65);
+}
+.brand h1{font-size:30px;margin-top:8px}
+.brand h1 span{color:var(--cyan)}
+.tagline{
+    color:var(--cyan);
+    font-size:10px;
+    font-weight:bold;
+    letter-spacing:2px;
+    margin-top:10px;
+}
+.heading{text-align:center;margin-bottom:24px}
+.heading h2{font-size:25px;margin-bottom:9px}
+.heading p{font-size:13px;color:var(--muted);line-height:1.6}
+.field-label{
+    display:block;
+    margin:19px 0 9px;
+    font-size:13px;
+    font-weight:bold;
+}
+.field{position:relative}
+.field input{
+    width:100%;height:57px;
+    padding:0 48px 0 16px;
+    border:1px solid #247fc0;
+    border-radius:14px;
+    outline:none;
+    background:#0b2342;
+    color:white;
+    font-size:16px;
+}
+.field input:focus{
+    border-color:var(--cyan);
+    box-shadow:0 0 0 3px #20d9ff20;
+}
+.field input::placeholder{color:#8199ba}
+.eye{
+    position:absolute;right:12px;top:50%;
+    transform:translateY(-50%);
+    border:0;background:none;
+    color:var(--cyan);font-size:20px;
+    cursor:pointer;
+}
+.button{
+    width:100%;height:58px;
+    margin-top:24px;
+    border:0;border-radius:15px;
+    background:linear-gradient(100deg,#087cff,#00cfff);
+    color:white;font-size:16px;
+    font-weight:900;cursor:pointer;
+    box-shadow:0 8px 25px #087cff40;
+}
+.button:disabled{opacity:.55;cursor:wait}
+.links{
+    display:flex;justify-content:space-between;
+    margin-top:17px;font-size:12px;
+}
+.links a,.switch a{
+    color:var(--cyan);text-decoration:none;
+    font-weight:bold;
+}
+.switch{
+    text-align:center;
+    margin-top:25px;padding-top:20px;
+    border-top:1px solid #ffffff20;
+    color:var(--muted);font-size:13px;
+}
+.status{
+    min-height:22px;margin-top:15px;
+    text-align:center;font-size:12px;
+    line-height:1.6;overflow-wrap:anywhere;
+}
+.error{color:#ff8797}
+.success{color:#53e8b1}
+.pin-boxes{
+    display:flex;justify-content:center;
+    gap:9px;margin:27px 0;
+}
+.pin-box{
+    width:43px;height:53px;
+    border:1px solid #168ce9;
+    border-radius:11px;
+    background:#0b2342;
+    display:flex;align-items:center;
+    justify-content:center;
+    color:var(--cyan);font-size:24px;
+    box-shadow:0 0 12px #087cff15;
+}
+.pin-box.filled{
+    border-color:var(--cyan);
+    box-shadow:0 0 14px #20d9ff35;
+}
+.pin-input{
+    position:absolute;
+    opacity:0;
+    width:1px;height:1px;
+}
+.pin-area{position:relative}
+.pin-hint{
+    color:var(--muted);font-size:12px;
+    text-align:center;margin-top:12px;
+}
+.back{
+    display:block;text-align:center;
+    margin-top:19px;color:var(--cyan);
+    font-size:13px;text-decoration:none;
+}
+.hidden{display:none!important}
+.footer{
+    text-align:center;color:#718eae;
+    font-size:10px;margin-top:25px;
+}
+@media(max-width:360px){
+    .container{padding:25px 16px}
+    .pin-boxes{gap:6px}
+    .pin-box{width:39px;height:49px}
+}
 </style>
 </head>
+
 <body>
-<div class="wrap">
-  <div class="brand"><div class="logo">S</div>SwiftPays</div>
-  <main class="card">
-    <div class="welcome"><h1>Welcome Back</h1><p>Login to your SwiftPays account to continue</p></div>
-    <div class="error" id="errorBox" role="alert"></div>
-    <div class="success" id="successBox"></div>
+
+<main class="container">
+
+<header class="brand">
+    <img src="/logo.png" class="logo" alt="SwiftPays Logo">
+    <h1>Swift<span>Pays</span></h1>
+    <div class="tagline">💎 PREMIUM SECURE GATEWAY 💎</div>
+</header>
+
+<!-- LOGIN STEP -->
+
+<section id="loginStep">
+
+    <div class="heading">
+        <h2>Welcome Back</h2>
+        <p>Login securely to your SwiftPays account.</p>
+    </div>
+
     <form id="loginForm">
-      <div class="field"><label for="mobile">MOBILE NUMBER</label><input id="mobile" name="mobile" type="tel" inputmode="numeric" autocomplete="tel" placeholder="Enter registered mobile number" maxlength="15" required></div>
-      <div class="field"><label for="password">PASSWORD</label><div class="input-wrap"><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required><button class="toggle" type="button" id="togglePassword">SHOW</button></div></div>
-      <div class="row"><label class="remember"><input type="checkbox" id="remember" checked> Remember me</label><button type="button" class="text-link" id="forgotBtn">Forgot Password?</button></div>
-      <button class="btn" id="loginBtn" type="submit">Login Securely →</button>
+
+        <label class="field-label" for="mobile">
+            📱 Mobile Number (+91)
+        </label>
+
+        <div class="field">
+            <input
+                id="mobile"
+                type="tel"
+                inputmode="numeric"
+                maxlength="10"
+                placeholder="Enter 10-digit mobile number"
+                autocomplete="tel-national"
+                required
+            >
+        </div>
+
+        <label class="field-label" for="password">
+            🔐 Password
+        </label>
+
+        <div class="field">
+            <input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+            >
+            <button type="button" class="eye"
+                onclick="togglePassword('password',this)">👁</button>
+        </div>
+
+        <div class="links">
+            <a href="/forgot-password">Forgot Password?</a>
+            <a href="/register.html">Create Account</a>
+        </div>
+
+        <button class="button" id="loginBtn" type="submit">
+            LOGIN SECURELY →
+        </button>
+
     </form>
-    <div class="footer">Don't have an account? <a href="/register.html">Create Account</a></div>
-    <div class="secure">🔒 Secure login · Your credentials are encrypted in transit</div>
-  </main>
+
+</section>
+
+
+<!-- S-PIN STEP -->
+
+<section id="pinStep" class="hidden">
+
+    <div class="heading">
+        <h2>🔒 Security Verification</h2>
+        <p>
+            Enter your 6-digit S-PIN to securely
+            access your SwiftPays dashboard.
+        </p>
+    </div>
+
+    <div class="pin-area" id="pinArea">
+
+        <div class="pin-boxes" id="pinBoxes">
+            <div class="pin-box"></div>
+            <div class="pin-box"></div>
+            <div class="pin-box"></div>
+            <div class="pin-box"></div>
+            <div class="pin-box"></div>
+            <div class="pin-box"></div>
+        </div>
+
+        <input
+            class="pin-input"
+            id="pinInput"
+            type="password"
+            inputmode="numeric"
+            maxlength="6"
+            autocomplete="off"
+            aria-label="Six digit S-PIN"
+        >
+
+    </div>
+
+    <p class="pin-hint">
+        🔐 Enter your private 6-digit S-PIN.
+    </p>
+
+    <button class="button" id="verifyPinBtn">
+        VERIFY S-PIN →
+    </button>
+
+    <a href="#" class="back" id="backLogin">
+        ← Back to Login
+    </a>
+
+</section>
+
+<p class="status" id="status" role="status" aria-live="polite"></p>
+
+<div class="switch">
+    Secure Payments · Fast Transfers · 24×7 Support
 </div>
+
+<footer class="footer">
+    🔐 Protected by SwiftPays Security<br>
+    © 2026 SwiftPays
+</footer>
+
+</main>
+
 <script>
-const API_BASE="https://swiftpay-api-6azu.onrender.com";
-const form=document.getElementById("loginForm"),loginBtn=document.getElementById("loginBtn");
-function message(text,type="error"){const box=document.getElementById(type==="success"?"successBox":"errorBox");box.textContent=text;box.classList.add("show");}
-function clearMessages(){["errorBox","successBox"].forEach(id=>document.getElementById(id).classList.remove("show"));}
-document.getElementById("togglePassword").addEventListener("click",()=>{const p=document.getElementById("password"),b=document.getElementById("togglePassword");p.type=p.type==="password"?"text":"password";b.textContent=p.type==="password"?"SHOW":"HIDE";});
-form.addEventListener("submit",async e=>{
- e.preventDefault();clearMessages();
- const mobile=document.getElementById("mobile").value.trim(),password=document.getElementById("password").value;
- if(!mobile||!password){message("Please enter your mobile number and password.");return;}
- loginBtn.disabled=true;loginBtn.textContent="Checking login…";
- try{
-  const res=await fetch(API_BASE+"/auth/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mobile,password})});
-  let data={};try{data=await res.json();}catch(_){}
-  if(!res.ok)throw new Error(data.detail||data.message||"Login failed. Please try again.");
-  if(!data.token)throw new Error("Login response did not include a session token. Please contact support.");
-  const storage=document.getElementById("remember").checked?localStorage:sessionStorage;
-  ["swiftpays_token","token","auth_token","access_token"].forEach(k=>{localStorage.removeItem(k);sessionStorage.removeItem(k);});
-  storage.setItem("swiftpays_token",data.token);
-  if(data.user)storage.setItem("swiftpays_user",JSON.stringify(data.user));
-  message("Login successful. Opening your dashboard…","success");
-  setTimeout(()=>{window.location.replace("/dashboard.html");},650);
- }catch(err){message(err.message||"Unable to login. Check your connection and try again.");}
- finally{loginBtn.disabled=false;loginBtn.textContent="Login Securely →";}
+"use strict";
+
+/* CONFIG */
+
+const API_BASE = "https://swiftpay-api-6azu.onrender.com";
+const DASHBOARD_URL = "/dashboard";
+
+let pinChallengeToken = "";
+let authenticatedUser = null;
+let busy = false;
+
+
+/* ELEMENTS */
+
+const loginStep = document.getElementById("loginStep");
+const pinStep = document.getElementById("pinStep");
+const pinInput = document.getElementById("pinInput");
+const statusBox = document.getElementById("status");
+
+
+/* STATUS */
+
+function showStatus(message,type=""){
+    statusBox.textContent = message;
+    statusBox.className = "status " + type;
+}
+
+
+/* PASSWORD VISIBILITY */
+
+function togglePassword(id,btn){
+    const input = document.getElementById(id);
+    input.type = input.type === "password" ? "text" : "password";
+    btn.textContent = input.type === "password" ? "👁" : "🙈";
+}
+
+
+/* MOBILE INPUT */
+
+document.getElementById("mobile").addEventListener("input",function(){
+    this.value = this.value.replace(/\D/g,"").slice(0,10);
 });
-document.getElementById("forgotBtn").addEventListener("click",()=>{
- const mobile=document.getElementById("mobile").value.trim();
- if(!mobile){message("Enter your registered mobile number first, then tap Forgot Password.");return;}
- message("Password recovery currently requires your Telegram account to be linked. If it is not linked, contact SwiftPays support.");
+
+
+/* API REQUEST */
+
+async function apiRequest(path,data,token=""){
+
+    const controller = new AbortController();
+    const timeout = setTimeout(()=>controller.abort(),30000);
+
+    try{
+
+        const headers = {
+            "Content-Type":"application/json",
+            "Accept":"application/json"
+        };
+
+        if(token){
+            headers.Authorization = "Bearer " + token;
+        }
+
+        const response = await fetch(API_BASE + path,{
+            method:"POST",
+            headers,
+            body:JSON.stringify(data),
+            signal:controller.signal
+        });
+
+        const result = await response.json().catch(()=>({}));
+
+        if(!response.ok){
+            throw new Error(
+                result.detail ||
+                result.message ||
+                "Request failed."
+            );
+        }
+
+        return result;
+
+    }catch(error){
+
+        if(error.name === "AbortError"){
+            throw new Error("Server timeout. Please try again.");
+        }
+
+        if(error instanceof TypeError){
+            throw new Error("Cannot connect to SwiftPays server.");
+        }
+
+        throw error;
+
+    }finally{
+        clearTimeout(timeout);
+    }
+}
+
+
+/* STEP 1: MOBILE + PASSWORD */
+
+document.getElementById("loginForm").addEventListener("submit",async function(e){
+
+    e.preventDefault();
+
+    if(busy)return;
+
+    const mobile = document.getElementById("mobile").value.trim();
+    const password = document.getElementById("password").value;
+
+    if(!/^[6-9][0-9]{9}$/.test(mobile)){
+        showStatus("Enter a valid 10-digit Indian mobile number.","error");
+        return;
+    }
+
+    if(!password){
+        showStatus("Please enter your password.","error");
+        return;
+    }
+
+    busy = true;
+
+    const button = document.getElementById("loginBtn");
+    button.disabled = true;
+    button.textContent = "VERIFYING LOGIN...";
+
+    showStatus("🔐 Checking your account...");
+
+    try{
+
+        const result = await apiRequest("/auth/login",{
+            mobile,
+            password
+        });
+
+        if(
+            result.success !== true ||
+            result.pin_required !== true ||
+            !result.pin_token
+        ){
+            throw new Error(
+                "PIN security response missing. Please update the backend."
+            );
+        }
+
+        pinChallengeToken = result.pin_token;
+
+        authenticatedUser = result.user || null;
+
+        loginStep.classList.add("hidden");
+        pinStep.classList.remove("hidden");
+
+        showStatus("✅ Password verified. Enter your S-PIN.","success");
+
+        pinInput.value = "";
+        updatePinBoxes();
+        setTimeout(()=>pinInput.focus(),150);
+
+    }catch(error){
+
+        showStatus(error.message,"error");
+
+    }finally{
+
+        busy = false;
+        button.disabled = false;
+        button.textContent = "LOGIN SECURELY →";
+
+    }
+
 });
+
+
+/* PIN BOX DISPLAY */
+
+function updatePinBoxes(){
+
+    const value = pinInput.value;
+    const boxes = document.querySelectorAll(".pin-box");
+
+    boxes.forEach((box,index)=>{
+
+        box.textContent = value[index] ? "●" : "";
+        box.classList.toggle("filled",!!value[index]);
+
+    });
+
+}
+
+pinInput.addEventListener("input",function(){
+
+    this.value = this.value.replace(/\D/g,"").slice(0,6);
+    updatePinBoxes();
+
+});
+
+document.getElementById("pinArea").addEventListener("click",()=>{
+    pinInput.focus();
+});
+
+
+/* STEP 2: VERIFY S-PIN */
+
+document.getElementById("verifyPinBtn").addEventListener("click",async function(){
+
+    if(busy)return;
+
+    const pin = pinInput.value.trim();
+
+    if(!/^[0-9]{6}$/.test(pin)){
+        showStatus("Please enter all 6 digits of your S-PIN.","error");
+        pinInput.focus();
+        return;
+    }
+
+    if(!pinChallengeToken){
+        showStatus("Login session expired. Please login again.","error");
+        return;
+    }
+
+    busy = true;
+
+    const button = this;
+    button.disabled = true;
+    button.textContent = "VERIFYING S-PIN...";
+
+    showStatus("🔒 Verifying your secure PIN...");
+
+    try{
+
+        const result = await apiRequest(
+            "/auth/verify-pin",
+            {
+                pin_token:pinChallengeToken,
+                pin:pin
+            }
+        );
+
+        if(result.success !== true || !result.token){
+            throw new Error("S-PIN verification response is invalid.");
+        }
+
+        // Store full session only after successful PIN verification.
+        localStorage.setItem("swiftpays_token",result.token);
+
+        if(result.user){
+            localStorage.setItem(
+                "swiftpays_user",
+                JSON.stringify(result.user)
+            );
+        }else if(authenticatedUser){
+            localStorage.setItem(
+                "swiftpays_user",
+                JSON.stringify(authenticatedUser)
+            );
+        }
+
+        pinChallengeToken = "";
+        pinInput.value = "";
+
+        showStatus("✅ Login successful. Opening Dashboard...","success");
+
+        setTimeout(()=>{
+            window.location.replace(DASHBOARD_URL);
+        },500);
+
+    }catch(error){
+
+        showStatus(error.message,"error");
+
+        pinInput.value = "";
+        updatePinBoxes();
+        pinInput.focus();
+
+    }finally{
+
+        busy = false;
+        button.disabled = false;
+        button.textContent = "VERIFY S-PIN →";
+
+    }
+
+});
+
+
+/* BACK TO LOGIN */
+
+document.getElementById("backLogin").addEventListener("click",function(e){
+
+    e.preventDefault();
+
+    pinChallengeToken = "";
+    authenticatedUser = null;
+    pinInput.value = "";
+
+    pinStep.classList.add("hidden");
+    loginStep.classList.remove("hidden");
+
+    showStatus("");
+
+});
+
+
+/* ENTER KEY */
+
+pinInput.addEventListener("keydown",function(e){
+
+    if(e.key === "Enter"){
+        document.getElementById("verifyPinBtn").click();
+    }
+
+});
+
 </script>
+
 </body>
 </html>
