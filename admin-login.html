@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#020d1b">
+  <title>SwiftPays • Secure Admin Login</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --cyan: #00c8ff;
+      --blue: #087cff;
+      --text: #f5f8ff;
+      --muted: #b5c9e8;
+      --panel: rgba(5, 25, 49, .94);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 38px 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 0% 0%, rgba(0,116,255,.42), transparent 31%),
+        radial-gradient(ellipse at 100% 100%, rgba(0,95,255,.32), transparent 32%),
+        radial-gradient(ellipse at 50% 45%, rgba(0,44,91,.35), transparent 55%),
+        linear-gradient(135deg, #010914, #031a34 55%, #010b19);
+      overflow-x: hidden;
+    }
+    body::before, body::after {
+      content: "";
+      position: fixed;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,145,255,.24);
+      box-shadow: 0 0 70px rgba(0,119,255,.18), inset 0 0 50px rgba(0,119,255,.12);
+      pointer-events: none;
+    }
+    body::before { top: -190px; left: -150px; }
+    body::after { right: -190px; bottom: -180px; }
+    .page {
+      width: min(100%, 850px);
+      position: relative;
+      z-index: 1;
+    }
+    .brand {
+      text-align: center;
+      margin: 0 auto 42px;
+    }
+    .brand-logo {
+      display: block;
+      width: min(270px, 68vw);
+      height: 150px;
+      margin: 0 auto 8px;
+      object-fit: contain;
+      object-position: center;
+      filter: drop-shadow(0 0 20px rgba(0,174,255,.28));
+    }
+    .brand-tagline {
+      margin: 0;
+      color: #c6dcff;
+      font-size: clamp(16px, 3.6vw, 25px);
+      letter-spacing: .2px;
+      font-weight: 500;
+    }
+    .card {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 38px clamp(20px, 6vw, 62px) 32px;
+      border: 1px solid rgba(40,157,255,.82);
+      border-radius: 42px;
+      background: linear-gradient(145deg, rgba(8,31,59,.97), rgba(2,17,36,.98));
+      box-shadow: 0 25px 80px rgba(0,0,0,.52), 0 0 34px rgba(0,145,255,.16), inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 8%; right: 8%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00d9ff, #fff, #00aaff, transparent);
+      box-shadow: 0 0 16px #00bfff;
+    }
+    .crown-shield {
+      width: 78px;
+      height: 78px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 12px;
+      color: #dff8ff;
+      border: 3px solid #00c8ff;
+      border-radius: 28px 28px 34px 34px;
+      background: rgba(0,137,255,.12);
+      box-shadow: 0 0 22px rgba(0,193,255,.35), inset 0 0 16px rgba(0,193,255,.14);
+    }
+    .crown-shield svg { width: 43px; height: 43px; }
+    h1 {
+      margin: 0;
+      text-align: center;
+      font-size: clamp(32px, 6vw, 54px);
+      line-height: 1.15;
+      letter-spacing: -.8px;
+    }
+    h1 span { color: #079dff; }
+    .subtitle {
+      margin: 12px 0 25px;
+      text-align: center;
+      color: var(--muted);
+      font-size: clamp(14px, 2.7vw, 20px);
+    }
+    .access-pill {
+      display: table;
+      margin: 0 auto 34px;
+      padding: 10px 28px;
+      border: 1px solid #126cff;
+      border-radius: 40px;
+      background: rgba(0,91,255,.16);
+      color: #d7eaff;
+      font-size: 17px;
+      font-weight: 750;
+      box-shadow: 0 0 18px rgba(0,103,255,.15);
+    }
+    .error {
+      display: none;
+      margin: 0 0 18px;
+      padding: 13px 15px;
+      border: 1px solid #a4475b;
+      border-radius: 13px;
+      background: rgba(90,19,39,.45);
+      color: #ffc0ca;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+    .field { margin: 0 0 24px; }
+    .input-wrap {
+      min-height: 91px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 0 26px;
+      border: 2px solid #547fa9;
+      border-radius: 24px;
+      background: rgba(22,48,75,.72);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .input-wrap:focus-within {
+      border-color: #00baff;
+      box-shadow: 0 0 0 4px rgba(0,174,255,.12);
+    }
+    .field-icon {
+      width: 36px;
+      height: 36px;
+      flex: 0 0 36px;
+      color: #d4e9ff;
+    }
+    .input-wrap input {
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: white;
+      font: inherit;
+      font-size: clamp(17px, 3vw, 25px);
+    }
+    .input-wrap input::placeholder { color: #9bb2ce; opacity: 1; }
+    .eye {
+      display: grid;
+      place-items: center;
+      padding: 8px;
+      border: 0;
+      background: transparent;
+      color: #b9d4ef;
+      cursor: pointer;
+    }
+    .eye svg { width: 30px; height: 30px; }
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 6px 0 29px;
+      color: #f0f6ff;
+      font-size: clamp(15px, 2.8vw, 21px);
+      cursor: pointer;
+    }
+    .remember input {
+      width: 25px;
+      height: 25px;
+      accent-color: #078cff;
+      cursor: pointer;
+    }
+    .submit {
+      width: 100%;
+      min-height: 96px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 22px;
+      border: 2px solid #00bfff;
+      border-radius: 25px;
+      background: linear-gradient(100deg, #078cff, #0065e9);
+      color: white;
+      font-size: clamp(22px, 4vw, 35px);
+      font-weight: 850;
+      box-shadow: 0 12px 30px rgba(0,119,255,.3), inset 0 1px 0 rgba(255,255,255,.2);
+      cursor: pointer;
+      transition: transform .15s, opacity .15s;
+    }
+    .submit:active { transform: scale(.99); }
+    .submit:disabled { opacity: .65; cursor: wait; }
+    .submit svg { width: 40px; height: 40px; }
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin: 35px auto 0;
+      color: #b8d0ef;
+      font-size: clamp(14px, 2.8vw, 22px);
+      text-align: center;
+    }
+    .footer::before, .footer::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      max-width: 140px;
+      background: linear-gradient(90deg, transparent, #4e85b7);
+    }
+    .footer::after { transform: rotate(180deg); }
+    .footer strong { color: #00baff; }
+    .notice {
+      margin-top: 18px;
+      text-align: center;
+      color: #89a9cc;
+      font-size: 12px;
+    }
+    @media (max-width: 560px) {
+      body { padding: 26px 13px; }
+      .brand { margin-bottom: 28px; }
+      .brand-logo { height: 112px; width: min(230px, 68vw); }
+      .card { padding: 29px 19px 25px; border-radius: 29px; }
+      .access-pill { margin-bottom: 27px; font-size: 14px; }
+      .input-wrap { min-height: 70px; border-radius: 18px; padding: 0 16px; gap: 13px; }
+      .field-icon { width: 29px; height: 29px; flex-basis: 29px; }
+      .field { margin-bottom: 19px; }
+      .submit { min-height: 74px; border-radius: 19px; }
+      .submit svg { width: 31px; height: 31px; }
+      .crown-shield { width: 67px; height: 67px; }
+      .crown-shield svg { width: 37px; height: 37px; }
+      .footer { margin-top: 27px; gap: 9px; }
+    }
+  
+:root{--cyan:#00f078;--blue:#00c853}
+body{background:radial-gradient(ellipse at 0% 0%,rgba(0,255,100,.28),transparent 31%),radial-gradient(ellipse at 100% 100%,rgba(0,190,75,.22),transparent 32%),linear-gradient(135deg,#010906,#031b10 55%,#010b06)}
+.card{border-color:rgba(0,255,105,.72);background:linear-gradient(145deg,rgba(8,38,22,.97),rgba(2,20,11,.98));box-shadow:0 25px 80px rgba(0,0,0,.52),0 0 34px rgba(0,255,100,.14),inset 0 1px 0 rgba(255,255,255,.08)}
+.input-wrap{border-color:#39784e;background:rgba(16,53,31,.72)}
+.input-wrap:focus-within{border-color:#00e676;box-shadow:0 0 0 4px rgba(0,230,118,.12)}
+.submit{border-color:#00e676;background:linear-gradient(100deg,#00c853,#008f3d)}
+h1 span,.footer strong{color:#00e676}
+.access-pill{border-color:#00a94f;background:rgba(0,170,70,.16)}
+
+/* SwiftPays unified NEON BLUE theme */
+:root{--sp-bg:#050b1b;--sp-panel:#0b1730;--sp-panel2:#0e2042;--sp-blue:#168bff;--sp-cyan:#20d9ff;--sp-text:#eaf4ff;--sp-muted:#9bb2d2;--sp-border:#1b4d83}
+html{color-scheme:dark}
+body{background:radial-gradient(ellipse at 8% 4%,#087cff35,transparent 36%),radial-gradient(ellipse at 95% 90%,#00cfff20,transparent 34%),#050b1b!important;color:var(--sp-text)!important}
+.card,.container,.shell,.panel,.section,.modal,.box{background:linear-gradient(145deg,#0b1730f5,#081329f8)!important;border-color:#1768b8!important;box-shadow:0 0 28px #078bff20,0 18px 60px #0008!important}
+button[type=submit],.submit,.action,.btn,.primary,.button-primary{background:linear-gradient(110deg,#087cff,#00bfff)!important;color:#fff!important;border-color:#20d9ff!important;box-shadow:0 8px 26px #087cff45!important}
+input,select,textarea{background:#0b1b36!important;color:#f2f8ff!important;border-color:#285889!important}
+input:focus,select:focus,textarea:focus{border-color:#20d9ff!important;box-shadow:0 0 0 3px #20d9ff22!important}
+a{color:#45dfff}
+label{color:#d7eaff}
+hr{border-color:#1b3b64}
+:focus-visible{outline:2px solid #20d9ff;outline-offset:2px}
+.sp-brand img,.logo{filter:drop-shadow(0 0 12px #00bfff55)}
+@media(max-width:600px){body{padding-left:12px!important;padding-right:12px!important}}
+
+</style>
+</head>
+<body>
+  <main class="page">
+    <header class="brand">
+      <img class="brand-logo" src="/logo.png" alt="SwiftPays logo">
+      <p class="brand-tagline">Payment Gateway Solution</p>
+    </header>
+
+    <section class="card" aria-labelledby="loginTitle">
+      <div class="crown-shield" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 17l8 6 8-12 8 12 8-6-4 19H12L8 17Z"/>
+          <path d="M15 42h18"/>
+          <circle cx="8" cy="15" r="2" fill="currentColor" stroke="none"/>
+          <circle cx="24" cy="9" r="2" fill="currentColor" stroke="none"/>
+          <circle cx="40" cy="15" r="2" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+
+      <h1 id="loginTitle">Admin <span>Login</span></h1>
+      <p class="subtitle">Sign in to access the SwiftPays Admin Panel</p>
+      <div class="access-pill">🌟 Restricted Access</div>
+
+      <div class="error" id="error" role="alert" aria-live="polite"></div>
+
+      <form id="loginForm">
+        <div class="field">
+          <div class="input-wrap">
+            <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <path d="m3 6 9 7 9-7"/>
+            </svg>
+            <input id="email" type="email" placeholder="Enter your email" autocomplete="username" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="input-wrap">
+            <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="10" width="18" height="12" rx="2"/>
+              <path d="M7 10V7a5 5 0 0 1 10 0v3"/>
+              <circle cx="12" cy="16" r="1.4"/>
+              <path d="M12 17.5V19"/>
+            </svg>
+            <input id="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+            <button class="eye" type="button" id="eye" aria-label="Show password">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/>
+                <circle cx="12" cy="12" r="3"/>
+                <path d="m3 3 18 18"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <label class="remember">
+          <input id="remember" type="checkbox" checked>
+          <span>Remember me for 24 hours</span>
+        </label>
+
+        <button class="submit" id="submit" type="submit">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 3h5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-5"/>
+            <path d="m10 17 5-5-5-5"/>
+            <path d="M15 12H3"/>
+          </svg>
+          <span>Secure Login</span>
+        </button>
+      </form>
+
+      <div class="footer"><strong>🛡 SwiftPays</strong> Admin Panel</div>
+      <p class="notice">Protected admin access · 24-hour device session</p>
+    </section>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA_KW4G3pdXu2VKTqa2-Sk9xE4hzDIWU9I",
+      authDomain: "swiftpay-d0bd2.firebaseapp.com",
+      projectId: "swiftpay-d0bd2",
+      storageBucket: "swiftpay-d0bd2.firebasestorage.app",
+      messagingSenderId: "83327557267",
+      appId: "1:83327557267:web:a5605f47bc72ae4190f766"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const API = "https://swiftpay-api-6azu.onrender.com";
+    const SESSION_KEY = "swiftpays_admin_session_v1";
+    const DEVICE_KEY = "swiftpays_admin_device_v1";
+    const $ = id => document.getElementById(id);
+
+    function deviceId() {
+      let id = localStorage.getItem(DEVICE_KEY);
+      if (!id) {
+        id = crypto.randomUUID() + crypto.randomUUID();
+        localStorage.setItem(DEVICE_KEY, id);
+      }
+      return id;
+    }
+
+    function showError(message) {
+      const el = $("error");
+      el.textContent = message;
+      el.style.display = "block";
+    }
+
+    $("eye").addEventListener("click", () => {
+      const password = $("password");
+      const show = password.type === "password";
+      password.type = show ? "text" : "password";
+      $("eye").setAttribute("aria-label", show ? "Hide password" : "Show password");
+    });
+
+    $("loginForm").addEventListener("submit", async event => {
+      event.preventDefault();
+      $("error").style.display = "none";
+
+      const button = $("submit");
+      button.disabled = true;
+      button.querySelector("span").textContent = "Verifying secure access…";
+
+      try {
+        const credential = await signInWithEmailAndPassword(
+          auth,
+          $("email").value.trim(),
+          $("password").value
+        );
+
+        const firebaseIdToken = await credential.user.getIdToken(true);
+        const response = await fetch(`${API}/admin/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            firebase_id_token: firebaseIdToken,
+            device_id: deviceId()
+          })
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok || data.authorized !== true || !data.admin_session_token) {
+          throw new Error(data.detail || "This account is not authorized.");
+        }
+
+        const expiresAt = Date.parse(data.expires_at) || Date.now() + 86400000;
+        localStorage.setItem(SESSION_KEY, JSON.stringify({
+          token: data.admin_session_token,
+          expiresAt
+        }));
+        sessionStorage.setItem("swiftpays_admin_entry", "verified");
+        location.replace("/admin-dashboard.html");
+      } catch (error) {
+        await signOut(auth).catch(() => {});
+        localStorage.removeItem(SESSION_KEY);
+        showError(error.message || "Login failed. Please try again.");
+        button.disabled = false;
+        button.querySelector("span").textContent = "Secure Login";
+      }
+    });
+  </script>
+</body>
+</html>

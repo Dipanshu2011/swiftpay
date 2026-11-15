@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050b1b">
+<title>Login | SwiftPays</title>
+<style>
+:root{--navy:#08245d;--blue:#1558d6;--blue2:#2878f0;--ink:#14213d;--muted:#75829a;--line:#e2e9f4;--bg:#f4f7fd;--danger:#c62828}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(155deg,#071e50 0,#1049ae 34%,#f4f7fd 34.1%,#f4f7fd 100%);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);display:flex;justify-content:center;align-items:center;padding:22px 15px}
+.wrap{width:100%;max-width:430px}.brand{display:flex;align-items:center;justify-content:center;gap:10px;color:#fff;font-size:25px;font-weight:850;letter-spacing:-.6px;margin:0 auto 28px}.logo{width:44px;height:44px;background:#fff;color:#1558d6;border-radius:14px;display:grid;place-items:center;font-size:27px;font-weight:950;box-shadow:0 8px 20px #00174755}
+.card{background:#fff;border:1px solid #e6edf8;border-radius:25px;padding:27px 22px;box-shadow:0 18px 50px #08275c20}.welcome{text-align:center;margin-bottom:24px}.welcome h1{font-size:25px;margin:0 0 7px;letter-spacing:-.5px}.welcome p{font-size:13px;color:var(--muted);margin:0;line-height:1.5}
+.field{margin:16px 0}.field label{display:block;font-size:12px;font-weight:800;color:#53617b;margin-bottom:8px}.input-wrap{position:relative}.field input{width:100%;height:51px;border:1px solid #dce5f2;border-radius:13px;padding:0 14px;font:inherit;font-size:14px;color:var(--ink);background:#fbfcff;outline:none}.field input:focus{border-color:#3478e8;box-shadow:0 0 0 3px #3478e81a}.toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);border:0;background:none;color:#63728b;font-size:12px;font-weight:750;cursor:pointer}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:7px 0 19px;font-size:12px}.remember{display:flex;align-items:center;gap:7px;color:#59677f}.remember input{accent-color:#1558d6}.text-link{border:0;background:none;color:#1558d6;font-weight:800;text-decoration:none;font-size:12px;cursor:pointer}
+.btn{width:100%;height:51px;border:0;border-radius:13px;background:linear-gradient(110deg,#1746b2,#2474ed);color:#fff;font-size:15px;font-weight:850;box-shadow:0 9px 18px #1856ce35;cursor:pointer}.btn:disabled{opacity:.65;cursor:wait}
+.error{display:none;background:#fff0f0;border:1px solid #ffd5d5;color:#a51f1f;border-radius:11px;padding:11px 12px;font-size:12px;line-height:1.5;margin:0 0 14px}.error.show{display:block}.success{display:none;background:#eaf8f0;border:1px solid #c7ecd5;color:#167343;border-radius:11px;padding:11px 12px;font-size:12px;margin:0 0 14px}.success.show{display:block}
+.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:19px}.footer a{color:#1558d6;text-decoration:none;font-weight:850}.secure{text-align:center;color:#8a96aa;font-size:10px;margin-top:18px}
+@media(min-height:780px){.card{padding:32px 25px}.brand{margin-bottom:35px}}
+
+
+/* SwiftPays unified NEON BLUE theme */
+:root{--sp-bg:#050b1b;--sp-panel:#0b1730;--sp-panel2:#0e2042;--sp-blue:#168bff;--sp-cyan:#20d9ff;--sp-text:#eaf4ff;--sp-muted:#9bb2d2;--sp-border:#1b4d83}
+html{color-scheme:dark}
+body{background:radial-gradient(ellipse at 8% 4%,#087cff35,transparent 36%),radial-gradient(ellipse at 95% 90%,#00cfff20,transparent 34%),#050b1b!important;color:var(--sp-text)!important}
+.card,.container,.shell,.panel,.section,.modal,.box{background:linear-gradient(145deg,#0b1730f5,#081329f8)!important;border-color:#1768b8!important;box-shadow:0 0 28px #078bff20,0 18px 60px #0008!important}
+button[type=submit],.submit,.action,.btn,.primary,.button-primary{background:linear-gradient(110deg,#087cff,#00bfff)!important;color:#fff!important;border-color:#20d9ff!important;box-shadow:0 8px 26px #087cff45!important}
+input,select,textarea{background:#0b1b36!important;color:#f2f8ff!important;border-color:#285889!important}
+input:focus,select:focus,textarea:focus{border-color:#20d9ff!important;box-shadow:0 0 0 3px #20d9ff22!important}
+a{color:#45dfff}
+label{color:#d7eaff}
+hr{border-color:#1b3b64}
+:focus-visible{outline:2px solid #20d9ff;outline-offset:2px}
+.sp-brand img,.logo{filter:drop-shadow(0 0 12px #00bfff55)}
+@media(max-width:600px){body{padding-left:12px!important;padding-right:12px!important}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><div class="logo">S</div>SwiftPays</div>
+  <main class="card">
+    <div class="welcome"><h1>Welcome Back</h1><p>Login to your SwiftPays account to continue</p></div>
+    <div class="error" id="errorBox" role="alert"></div>
+    <div class="success" id="successBox"></div>
+    <form id="loginForm">
+      <div class="field"><label for="mobile">MOBILE NUMBER</label><input id="mobile" name="mobile" type="tel" inputmode="numeric" autocomplete="tel" placeholder="Enter registered mobile number" maxlength="15" required></div>
+      <div class="field"><label for="password">PASSWORD</label><div class="input-wrap"><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required><button class="toggle" type="button" id="togglePassword">SHOW</button></div></div>
+      <div class="row"><label class="remember"><input type="checkbox" id="remember" checked> Remember me</label><button type="button" class="text-link" id="forgotBtn">Forgot Password?</button></div>
+      <button class="btn" id="loginBtn" type="submit">Login Securely →</button>
+    </form>
+    <div class="footer">Don't have an account? <a href="/register.html">Create Account</a></div>
+    <div class="secure">🔒 Secure login · Your credentials are encrypted in transit</div>
+  </main>
+</div>
+<script>
+const API_BASE="https://swiftpay-api-6azu.onrender.com";
+const form=document.getElementById("loginForm"),loginBtn=document.getElementById("loginBtn");
+function message(text,type="error"){const box=document.getElementById(type==="success"?"successBox":"errorBox");box.textContent=text;box.classList.add("show");}
+function clearMessages(){["errorBox","successBox"].forEach(id=>document.getElementById(id).classList.remove("show"));}
+document.getElementById("togglePassword").addEventListener("click",()=>{const p=document.getElementById("password"),b=document.getElementById("togglePassword");p.type=p.type==="password"?"text":"password";b.textContent=p.type==="password"?"SHOW":"HIDE";});
+form.addEventListener("submit",async e=>{
+ e.preventDefault();clearMessages();
+ const mobile=document.getElementById("mobile").value.trim(),password=document.getElementById("password").value;
+ if(!mobile||!password){message("Please enter your mobile number and password.");return;}
+ loginBtn.disabled=true;loginBtn.textContent="Checking login…";
+ try{
+  const res=await fetch(API_BASE+"/auth/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mobile,password})});
+  let data={};try{data=await res.json();}catch(_){}
+  if(!res.ok)throw new Error(data.detail||data.message||"Login failed. Please try again.");
+  if(!data.token)throw new Error("Login response did not include a session token. Please contact support.");
+  const storage=document.getElementById("remember").checked?localStorage:sessionStorage;
+  ["swiftpays_token","token","auth_token","access_token"].forEach(k=>{localStorage.removeItem(k);sessionStorage.removeItem(k);});
+  storage.setItem("swiftpays_token",data.token);
+  if(data.user)storage.setItem("swiftpays_user",JSON.stringify(data.user));
+  message("Login successful. Opening your dashboard…","success");
+  setTimeout(()=>{window.location.replace("/dashboard.html");},650);
+ }catch(err){message(err.message||"Unable to login. Check your connection and try again.");}
+ finally{loginBtn.disabled=false;loginBtn.textContent="Login Securely →";}
+});
+document.getElementById("forgotBtn").addEventListener("click",()=>{
+ const mobile=document.getElementById("mobile").value.trim();
+ if(!mobile){message("Enter your registered mobile number first, then tap Forgot Password.");return;}
+ message("Password recovery currently requires your Telegram account to be linked. If it is not linked, contact SwiftPays support.");
+});
+</script>
+</body>
+</html>
