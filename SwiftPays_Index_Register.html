@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#030b1c">
+<meta name="description" content="SwiftPays secure access verification">
+<title>SwiftPays | Secure Access</title>
+<link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://swiftpay-api-6azu.onrender.com" crossorigin>
+<link rel="dns-prefetch" href="//challenges.cloudflare.com">
+<style>
+:root{color-scheme:dark;--bg:#030a19;--panel:#071a35;--panel2:#0a2346;--cyan:#22d8ff;--blue:#168cff;--muted:#a9c2e5;--white:#f5f9ff;--line:#1761a0}
+*{box-sizing:border-box}
+html{min-height:100%;background:var(--bg)}
+body{margin:0;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:22px 16px;background:radial-gradient(ellipse at 50% 4%,#087cff32 0,transparent 42%),radial-gradient(ellipse at 4% 85%,#00d9ff18 0,transparent 32%),linear-gradient(145deg,#030918,#06152d 55%,#020817);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--white);overflow-x:hidden}
+body:before,body:after{content:"";position:fixed;pointer-events:none;border:1px solid #087cff26;border-radius:50%;width:520px;height:520px;filter:blur(1px);opacity:.42}
+body:before{top:-390px;left:-210px;box-shadow:0 0 90px #078bff28}
+body:after{right:-360px;bottom:-430px;box-shadow:0 0 100px #00d9ff20}
+.shell{position:relative;z-index:1;width:min(100%,440px);padding:20px 0}
+.card{position:relative;overflow:hidden;text-align:center;padding:30px 24px 25px;border:1px solid #168ce9;border-radius:30px;background:linear-gradient(150deg,rgba(8,30,61,.97),rgba(3,15,34,.98) 65%,rgba(5,27,53,.98));box-shadow:0 0 0 1px #22d8ff12 inset,0 22px 75px #0009,0 0 42px #087cff25}
+.card:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg,transparent 8%,#17baff0c 48%,transparent 75%);opacity:.9}
+.top-glow{position:absolute;top:0;left:13%;right:13%;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),#fff, var(--blue),transparent);box-shadow:0 0 18px var(--cyan)}
+.brand{position:relative;display:flex;align-items:center;justify-content:center;margin:0 auto 17px}
+.brand img{width:132px;height:132px;object-fit:contain;filter:drop-shadow(0 0 18px #0aaeff55);border-radius:28px}
+.kicker{font-size:10px;font-weight:850;letter-spacing:2.5px;color:var(--cyan);text-transform:uppercase;margin:0 0 14px}
+h1{font-size:clamp(24px,6vw,29px);line-height:1.13;letter-spacing:-.8px;margin:0 0 10px;font-weight:850}
+h1 span{color:var(--cyan);text-shadow:0 0 22px #13cfff35}
+
+.desc{max-width:350px;margin:0 auto 24px;color:var(--muted);font-size:14px;line-height:1.65}
+
+
+
+
+.verify-panel{position:relative;z-index:2;background:#fff;border-radius:10px;padding:10px 8px;min-height:76px;display:flex;align-items:center;justify-content:center;margin:12px auto 15px;box-shadow:0 7px 25px #0004;max-width:100%;overflow:hidden}
+#turnstile-widget{width:100%;display:flex;justify-content:center;min-height:55px}
+.status-wrap{min-height:54px;display:flex;align-items:center;justify-content:center;gap:10px;padding:11px 14px;border:1px solid #0c83c9;border-radius:999px;background:linear-gradient(100deg,#062647,#08365b 55%,#062443);box-shadow:0 0 20px #008cff20}
+.spinner{width:19px;height:19px;flex:0 0 19px;border:2px solid #24628b;border-top-color:var(--cyan);border-right-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#status{font-size:13px;font-weight:700;color:#eaf7ff;line-height:1.4}
+.status-wrap.ok{border-color:#18b985;background:#062e31}
+.status-wrap.ok .spinner{display:none}
+.status-wrap.error{border-color:#e36b86;background:#321b2b}
+.status-wrap.error #status{color:#ffdbe4}
+.retry{display:none;margin:13px auto 0;border:1px solid #168ce9;border-radius:999px;padding:10px 18px;background:#0b2b50;color:#eaf7ff;font-size:13px;font-weight:800;cursor:pointer}
+.retry.show{display:inline-flex}
+.footer{margin-top:21px;padding-top:17px;border-top:1px solid #16406b;color:#a9c9e9;font-size:12px;display:flex;align-items:center;justify-content:center;gap:8px}
+.footer .lock{color:var(--cyan);font-size:16px}
+.note{margin:10px 0 0;color:#6485ac;font-size:10px;line-height:1.5}
+@media(max-width:390px){body{padding:12px}.shell{padding:10px 0}.card{padding:23px 15px 20px;border-radius:25px}.brand img{width:116px;height:116px}.verify-panel{padding:8px 4px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main class="shell">
+<section class="card" aria-labelledby="title">
+<div class="top-glow"></div>
+<div class="brand"><img src="/logo.png" alt="SwiftPays neon lightning S logo" width="116" height="116" fetchpriority="high"></div>
+<div class="kicker">💎 Premium secure gateway 💎</div>
+<h1 id="title">Secure access to<br><span>SwiftPays</span></h1>
+<p class="desc">We’re checking your connection to help keep your account and payments safe. This usually takes only a moment.</p>
+<div class="verify-panel"><div id="turnstile-widget" aria-label="Cloudflare human verification"></div></div>
+<div class="status-wrap" id="status-wrap" role="status" aria-live="polite">
+<div class="spinner" id="spinner"></div><div id="status">Preparing secure verification…</div>
+</div>
+<button class="retry" id="retry" type="button">↻ Try verification again</button>
+<footer class="footer"><span class="lock">♧</span><span>Protected access · SwiftPays</span></footer>
+<p class="note">🔐 Your verification token is checked securely by our server.</p>
+</section>
+</main>
+<script>
+(() => {
+  "use strict";
+  const API_BASE = "https://swiftpay-api-6azu.onrender.com";
+  const REGISTER_URL = "/register.html";
+  const SESSION_KEY = "swiftpays_verified_at";
+  const SESSION_TTL = 4 * 60 * 60 * 1000;
+  const statusEl = document.getElementById("status");
+  const statusWrap = document.getElementById("status-wrap");
+  const retryBtn = document.getElementById("retry");
+  let widgetId = null;
+  let active = false;
+  let configCache = null;
+
+  function status(message, kind) {
+    statusEl.textContent = message;
+    statusWrap.className = "status-wrap" + (kind ? " " + kind : "");
+    retryBtn.classList.toggle("show", kind === "error");
+  }
+  function alreadyVerified() {
+    const stamp = Number(sessionStorage.getItem(SESSION_KEY) || 0);
+    return stamp > 0 && Date.now() - stamp < SESSION_TTL;
+  }
+  function redirectToRegister() {
+    sessionStorage.setItem(SESSION_KEY, String(Date.now()));
+    window.location.replace(REGISTER_URL);
+  }
+  function showVerifiedAndContinue() {
+    const panel = document.querySelector(".verify-panel");
+    if (panel) panel.style.display = "none";
+    status("✅ Verification successful. Opening SwiftPays registration…", "ok");
+    setTimeout(redirectToRegister, 450);
+  }
+  function loadTurnstile() {
+    if (window.turnstile) return Promise.resolve();
+    if (window.__swiftTurnstilePromise) return window.__swiftTurnstilePromise;
+    window.__swiftTurnstilePromise = new Promise((resolve, reject) => {
+      const existing = document.querySelector('script[data-turnstile-loader="1"]');
+      const script = existing || document.createElement("script");
+      const timeout = setTimeout(() => reject(new Error("Cloudflare verification is taking too long to load. Please retry.")), 15000);
+      const ready = () => { clearTimeout(timeout); resolve(); };
+      script.addEventListener("load", ready, {once:true});
+      script.addEventListener("error", () => { clearTimeout(timeout); reject(new Error("Could not load Cloudflare verification. Check your connection and retry.")); }, {once:true});
+      if (!existing) {
+        script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+        script.async = true; script.defer = true; script.dataset.turnstileLoader = "1";
+        document.head.appendChild(script);
+      }
+      const poll = setInterval(() => {
+        if (window.turnstile) { clearInterval(poll); clearTimeout(timeout); resolve(); }
+      }, 100);
+      setTimeout(() => clearInterval(poll), 16000);
+    });
+    return window.__swiftTurnstilePromise;
+  }
+  async function fetchConfig() {
+    if (configCache) return configCache;
+    const cachedKey = localStorage.getItem("swiftpays_turnstile_site_key");
+    // On repeat visits, render immediately with the previously fetched public Site Key.
+    // Refresh it quietly in the background; the secret key is never stored in the browser.
+    if (cachedKey) {
+      fetch(API_BASE + "/public/config", {headers:{"Accept":"application/json"}, cache:"no-store"})
+        .then(r => r.ok ? r.json() : null)
+        .then(data => {
+          if (data && data.turnstile_enabled === true && data.turnstile_site_key) {
+            localStorage.setItem("swiftpays_turnstile_site_key", data.turnstile_site_key);
+            configCache = data;
+          }
+        }).catch(() => {});
+      configCache = {turnstile_enabled:true, turnstile_site_key:cachedKey};
+      return configCache;
+    }
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
+    try {
+      const response = await fetch(API_BASE + "/public/config", {
+        method:"GET", mode:"cors", cache:"no-store",
+        headers:{"Accept":"application/json"}, signal:controller.signal
+      });
+      if (!response.ok) throw new Error("Security settings are temporarily unavailable. Please retry in a moment.");
+      const data = await response.json();
+      if (data.maintenance_mode) throw new Error("SwiftPays is temporarily under maintenance. Please try again later.");
+      if (data.turnstile_enabled !== true || !data.turnstile_site_key) {
+        throw new Error("Security verification is not configured yet. Please contact SwiftPays support.");
+      }
+      localStorage.setItem("swiftpays_turnstile_site_key", data.turnstile_site_key);
+      configCache = data;
+      return data;
+    } catch (err) {
+      if (cachedKey && !controller.signal.aborted) {
+        return {turnstile_enabled:true, turnstile_site_key:cachedKey};
+      }
+      if (err.name === "AbortError") throw new Error("The security server is waking up. Please tap retry in a few seconds.");
+      throw err;
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+  async function verifyOnServer(token) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 25000);
+    try {
+      const response = await fetch(API_BASE + "/verify-turnstile", {
+        method:"POST", mode:"cors", cache:"no-store",
+        headers:{"Content-Type":"application/json","Accept":"application/json"},
+        body:JSON.stringify({token}), signal:controller.signal
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result.success !== true) {
+        throw new Error(result.detail || "We could not confirm verification. Please try again.");
+      }
+      return true;
+    } catch (err) {
+      if (err.name === "AbortError") throw new Error("Server response is taking longer than expected. Please retry.");
+      if (err instanceof TypeError) throw new Error("Could not reach SwiftPays security server. Check your internet and retry.");
+      throw err;
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+  async function renderChallenge() {
+    if (active) return;
+    active = true;
+    retryBtn.classList.remove("show");
+    status("Loading secure verification…");
+    try {
+      const configPromise = fetchConfig();
+      const turnstilePromise = loadTurnstile();
+      const [config] = await Promise.all([configPromise, turnstilePromise]);
+      if (!window.turnstile) throw new Error("Cloudflare verification did not initialize. Please retry.");
+      if (widgetId !== null) {
+        window.turnstile.remove(widgetId);
+        widgetId = null;
+      }
+      document.getElementById("turnstile-widget").innerHTML = "";
+      widgetId = window.turnstile.render("#turnstile-widget", {
+        sitekey: config.turnstile_site_key,
+        theme:"light",
+        size:"flexible",
+        retry:"auto",
+        "refresh-expired":"auto",
+        callback: async (token) => {
+          status("✨ Verification received. Confirming securely…");
+          try {
+            await verifyOnServer(token);
+            showVerifiedAndContinue();
+          } catch (err) {
+            status(err.message || "Verification failed. Please try again.", "error");
+            try { window.turnstile.reset(widgetId); } catch (_) {}
+          }
+        },
+        "expired-callback": () => status("Your verification expired. Please complete the check again.", "error"),
+        "error-callback": () => status("Cloudflare could not complete the check. Please retry.", "error")
+      });
+      status("Please complete the security check above.");
+    } catch (err) {
+      status(err.message || "Unable to start verification. Please retry.", "error");
+    } finally {
+      active = false;
+    }
+  }
+  retryBtn.addEventListener("click", () => {
+    configCache = null;
+    window.__swiftTurnstilePromise = null;
+    renderChallenge();
+  });
+  if (alreadyVerified()) {
+    showVerifiedAndContinue();
+  } else {
+    renderChallenge();
+  }
+})();
+</script>
+</body>
+</html>
