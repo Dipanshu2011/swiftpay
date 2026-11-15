@@ -4,360 +4,572 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050b1b">
+<meta name="theme-color" content="#030b1c">
+
 <title>Create Account | SwiftPays</title>
+
+<link rel="preconnect" href="https://challenges.cloudflare.com">
+<link rel="preconnect" href="https://swiftpay-api-6azu.onrender.com">
 
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-
-body{
-min-height:100vh;
-padding:20px 14px;
-display:flex;
-justify-content:center;
-align-items:center;
-font-family:Arial,sans-serif;
-color:#fff;
-background:
-radial-gradient(ellipse at 0% 10%,#0756a955,transparent 38%),
-radial-gradient(ellipse at 100% 85%,#7015a955,transparent 38%),
-#030719;
+:root {
+    --bg: #030b1c;
+    --panel: #071a35;
+    --blue: #087cff;
+    --cyan: #20d9ff;
+    --text: #f3f9ff;
+    --muted: #a9c2e5;
+    --border: #1768a9;
 }
 
-.card{
-width:100%;
-max-width:650px;
-padding:28px;
-border:2px solid transparent;
-border-radius:30px;
-background:
-linear-gradient(145deg,#06132cf5,#080b25f8) padding-box,
-linear-gradient(135deg,#13dff4,#286bff 50%,#b23cff) border-box;
-box-shadow:0 0 35px #078bff30,0 24px 80px #0009;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.brand{
-display:flex;
-justify-content:center;
-align-items:center;
-margin-bottom:23px;
+body {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 14px;
+
+    font-family: Inter, Arial, sans-serif;
+    color: var(--text);
+
+    background:
+        radial-gradient(ellipse at 10% 5%, #087cff35, transparent 40%),
+        radial-gradient(ellipse at 95% 90%, #00cfff20, transparent 38%),
+        var(--bg);
 }
 
-.logo{
-width:82px;
-height:82px;
-object-fit:cover;
-border-radius:23px;
-background:#102b60;
-border:2px solid #13dff4;
-box-shadow:0 0 12px #13dff466,0 0 25px #286bff33;
-display:block;
+.container {
+    width: 100%;
+    max-width: 460px;
+    padding: 30px 24px;
+
+    position: relative;
+    overflow: hidden;
+
+    border: 1px solid #168ce9;
+    border-radius: 27px;
+
+    background:
+        linear-gradient(145deg, #0b1d39, #061329 75%);
+
+    box-shadow:
+        0 0 30px #087cff25,
+        0 25px 70px #0008;
 }
 
-.hero{
-text-align:center;
-margin-bottom:28px;
+.container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 12%;
+    right: 12%;
+    height: 2px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #20d9ff,
+        white,
+        #087cff,
+        transparent
+    );
+
+    box-shadow: 0 0 15px #20d9ff;
 }
 
-h1{
-font-size:34px;
-font-weight:900;
-margin-bottom:10px;
+.brand {
+    text-align: center;
+    margin-bottom: 22px;
 }
 
-.subtitle{
-color:#bdcbed;
-font-size:14px;
-line-height:1.7;
+.logo {
+    width: 105px;
+    height: 105px;
+    object-fit: contain;
+    border-radius: 25px;
+
+    filter: drop-shadow(0 0 16px #00bfff65);
 }
 
-label{
-display:block;
-margin:20px 0 9px;
-color:#e1eaff;
-font-size:15px;
-font-weight:800;
+.brand-name {
+    font-size: 28px;
+    font-weight: 900;
+    margin-top: 8px;
+    letter-spacing: -1px;
 }
 
-.field{position:relative}
-
-.field input{
-width:100%;
-height:64px;
-padding:0 18px 0 58px;
-border:1.5px solid #247fc9;
-border-radius:17px;
-background:linear-gradient(110deg,#10274a,#101534);
-color:white;
-font-size:16px;
-outline:none;
+.brand-name span {
+    color: var(--cyan);
 }
 
-.field input:focus{
-border-color:#13dff4;
-box-shadow:0 0 0 3px #12dff422;
+.heading {
+    text-align: center;
+    margin-bottom: 25px;
 }
 
-.field input::placeholder{color:#a7b8d7}
-
-.field-icon{
-position:absolute;
-left:17px;
-top:50%;
-transform:translateY(-50%);
-font-size:21px;
-z-index:2;
-pointer-events:none;
+.heading h1 {
+    font-size: 26px;
+    font-weight: 900;
+    margin-bottom: 10px;
 }
 
-.mobile-input{padding-left:85px!important}
-
-.country-code{
-position:absolute;
-left:17px;
-top:50%;
-transform:translateY(-50%);
-z-index:2;
-font-size:15px;
-font-weight:800;
-pointer-events:none;
+.heading p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted);
 }
 
-.password-input{padding-right:65px!important}
-
-.toggle{
-position:absolute;
-right:12px;
-top:50%;
-transform:translateY(-50%);
-border:0;
-background:transparent;
-font-size:23px;
-cursor:pointer;
-padding:7px;
+.premium {
+    color: var(--cyan);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
 }
 
-.hint{
-margin:8px 2px 0;
-color:#91a6ca;
-font-size:12px;
-line-height:1.5;
+label {
+    display: block;
+    margin: 19px 0 9px;
+    font-size: 13px;
+    font-weight: 800;
+    color: #e4f1ff;
 }
 
-.cloudflare-box{
-width:100%;
-min-height:100px;
-margin-top:26px;
-padding:14px 8px;
-display:flex;
-justify-content:center;
-align-items:center;
-border:1px solid #247fc9;
-border-radius:17px;
-background:#101534;
-overflow:hidden;
+.field {
+    position: relative;
 }
 
-#turnstile-container{
-width:100%;
-min-height:65px;
-display:flex;
-justify-content:center;
-align-items:center;
+.field input {
+    width: 100%;
+    height: 59px;
+
+    padding: 0 16px 0 49px;
+
+    border: 1px solid #247fc0;
+    border-radius: 15px;
+
+    outline: none;
+
+    background: linear-gradient(
+        110deg,
+        #10294a,
+        #0a1933
+    );
+
+    color: white;
+    font-size: 15px;
+
+    transition: .2s;
 }
 
-.submit{
-width:100%;
-min-height:68px;
-margin-top:25px;
-border:0;
-border-radius:18px;
-background:linear-gradient(105deg,#08d9e8,#1768f5 55%,#a52dff);
-color:white;
-font-size:18px;
-font-weight:900;
-cursor:pointer;
-box-shadow:0 10px 32px #1768f555;
+.field input::placeholder {
+    color: #9bb2d2;
 }
 
-.submit:disabled{
-opacity:.6;
-cursor:wait;
+.field input:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px #20d9ff20;
 }
 
-.status{
-min-height:22px;
-margin-top:15px;
-text-align:center;
-font-size:13px;
-line-height:1.5;
-color:#bdcbed;
-overflow-wrap:anywhere;
+.field-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 19px;
+    pointer-events: none;
 }
 
-.status.error{color:#ff8585}
-.status.success{color:#43eab0}
-
-.switch{
-margin-top:25px;
-padding-top:22px;
-border-top:1px solid #ffffff24;
-text-align:center;
-color:#c2cee8;
-font-size:14px;
+.mobile-input {
+    padding-left: 90px !important;
 }
 
-.switch a{
-color:#24e0f2;
-font-weight:900;
-text-decoration:none;
-margin-left:5px;
+.country-code {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 800;
+    font-size: 14px;
+    z-index: 2;
+    pointer-events: none;
 }
 
-.footer{
-text-align:center;
-margin-top:23px;
-color:#879abd;
-font-size:11px;
+.password-input {
+    padding-right: 58px !important;
 }
 
-@media(max-width:480px){
-.card{padding:27px 18px}
-h1{font-size:29px}
-.field input{height:62px}
-.logo{
-width:76px;
-height:76px;
-border-radius:21px;
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    border: none;
+    background: transparent;
+    color: white;
+
+    font-size: 21px;
+    cursor: pointer;
+    padding: 7px;
 }
+
+.hint {
+    color: #8faaca;
+    font-size: 11px;
+    margin: 8px 2px 0;
+    line-height: 1.5;
 }
 
+.cloudflare {
+    margin-top: 25px;
+    padding: 10px 5px;
 
-/* SwiftPays unified NEON BLUE theme */
-:root{--sp-bg:#050b1b;--sp-panel:#0b1730;--sp-panel2:#0e2042;--sp-blue:#168bff;--sp-cyan:#20d9ff;--sp-text:#eaf4ff;--sp-muted:#9bb2d2;--sp-border:#1b4d83}
-html{color-scheme:dark}
-body{background:radial-gradient(ellipse at 8% 4%,#087cff35,transparent 36%),radial-gradient(ellipse at 95% 90%,#00cfff20,transparent 34%),#050b1b!important;color:var(--sp-text)!important}
-.card,.container,.shell,.panel,.section,.modal,.box{background:linear-gradient(145deg,#0b1730f5,#081329f8)!important;border-color:#1768b8!important;box-shadow:0 0 28px #078bff20,0 18px 60px #0008!important}
-button[type=submit],.submit,.action,.btn,.primary,.button-primary{background:linear-gradient(110deg,#087cff,#00bfff)!important;color:#fff!important;border-color:#20d9ff!important;box-shadow:0 8px 26px #087cff45!important}
-input,select,textarea{background:#0b1b36!important;color:#f2f8ff!important;border-color:#285889!important}
-input:focus,select:focus,textarea:focus{border-color:#20d9ff!important;box-shadow:0 0 0 3px #20d9ff22!important}
-a{color:#45dfff}
-label{color:#d7eaff}
-hr{border-color:#1b3b64}
-:focus-visible{outline:2px solid #20d9ff;outline-offset:2px}
-.sp-brand img,.logo{filter:drop-shadow(0 0 12px #00bfff55)}
-@media(max-width:600px){body{padding-left:12px!important;padding-right:12px!important}}
+    min-height: 76px;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#turnstile-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
+}
+
+.submit-btn {
+    width: 100%;
+    min-height: 60px;
+    margin-top: 23px;
+
+    border: 1px solid #20d9ff;
+    border-radius: 16px;
+
+    background: linear-gradient(
+        105deg,
+        #087cff,
+        #00bfff
+    );
+
+    color: white;
+    font-size: 16px;
+    font-weight: 900;
+
+    cursor: pointer;
+
+    box-shadow: 0 8px 28px #087cff45;
+    transition: .2s;
+}
+
+.submit-btn:active {
+    transform: scale(.98);
+}
+
+.submit-btn:disabled {
+    opacity: .55;
+    cursor: wait;
+}
+
+.status {
+    min-height: 22px;
+    margin-top: 15px;
+
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+
+    color: var(--muted);
+}
+
+.status.error {
+    color: #ff8797;
+}
+
+.status.success {
+    color: #53e8b1;
+}
+
+.login {
+    text-align: center;
+    margin-top: 24px;
+    padding-top: 20px;
+
+    border-top: 1px solid #ffffff20;
+
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.login a {
+    color: var(--cyan);
+    font-weight: 900;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.features {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #ffffff17;
+}
+
+.feature {
+    width: 33.33%;
+    text-align: center;
+    color: #a9c2e5;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.feature:not(:last-child) {
+    border-right: 1px solid #ffffff20;
+}
+
+.feature-icon {
+    display: block;
+    font-size: 23px;
+    margin-bottom: 7px;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 22px;
+    color: #718eae;
+    font-size: 10px;
+}
+
+@media(max-width:380px) {
+    .container {
+        padding: 25px 17px;
+    }
+
+    .heading h1 {
+        font-size: 23px;
+    }
+
+    .logo {
+        width: 90px;
+        height: 90px;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<main class="card">
+<main class="container">
 
-<header class="brand">
-<img
-class="logo"
-src="/logo.png"
-alt="SwiftPays Logo">
-</header>
+    <!-- BRAND LOGO -->
 
-<div class="hero">
-<h1>Create Account</h1>
-<p class="subtitle">
-✨ Join SwiftPays and enjoy secure, fast and reliable payment services.
-</p>
-</div>
+    <header class="brand">
 
-<form id="registerForm" autocomplete="on">
+        <img
+            src="/logo.png"
+            alt="SwiftPays Logo"
+            class="logo"
+            width="105"
+            height="105"
+        >
 
-<label for="name">👤 Full Name</label>
+        <div class="brand-name">
+            Swift<span>Pays</span>
+        </div>
 
-<div class="field">
-<span class="field-icon">👤</span>
-<input
-type="text"
-id="name"
-name="name"
-maxlength="80"
-autocomplete="name"
-placeholder="Enter your full name"
-required>
-</div>
+    </header>
 
-<label for="mobile">📱 Mobile Number</label>
+    <!-- PAGE HEADING -->
 
-<div class="field">
-<span class="country-code">🇮🇳 +91</span>
-<input
-type="tel"
-id="mobile"
-name="mobile"
-class="mobile-input"
-inputmode="numeric"
-maxlength="10"
-pattern="[6-9][0-9]{9}"
-autocomplete="tel-national"
-placeholder="10-digit mobile number"
-required>
-</div>
+    <section class="heading">
 
-<p class="hint">
-Enter your active 10-digit Indian mobile number.
-</p>
+        <div class="premium">
+            💎 PREMIUM SECURE GATEWAY 💎
+        </div>
 
-<label for="password">🔐 Password</label>
+        <h1>✨ Create Your Account</h1>
 
-<div class="field">
-<span class="field-icon">🔐</span>
+        <p>
+            Join the secure payment experience.
+            Create your SwiftPays account today.
+        </p>
 
-<input
-type="password"
-id="password"
-name="password"
-class="password-input"
-minlength="8"
-maxlength="128"
-autocomplete="new-password"
-placeholder="Enter your password"
-required>
+    </section>
 
-<button
-type="button"
-class="toggle"
-id="togglePassword"
-aria-label="Show password">🙈</button>
-</div>
+    <!-- REGISTRATION FORM -->
 
-<p class="hint">
-Password must contain at least 8 characters.
-</p>
+    <form id="registerForm" autocomplete="on">
 
-<div class="cloudflare-box">
-<div id="turnstile-container"></div>
-</div>
+        <!-- FULL NAME -->
 
-<button
-type="submit"
-class="submit"
-id="submitBtn">
-CREATE ACCOUNT →
-</button>
+        <label for="name">
+            👤 Full Name
+        </label>
 
-<div class="status" id="status" role="status" aria-live="polite"></div>
+        <div class="field">
 
-</form>
+            <span class="field-icon">👤</span>
 
-<div class="switch">
-Already have an account?
-<a href="/login">Login Now</a>
-</div>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Enter your full name"
+                autocomplete="name"
+                maxlength="80"
+                required
+            >
 
-<div class="footer">
-© 2026 SwiftPays. All Rights Reserved.
-</div>
+        </div>
+
+        <!-- MOBILE NUMBER -->
+
+        <label for="mobile">
+            📱 Mobile Number
+        </label>
+
+        <div class="field">
+
+            <span class="country-code">
+                🇮🇳 +91
+            </span>
+
+            <input
+                type="tel"
+                id="mobile"
+                name="mobile"
+                class="mobile-input"
+                placeholder="10-digit mobile number"
+                inputmode="numeric"
+                autocomplete="tel-national"
+                maxlength="10"
+                pattern="[6-9][0-9]{9}"
+                required
+            >
+
+        </div>
+
+        <p class="hint">
+            Enter your active 10-digit Indian mobile number.
+        </p>
+
+        <!-- PASSWORD -->
+
+        <label for="password">
+            🔐 Create Password
+        </label>
+
+        <div class="field">
+
+            <span class="field-icon">🔒</span>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                class="password-input"
+                placeholder="Create a strong password"
+                autocomplete="new-password"
+                minlength="8"
+                maxlength="128"
+                required
+            >
+
+            <button
+                type="button"
+                class="toggle-password"
+                id="togglePassword"
+                aria-label="Show password"
+            >
+                👁
+            </button>
+
+        </div>
+
+        <p class="hint">
+            Use at least 8 characters. Never share your password.
+        </p>
+
+        <!-- CLOUDFLARE -->
+
+        <div class="cloudflare">
+
+            <div id="turnstile-container"></div>
+
+        </div>
+
+        <!-- SUBMIT -->
+
+        <button
+            type="submit"
+            class="submit-btn"
+            id="submitBtn"
+        >
+            💎 CREATE ACCOUNT →
+        </button>
+
+        <div
+            class="status"
+            id="status"
+            role="status"
+            aria-live="polite"
+        ></div>
+
+    </form>
+
+    <!-- LOGIN -->
+
+    <div class="login">
+
+        Already have an account?
+
+        <a href="/login">
+            Login Now
+        </a>
+
+    </div>
+
+    <!-- FEATURES -->
+
+    <div class="features">
+
+        <div class="feature">
+            <span class="feature-icon">🛡️</span>
+            Secured<br>Payments
+        </div>
+
+        <div class="feature">
+            <span class="feature-icon">⚡</span>
+            Fast<br>Transfers
+        </div>
+
+        <div class="feature">
+            <span class="feature-icon">🎧</span>
+            24×7<br>Support
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        🔐 Secure Registration · © 2026 SwiftPays
+    </footer>
 
 </main>
 
@@ -365,41 +577,58 @@ Already have an account?
 "use strict";
 
 /* =====================================
-   SWIFTPAYS API
+   SWIFTPAYS CONFIGURATION
 ===================================== */
 
-const API_BASE = "https://swiftpay-api-6azu.onrender.com";
+const API_BASE =
+    "https://swiftpay-api-6azu.onrender.com";
+
+const form =
+    document.getElementById("registerForm");
+
+const submitBtn =
+    document.getElementById("submitBtn");
+
+const passwordInput =
+    document.getElementById("password");
+
+const togglePassword =
+    document.getElementById("togglePassword");
 
 let cloudflareToken = "";
-let turnstileWidgetId = null;
+let widgetId = null;
 let isSubmitting = false;
 
-const form = document.getElementById("registerForm");
-const passwordInput = document.getElementById("password");
-const togglePassword = document.getElementById("togglePassword");
-const submitBtn = document.getElementById("submitBtn");
 
 /* =====================================
-   STATUS
+   STATUS MESSAGE
 ===================================== */
 
-function showStatus(message,type=""){
-    const status = document.getElementById("status");
+function showStatus(message, type = "") {
+
+    const status =
+        document.getElementById("status");
+
     status.textContent = message;
+
     status.className = "status " + type;
 }
 
+
 /* =====================================
-   PASSWORD SHOW / HIDE
+   PASSWORD VISIBILITY
 ===================================== */
 
-togglePassword.addEventListener("click",function(){
+togglePassword.addEventListener("click", function () {
 
-    const hidden = passwordInput.type === "password";
+    const hidden =
+        passwordInput.type === "password";
 
-    passwordInput.type = hidden ? "text" : "password";
+    passwordInput.type =
+        hidden ? "text" : "password";
 
-    togglePassword.textContent = hidden ? "👁️" : "🙈";
+    togglePassword.textContent =
+        hidden ? "🙈" : "👁";
 
     togglePassword.setAttribute(
         "aria-label",
@@ -408,34 +637,42 @@ togglePassword.addEventListener("click",function(){
 
 });
 
+
 /* =====================================
-   MOBILE VALIDATION
+   MOBILE NUMBER INPUT
 ===================================== */
 
-document.getElementById("mobile").addEventListener("input",function(){
+document.getElementById("mobile")
+.addEventListener("input", function () {
 
-    this.value = this.value.replace(/\D/g,"").slice(0,10);
+    this.value = this.value
+        .replace(/\D/g, "")
+        .slice(0, 10);
 
 });
 
+
 /* =====================================
-   WAIT FOR CLOUDFLARE
+   LOAD CLOUDFLARE
 ===================================== */
 
-function waitForTurnstile(siteKey){
+function waitForTurnstile(siteKey) {
 
     let attempts = 0;
 
-    const timer = setInterval(function(){
+    const timer = setInterval(function () {
 
         attempts++;
 
-        if(window.turnstile){
+        if (window.turnstile) {
 
             clearInterval(timer);
+
             renderTurnstile(siteKey);
 
-        }else if(attempts >= 100){
+        }
+
+        if (attempts >= 100) {
 
             clearInterval(timer);
 
@@ -446,79 +683,136 @@ function waitForTurnstile(siteKey){
 
         }
 
-    },200);
+    }, 200);
 
 }
 
+
 /* =====================================
-   LOAD CLOUDFLARE CONFIG
+   FETCH PUBLIC CONFIGURATION
 ===================================== */
 
-async function loadCloudflare(){
+async function loadCloudflare() {
 
-    try{
+    showStatus("Loading security verification...");
 
-        const response = await fetch(
-            API_BASE + "/public/config",
-            {
-                method:"GET",
-                cache:"no-store"
-            }
+    try {
+
+        const controller = new AbortController();
+
+        const timeout = setTimeout(
+            () => controller.abort(),
+            20000
         );
+
+        let response;
+
+        try {
+
+            response = await fetch(
+                API_BASE + "/public/config",
+                {
+                    method: "GET",
+                    cache: "no-store",
+                    headers: {
+                        "Accept": "application/json"
+                    },
+                    signal: controller.signal
+                }
+            );
+
+        } finally {
+
+            clearTimeout(timeout);
+
+        }
 
         const config = await response.json();
 
-        if(!response.ok){
+        if (!response.ok) {
+
             throw new Error(
-                config.detail || "Security configuration unavailable."
+                config.detail ||
+                "Security configuration unavailable."
             );
+
+        }
+
+        if (config.maintenance_mode) {
+
+            throw new Error(
+                "SwiftPays is under maintenance."
+            );
+
         }
 
         const siteKey = (
-            config.turnstile_site_key || config.site_key || ""
+            config.turnstile_site_key ||
+            config.site_key ||
+            ""
         ).trim();
 
-        if(!siteKey || config.turnstile_enabled === false){
-            throw new Error("Cloudflare Site Key is not configured.");
+        if (
+            !siteKey ||
+            config.turnstile_enabled !== true
+        ) {
+
+            throw new Error(
+                "Cloudflare verification is not configured."
+            );
+
         }
 
         waitForTurnstile(siteKey);
 
-    }catch(error){
+    } catch (error) {
 
-        showStatus(error.message,"error");
+        showStatus(
+            error.name === "AbortError"
+                ? "Security server is taking too long. Please refresh."
+                : error.message,
+            "error"
+        );
 
     }
 
 }
 
+
 /* =====================================
    RENDER TURNSTILE
 ===================================== */
 
-function renderTurnstile(siteKey){
+function renderTurnstile(siteKey) {
 
-    try{
+    try {
 
-        turnstileWidgetId = window.turnstile.render(
+        widgetId = window.turnstile.render(
             "#turnstile-container",
             {
-                sitekey:siteKey,
-                theme:"dark",
-                size:"normal",
 
-                callback:function(token){
+                sitekey: siteKey,
+
+                theme: "light",
+
+                size: "flexible",
+
+                retry: "auto",
+
+                "refresh-expired": "auto",
+
+                callback: function (token) {
 
                     cloudflareToken = token;
 
                     showStatus(
-                        "Cloudflare verification completed.",
+                        "✅ Security verification completed.",
                         "success"
                     );
 
                 },
 
-                "expired-callback":function(){
+                "expired-callback": function () {
 
                     cloudflareToken = "";
 
@@ -529,7 +823,7 @@ function renderTurnstile(siteKey){
 
                 },
 
-                "error-callback":function(){
+                "error-callback": function () {
 
                     cloudflareToken = "";
 
@@ -539,10 +833,11 @@ function renderTurnstile(siteKey){
                     );
 
                 }
+
             }
         );
 
-    }catch(error){
+    } catch (error) {
 
         showStatus(
             "Unable to display Cloudflare verification.",
@@ -553,37 +848,35 @@ function renderTurnstile(siteKey){
 
 }
 
+
 /* =====================================
-   CREATE ACCOUNT
+   REGISTRATION SUBMISSION
 ===================================== */
 
-form.addEventListener("submit",async function(event){
+form.addEventListener("submit", async function (event) {
 
     event.preventDefault();
 
-    if(isSubmitting)return;
+    if (isSubmitting) return;
 
-    const name = document.getElementById("name").value.trim();
+    const name =
+        document.getElementById("name")
+        .value.trim();
 
-    const mobile = document.getElementById("mobile").value.trim();
+    const mobile =
+        document.getElementById("mobile")
+        .value.trim();
 
-    const password = passwordInput.value;
+    const password =
+        passwordInput.value;
 
-    /* Name */
 
-    if(name.length < 2){
+    /* NAME VALIDATION */
 
-        showStatus("Please enter your full name.","error");
-        return;
-
-    }
-
-    /* Mobile */
-
-    if(!/^[6-9][0-9]{9}$/.test(mobile)){
+    if (name.length < 2) {
 
         showStatus(
-            "Please enter a valid 10-digit Indian mobile number.",
+            "Please enter your full name.",
             "error"
         );
 
@@ -591,9 +884,24 @@ form.addEventListener("submit",async function(event){
 
     }
 
-    /* Password */
 
-    if(password.length < 8){
+    /* MOBILE VALIDATION */
+
+    if (!/^[6-9][0-9]{9}$/.test(mobile)) {
+
+        showStatus(
+            "Enter a valid 10-digit Indian mobile number.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /* PASSWORD VALIDATION */
+
+    if (password.length < 8) {
 
         showStatus(
             "Password must contain at least 8 characters.",
@@ -604,9 +912,10 @@ form.addEventListener("submit",async function(event){
 
     }
 
-    /* Cloudflare */
 
-    if(!cloudflareToken){
+    /* CLOUDFLARE VALIDATION */
+
+    if (!cloudflareToken) {
 
         showStatus(
             "Please complete Cloudflare verification first.",
@@ -617,38 +926,75 @@ form.addEventListener("submit",async function(event){
 
     }
 
+
+    /* START REQUEST */
+
     isSubmitting = true;
 
     submitBtn.disabled = true;
-    submitBtn.textContent = "VERIFYING...";
 
-    showStatus("Verifying your registration...");
+    submitBtn.textContent =
+        "⏳ CREATING ACCOUNT...";
 
-    try{
+    showStatus(
+        "🔐 Securely processing your registration..."
+    );
 
-        const response = await fetch(
-            API_BASE + "/auth/register",
-            {
-                method:"POST",
 
-                headers:{
-                    "Content-Type":"application/json"
-                },
+    try {
 
-                body:JSON.stringify({
-                    name:name,
-                    mobile:mobile,
-                    password:password,
-                    turnstile_token:cloudflareToken
-                })
-            }
+        const controller = new AbortController();
+
+        const timeout = setTimeout(
+            () => controller.abort(),
+            30000
         );
 
-        const result = await response.json().catch(function(){
-            return {};
-        });
+        let response;
 
-        if(!response.ok){
+        try {
+
+            response = await fetch(
+                API_BASE + "/auth/register",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        name: name,
+
+                        mobile: mobile,
+
+                        password: password,
+
+                        turnstile_token: cloudflareToken
+
+                    }),
+
+                    signal: controller.signal
+
+                }
+            );
+
+        } finally {
+
+            clearTimeout(timeout);
+
+        }
+
+
+        const result = await response
+            .json()
+            .catch(() => ({}));
+
+
+        if (!response.ok) {
 
             throw new Error(
                 result.detail ||
@@ -658,8 +1004,9 @@ form.addEventListener("submit",async function(event){
 
         }
 
+
         /*
-          REQUIRED BACKEND RESPONSE:
+          EXPECTED BACKEND RESPONSE:
 
           {
             "success": true,
@@ -668,70 +1015,84 @@ form.addEventListener("submit",async function(event){
           }
         */
 
-        if(
+
+        if (
             result.success !== true ||
             result.pin_setup_required !== true ||
             !result.setup_token
-        ){
+        ) {
 
             throw new Error(
-                "Backend did not return the S-PIN setup token. Check Render deployment."
+                "Registration response is incomplete. Please contact support."
             );
 
         }
 
-        /* SAVE TEMPORARY TOKEN */
+
+        /* SAVE TEMPORARY SETUP TOKEN */
 
         sessionStorage.setItem(
             "swiftpays_setup_token",
             result.setup_token
         );
 
+
         showStatus(
-            "Details verified! Redirecting to S-PIN setup...",
+            "✅ Account details accepted! Opening S-PIN setup...",
             "success"
         );
 
-        /* REDIRECT WITH TOKEN */
 
-        const pinURL =
-            "/create-pin?token=" +
-            encodeURIComponent(result.setup_token);
+        /* REDIRECT TO S-PIN PAGE */
 
-        setTimeout(function(){
+        setTimeout(function () {
 
-            window.location.replace(pinURL);
+            window.location.replace(
+                "/create-pin?token=" +
+                encodeURIComponent(result.setup_token)
+            );
 
-        },600);
+        }, 700);
 
-    }catch(error){
+
+    } catch (error) {
 
         showStatus(
-            error.message || "Something went wrong.",
+            error.name === "AbortError"
+                ? "Server response timed out. Check your account before retrying."
+                : error.message,
             "error"
         );
 
         cloudflareToken = "";
 
-        if(window.turnstile && turnstileWidgetId !== null){
+        if (
+            window.turnstile &&
+            widgetId !== null
+        ) {
 
-            try{
-                window.turnstile.reset(turnstileWidgetId);
-            }catch(resetError){}
+            try {
+
+                window.turnstile.reset(widgetId);
+
+            } catch (resetError) {}
 
         }
 
         isSubmitting = false;
 
         submitBtn.disabled = false;
-        submitBtn.textContent = "CREATE ACCOUNT →";
+
+        submitBtn.textContent =
+            "💎 CREATE ACCOUNT →";
 
     }
 
 });
 
+
 /* =====================================
-   INITIALIZE
+   INITIALIZATION
 ===================================== */
 
 loadCloudflare();
@@ -739,5 +1100,4 @@ loadCloudflare();
 </script>
 
 </body>
-  </html>
-  
+</html>
