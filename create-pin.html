@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +12,6 @@
   --cyan: #08d9ed;
   --blue: #0875ff;
   --bg: #030817;
-  --text: #ffffff;
   --muted: #a9b9d2;
   --border: #287acb;
 }
@@ -31,7 +29,7 @@ body {
   align-items: center;
   justify-content: center;
   font-family: Arial, Helvetica, sans-serif;
-  color: var(--text);
+  color: #fff;
   background:
     radial-gradient(circle at 5% 5%, #0875ff35, transparent 35%),
     radial-gradient(circle at 95% 95%, #00d9ed25, transparent 35%),
@@ -62,39 +60,33 @@ body {
   pointer-events: none;
 }
 
-/* ORIGINAL SWIFTPAYS LOGO */
+/* TOP BRAND LOGO */
 
 .brand {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
   position: relative;
   z-index: 1;
 }
 
 .brand img {
-  width: 210px;
+  width: 190px;
   max-width: 75%;
-  height: 75px;
+  height: 65px;
   object-fit: contain;
 }
 
-/* SECURITY SHIELD */
+/* MAIN LOGO - REPLACES SHIELD */
 
-.shield {
-  width: 112px;
-  height: 120px;
-  margin: 0 auto 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  filter: drop-shadow(0 0 15px #00bfff70);
-}
-
-.shield svg {
-  width: 100%;
-  height: 100%;
+.security-logo {
+  width: 180px;
+  height: 150px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 25px;
+  filter: drop-shadow(0 0 18px #087dff55);
 }
 
 h1 {
@@ -169,8 +161,8 @@ label {
   right: 14px;
   top: 50%;
   transform: translateY(-50%);
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -274,8 +266,13 @@ label {
   }
 
   .brand img {
-    width: 185px;
-    height: 65px;
+    width: 170px;
+    height: 60px;
+  }
+
+  .security-logo {
+    width: 155px;
+    height: 135px;
   }
 
   .input-wrap input {
@@ -289,52 +286,20 @@ label {
 
 <main class="card">
 
-  <!-- ORIGINAL SWIFTPAYS LOGO -->
+  <!-- TOP SWIFTPAYS BRAND LOGO -->
   <div class="brand">
     <img
       src="https://swiftpays.pages.dev/logo.png"
       alt="SwiftPays Logo"
-      onerror="this.style.display='none';document.getElementById('logoFallback').style.display='block';"
     >
-    <div id="logoFallback"
-      style="display:none;font-size:32px;font-weight:800;font-style:italic;">
-      Swift<span style="color:#08d9ed">Pays</span>
-    </div>
   </div>
 
-  <!-- SECURITY SHIELD -->
-  <div class="shield">
-    <svg viewBox="0 0 120 130" fill="none"
-      xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="shieldGradient"
-          x1="10" y1="5" x2="110" y2="125"
-          gradientUnits="userSpaceOnUse">
-          <stop stop-color="#00EFFF"/>
-          <stop offset="1" stop-color="#0875FF"/>
-        </linearGradient>
-      </defs>
-
-      <path
-        d="M60 5 L108 25 V60 C108 91 88 112 60 127
-        C32 112 12 91 12 60 V25 Z"
-        fill="#09244B"
-        stroke="url(#shieldGradient)"
-        stroke-width="5"/>
-
-      <rect x="43" y="55" width="34" height="29"
-        rx="7" fill="white"/>
-
-      <path d="M49 55 V45 C49 30 71 30 71 45 V55"
-        stroke="white" stroke-width="6"
-        stroke-linecap="round"/>
-
-      <circle cx="60" cy="68" r="4" fill="#0875FF"/>
-      <path d="M60 70 V76"
-        stroke="#0875FF" stroke-width="3"
-        stroke-linecap="round"/>
-    </svg>
-  </div>
+  <!-- YOUR LOGO INSTEAD OF SHIELD ICON -->
+  <img
+    src="https://swiftpays.pages.dev/logo.png"
+    alt="SwiftPays Security Logo"
+    class="security-logo"
+  >
 
   <h1>Create Your Security <span>PIN</span></h1>
 
@@ -360,7 +325,6 @@ label {
 
       <input
         id="pin"
-        name="pin"
         type="password"
         inputmode="numeric"
         maxlength="6"
@@ -385,6 +349,7 @@ label {
           <path d="M3 3 21 21"/>
         </svg>
       </button>
+
     </div>
 
     <!-- CONFIRM PIN -->
@@ -402,7 +367,6 @@ label {
 
       <input
         id="confirmPin"
-        name="confirmPin"
         type="password"
         inputmode="numeric"
         maxlength="6"
@@ -427,10 +391,12 @@ label {
           <path d="M3 3 21 21"/>
         </svg>
       </button>
+
     </div>
 
-    <!-- PIN SECURITY TIP -->
+    <!-- SECURITY TIP -->
     <div class="hint">
+
       <svg class="hint-icon" viewBox="0 0 24 24"
         fill="none" stroke="currentColor"
         stroke-width="2" stroke-linecap="round"
@@ -443,6 +409,7 @@ label {
         <strong>Use a strong PIN</strong>
         <p>Avoid simple patterns like 123456 or 000000.</p>
       </div>
+
     </div>
 
     <button class="submit-btn" id="submitBtn" type="submit">
@@ -451,8 +418,8 @@ label {
 
   </form>
 
-  <div id="status" class="status" role="status"
-    aria-live="polite"></div>
+  <div id="status" class="status"
+    role="status" aria-live="polite"></div>
 
   <div class="footer">
     🔐 Your security is our priority.
@@ -465,16 +432,16 @@ label {
 <script>
 "use strict";
 
-/* ==================================
-   SWIFTPAYS BACKEND CONFIGURATION
-================================== */
+/* =================================
+   BACKEND CONFIGURATION
+================================= */
 
 const API_BASE =
   "https://swiftpay-api-6azu.onrender.com";
 
-/* ==================================
+/* =================================
    ELEMENTS
-================================== */
+================================= */
 
 const form = document.getElementById("pinForm");
 const pinInput = document.getElementById("pin");
@@ -482,18 +449,18 @@ const confirmInput = document.getElementById("confirmPin");
 const submitBtn = document.getElementById("submitBtn");
 const statusBox = document.getElementById("status");
 
-/* ==================================
+/* =================================
    STATUS MESSAGE
-================================== */
+================================= */
 
 function showStatus(message, type = "") {
   statusBox.textContent = message;
   statusBox.className = "status " + type;
 }
 
-/* ==================================
-   SHOW / HIDE PIN
-================================== */
+/* =================================
+   SHOW / HIDE EYE ICONS
+================================= */
 
 const eyeOpen = `
 <svg viewBox="0 0 24 24" fill="none"
@@ -519,6 +486,7 @@ function togglePin(id, button) {
 
   input.type = showing ? "text" : "password";
   button.innerHTML = showing ? eyeOpen : eyeClosed;
+
   button.setAttribute("aria-pressed", String(showing));
   button.setAttribute(
     "aria-label",
@@ -526,9 +494,9 @@ function togglePin(id, button) {
   );
 }
 
-/* ==================================
-   ONLY NUMBERS, MAX 6 DIGITS
-================================== */
+/* =================================
+   NUMERIC INPUT ONLY
+================================= */
 
 [pinInput, confirmInput].forEach(input => {
   input.addEventListener("input", () => {
@@ -538,19 +506,9 @@ function togglePin(id, button) {
   });
 });
 
-/* ==================================
-   REGISTRATION SETUP TOKEN
-
-   Backend register response:
-   {
-     "success": true,
-     "pin_setup_required": true,
-     "setup_token": "..."
-   }
-
-   Registration page should redirect:
-   /create-pin?token=SETUP_TOKEN
-================================== */
+/* =================================
+   REGISTRATION TOKEN
+================================= */
 
 const params = new URLSearchParams(window.location.search);
 
@@ -559,7 +517,10 @@ const setupToken =
   sessionStorage.getItem("swiftpays_setup_token");
 
 if (setupToken) {
-  sessionStorage.setItem("swiftpays_setup_token", setupToken);
+  sessionStorage.setItem(
+    "swiftpays_setup_token",
+    setupToken
+  );
 } else {
   showStatus(
     "Registration session missing. Please register again.",
@@ -568,9 +529,9 @@ if (setupToken) {
   submitBtn.disabled = true;
 }
 
-/* ==================================
-   WEAK PIN CHECK
-================================== */
+/* =================================
+   WEAK PIN VALIDATION
+================================= */
 
 function isWeakPin(pin) {
   const weakPins = [
@@ -593,11 +554,12 @@ function isWeakPin(pin) {
   return weakPins.includes(pin);
 }
 
-/* ==================================
+/* =================================
    CREATE PIN API
-================================== */
+================================= */
 
 form.addEventListener("submit", async function(event) {
+
   event.preventDefault();
 
   const pin = pinInput.value.trim();
@@ -616,26 +578,35 @@ form.addEventListener("submit", async function(event) {
   }
 
   if (!/^[0-9]{6}$/.test(pin)) {
-    showStatus("Please enter a valid 6-digit PIN.", "error");
+    showStatus(
+      "Please enter a valid 6-digit PIN.",
+      "error"
+    );
     pinInput.focus();
     return;
   }
 
   if (!/^[0-9]{6}$/.test(confirmPin)) {
-    showStatus("Please confirm your 6-digit PIN.", "error");
+    showStatus(
+      "Please confirm your 6-digit PIN.",
+      "error"
+    );
     confirmInput.focus();
     return;
   }
 
   if (pin !== confirmPin) {
-    showStatus("Both PINs do not match.", "error");
+    showStatus(
+      "Both PINs do not match.",
+      "error"
+    );
     confirmInput.focus();
     return;
   }
 
   if (isWeakPin(pin)) {
     showStatus(
-      "This PIN is too easy to guess. Please choose a stronger PIN.",
+      "This PIN is too easy to guess. Choose a stronger PIN.",
       "error"
     );
     pinInput.focus();
@@ -644,9 +615,13 @@ form.addEventListener("submit", async function(event) {
 
   submitBtn.disabled = true;
   submitBtn.textContent = "Creating Secure PIN...";
-  showStatus("Please wait. Securing your account...");
+
+  showStatus(
+    "Please wait. Securing your account..."
+  );
 
   try {
+
     const response = await fetch(
       API_BASE + "/auth/setup-pin",
       {
@@ -664,11 +639,16 @@ form.addEventListener("submit", async function(event) {
     const result = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      let message = result.detail || result.message ||
+
+      let message =
+        result.detail ||
+        result.message ||
         "Unable to create PIN. Please try again.";
 
       if (Array.isArray(message)) {
-        message = message.map(item => item.msg || "").join(", ");
+        message = message
+          .map(item => item.msg || "")
+          .join(", ");
       }
 
       throw new Error(String(message));
@@ -676,11 +656,11 @@ form.addEventListener("submit", async function(event) {
 
     if (!result.token) {
       throw new Error(
-        "Account response did not contain a session token."
+        "Session token was not returned by the server."
       );
     }
 
-    /* SAVE LOGIN SESSION */
+    /* SAVE AUTHENTICATED SESSION */
 
     localStorage.setItem(
       "swiftpays_token",
@@ -694,7 +674,9 @@ form.addEventListener("submit", async function(event) {
       );
     }
 
-    sessionStorage.removeItem("swiftpays_setup_token");
+    sessionStorage.removeItem(
+      "swiftpays_setup_token"
+    );
 
     showStatus(
       "Your PIN has been created successfully! Redirecting...",
@@ -703,21 +685,25 @@ form.addEventListener("submit", async function(event) {
 
     submitBtn.textContent = "PIN Created ✓";
 
-    /* CHANGE THIS PATH IF YOUR DASHBOARD HAS A DIFFERENT NAME */
+    /* DASHBOARD REDIRECT */
 
     setTimeout(() => {
       window.location.replace("/dashboard.html");
     }, 1200);
 
   } catch (error) {
+
     showStatus(
-      error.message || "Something went wrong. Please try again.",
+      error.message ||
+      "Something went wrong. Please try again.",
       "error"
     );
 
     submitBtn.disabled = false;
     submitBtn.textContent = "Create PIN ➜";
+
   }
+
 });
 </script>
 
