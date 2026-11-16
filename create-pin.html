@@ -60,8 +60,6 @@ body {
   pointer-events: none;
 }
 
-/* SINGLE SECURITY SHIELD ICON */
-
 .shield {
   width: 145px;
   height: 155px;
@@ -269,7 +267,6 @@ label {
 
 <main class="card">
 
-  <!-- BLUE SHIELD + WHITE LOCK -->
   <div class="shield">
     <svg viewBox="0 0 120 130"
       fill="none"
@@ -322,7 +319,6 @@ label {
 
   <form id="pinForm">
 
-    <!-- ENTER PIN -->
     <label for="pin">Enter 6-digit PIN</label>
 
     <div class="input-wrap">
@@ -364,7 +360,6 @@ label {
 
     </div>
 
-    <!-- CONFIRM PIN -->
     <label for="confirmPin">Confirm PIN</label>
 
     <div class="input-wrap">
@@ -406,7 +401,6 @@ label {
 
     </div>
 
-    <!-- SECURITY TIP -->
     <div class="hint">
 
       <svg class="hint-icon" viewBox="0 0 24 24"
@@ -445,16 +439,8 @@ label {
 <script>
 "use strict";
 
-/* =================================
-   BACKEND CONFIGURATION
-================================= */
-
 const API_BASE =
   "https://swiftpay-api-6azu.onrender.com";
-
-/* =================================
-   ELEMENTS
-================================= */
 
 const form = document.getElementById("pinForm");
 const pinInput = document.getElementById("pin");
@@ -462,18 +448,10 @@ const confirmInput = document.getElementById("confirmPin");
 const submitBtn = document.getElementById("submitBtn");
 const statusBox = document.getElementById("status");
 
-/* =================================
-   STATUS MESSAGE
-================================= */
-
 function showStatus(message, type = "") {
   statusBox.textContent = message;
   statusBox.className = "status " + type;
 }
-
-/* =================================
-   EYE ICONS
-================================= */
 
 const eyeOpen = `
 <svg viewBox="0 0 24 24" fill="none"
@@ -507,10 +485,6 @@ function togglePin(id, button) {
   );
 }
 
-/* =================================
-   NUMBERS ONLY
-================================= */
-
 [pinInput, confirmInput].forEach(input => {
   input.addEventListener("input", () => {
     input.value = input.value
@@ -519,9 +493,7 @@ function togglePin(id, button) {
   });
 });
 
-/* =================================
-   REGISTRATION TOKEN
-================================= */
+/* REGISTRATION TOKEN */
 
 const params = new URLSearchParams(window.location.search);
 
@@ -542,9 +514,7 @@ if (setupToken) {
   submitBtn.disabled = true;
 }
 
-/* =================================
-   WEAK PIN VALIDATION
-================================= */
+/* WEAK PIN VALIDATION */
 
 function isWeakPin(pin) {
   const weakPins = [
@@ -567,9 +537,7 @@ function isWeakPin(pin) {
   return weakPins.includes(pin);
 }
 
-/* =================================
-   CREATE PIN API
-================================= */
+/* CREATE PIN API */
 
 form.addEventListener("submit", async function(event) {
 
@@ -697,8 +665,6 @@ form.addEventListener("submit", async function(event) {
     );
 
     submitBtn.textContent = "PIN Created ✓";
-
-    /* DASHBOARD REDIRECT */
 
     setTimeout(() => {
       window.location.replace("/dashboard.html");
