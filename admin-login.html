@@ -5,16 +5,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#020b1c">
-<title>SwiftPays | Admin Login</title>
+<title>SwiftPays | Admin Portal</title>
 
 <style>
-:root {
-  --blue:#087cff;
-  --cyan:#00d9ff;
-  --navy:#020b1c;
-  --panel:#071a36;
-  --text:#f2f8ff;
-  --muted:#a8c1df;
+:root{
+ --cyan:#00d9ff;
+ --blue:#087cff;
+ --navy:#020b1c;
+ --panel:#071a36;
+ --text:#f2f8ff;
+ --muted:#a8c1df;
 }
 *{box-sizing:border-box}
 
@@ -45,6 +45,28 @@ body:before{
  background-size:40px 40px;
 }
 
+.wave{
+ position:fixed;
+ left:-10%;
+ right:-10%;
+ bottom:-175px;
+ height:330px;
+ border:2px solid #00aaff55;
+ border-radius:50%;
+ transform:rotate(-7deg);
+ box-shadow:0 -12px 35px #007bff22;
+ pointer-events:none;
+}
+
+.wave:after{
+ content:"";
+ position:absolute;
+ inset:25px 0;
+ border-top:2px solid #00d9ff88;
+ border-radius:50%;
+ filter:drop-shadow(0 0 10px #00cfff);
+}
+
 .container{
  width:100%;
  max-width:1120px;
@@ -56,7 +78,7 @@ body:before{
  z-index:1;
 }
 
-/* LEFT BRAND AREA */
+/* BRAND AREA */
 
 .brand-area{padding:20px}
 
@@ -67,20 +89,11 @@ body:before{
  margin-bottom:55px;
 }
 
-.logo{
- width:75px;
- height:75px;
- border:2px solid var(--cyan);
- border-radius:21px;
- display:flex;
- align-items:center;
- justify-content:center;
- font-size:57px;
- font-weight:900;
- font-style:italic;
- color:white;
- text-shadow:0 0 12px var(--cyan);
- box-shadow:0 0 25px #008cff66;
+.brand-logo{
+ width:82px;
+ height:82px;
+ object-fit:contain;
+ filter:drop-shadow(0 0 15px #00cfff);
 }
 
 .brand-name{
@@ -110,12 +123,10 @@ body:before{
  filter:drop-shadow(0 0 25px #008cff);
 }
 
-.shield span{
- font-size:130px;
- font-weight:900;
- font-style:italic;
- color:white;
- text-shadow:0 0 20px var(--cyan);
+.shield img{
+ width:145px;
+ height:145px;
+ object-fit:contain;
 }
 
 .orbit{
@@ -178,26 +189,16 @@ body:before{
  box-shadow:0 0 15px var(--cyan);
 }
 
-.card-logo{
- width:75px;
- height:75px;
- margin:auto;
- display:flex;
- align-items:center;
- justify-content:center;
- border:2px solid var(--cyan);
- border-radius:22px;
- font-size:58px;
- font-weight:900;
- font-style:italic;
- color:white;
- text-shadow:0 0 15px var(--cyan);
- box-shadow:0 0 25px #008cff66;
-}
-
 .card-brand{
  text-align:center;
  margin-bottom:30px;
+}
+
+.card-logo{
+ width:100px;
+ height:100px;
+ object-fit:contain;
+ filter:drop-shadow(0 0 20px #00cfff);
 }
 
 .card-brand h1{
@@ -251,7 +252,9 @@ body:before{
 
 .input-box:focus-within{
  border-color:var(--cyan);
- box-shadow:0 0 0 3px #00d9ff20,0 0 20px #087cff45;
+ box-shadow:
+ 0 0 0 3px #00d9ff20,
+ 0 0 20px #087cff45;
 }
 
 .input-icon{
@@ -273,7 +276,8 @@ body:before{
  color:#91acd0;
 }
 
-/* Prevent browser autofill from turning fields green */
+/* AUTOFILL FIX */
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -396,37 +400,70 @@ input:-webkit-autofill:active{
 
 <body>
 
+<div class="wave"></div>
+
 <main class="container">
 
+<!-- LEFT BRAND SECTION -->
+
 <section class="brand-area">
+
  <div class="brand">
-  <div class="logo">S</div>
-  <div class="brand-name">Swift<span>Pays</span></div>
+  <img
+   src="https://swiftpays.pages.dev/logo.png"
+   alt="SwiftPays"
+   class="brand-logo">
+
+  <div class="brand-name">
+   Swift<span>Pays</span>
+  </div>
  </div>
 
  <div class="shield-area">
   <div class="orbit"></div>
-  <div class="shield"><span>S</span></div>
+
+  <div class="shield">
+   <img
+    src="https://swiftpays.pages.dev/logo.png"
+    alt="SwiftPays Security">
+  </div>
  </div>
 
  <div class="features">
-  <div class="feature">▥ Analytics</div>
-  <div class="feature">⚙ Control</div>
-  <div class="feature">♙ Admins</div>
-  <div class="feature">▤ Database</div>
+  <div class="feature">📊 Analytics</div>
+  <div class="feature">⚙️ Control</div>
+  <div class="feature">👥 Admins</div>
+  <div class="feature">🗄️ Database</div>
  </div>
 
- <div class="tagline">SECURE · MANAGE · CONTROL</div>
+ <div class="tagline">
+  SECURE · MANAGE · CONTROL
+ </div>
+
 </section>
 
+
+<!-- ADMIN LOGIN SECTION -->
 
 <section class="login-card">
 
  <header class="card-brand">
-  <div class="card-logo">S</div>
+
+  <img
+   src="https://swiftpays.pages.dev/logo.png"
+   alt="SwiftPays Logo"
+   class="card-logo">
+
   <h1>Swift<span>Pays</span></h1>
-  <div class="portal">♛ ADMIN PORTAL</div>
-  <div class="subtitle">Secure Administration Console</div>
+
+  <div class="portal">
+   👑 ADMIN PORTAL
+  </div>
+
+  <div class="subtitle">
+   Secure Administration Console
+  </div>
+
  </header>
 
  <div id="error" class="message error"></div>
@@ -434,46 +471,91 @@ input:-webkit-autofill:active{
 
  <form id="loginForm">
 
-  <div class="field">
-   <label for="email">EMAIL / ADMIN ID</label>
-   <div class="input-box">
-    <span class="input-icon">✉</span>
-    <input
-      id="email"
-      type="email"
-      placeholder="Enter your admin email"
-      autocomplete="username"
-      required>
-   </div>
-  </div>
+  <!-- EMAIL -->
 
   <div class="field">
-   <label for="password">PASSWORD</label>
+
+   <label for="email">
+    ✉️ EMAIL / ADMIN ID
+   </label>
+
    <div class="input-box">
-    <span class="input-icon">♙</span>
+
+    <span class="input-icon">✉️</span>
+
     <input
-      id="password"
-      type="password"
-      placeholder="Enter your password"
-      autocomplete="current-password"
-      required>
-    <button class="eye" type="button" id="eye">SHOW</button>
+     id="email"
+     type="email"
+     placeholder="Enter your admin email"
+     autocomplete="username"
+     required>
+
    </div>
+
   </div>
+
+
+  <!-- PASSWORD -->
+
+  <div class="field">
+
+   <label for="password">
+    🔐 PASSWORD
+   </label>
+
+   <div class="input-box">
+
+    <span class="input-icon">🔐</span>
+
+    <input
+     id="password"
+     type="password"
+     placeholder="Enter your password"
+     autocomplete="current-password"
+     required>
+
+    <button
+     class="eye"
+     type="button"
+     id="eye">
+     SHOW
+    </button>
+
+   </div>
+
+  </div>
+
+
+  <!-- REMEMBER ME -->
 
   <label class="remember">
-   <input type="checkbox" id="remember" checked>
-   Remember me for 24 hours
+
+   <input
+    type="checkbox"
+    id="remember"
+    checked>
+
+   🔒 Remember me for 24 hours
+
   </label>
 
-  <button class="submit" id="submit" type="submit">
-   ⇥ &nbsp; Secure Login
+
+  <!-- LOGIN BUTTON -->
+
+  <button
+   class="submit"
+   id="submit"
+   type="submit">
+
+   🔐 &nbsp; SECURE LOGIN &nbsp; →
+
   </button>
 
  </form>
 
+
  <div class="access">
-  ⛨ <strong>SwiftPays</strong> &nbsp; Admin Panel
+  🛡️ <strong>SwiftPays</strong> &nbsp; Admin Panel
   <br>
   Protected Owner/Admin Access
  </div>
@@ -483,8 +565,11 @@ input:-webkit-autofill:active{
  </div>
 
 </section>
+
 </main>
 
+
+<!-- FIREBASE AUTHENTICATION -->
 
 <script type="module">
 
@@ -508,9 +593,16 @@ const firebaseConfig = {
  appId:"1:83327557267:web:a5605f47bc72ae4190f766"
 };
 
-const API_BASE = "https://swiftpay-api-6azu.onrender.com";
-const SESSION_KEY = "swiftpays_admin_session_v1";
-const DEVICE_KEY = "swiftpays_admin_device_v1";
+
+const API_BASE =
+ "https://swiftpay-api-6azu.onrender.com";
+
+const SESSION_KEY =
+ "swiftpays_admin_session_v1";
+
+const DEVICE_KEY =
+ "swiftpays_admin_device_v1";
+
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -518,23 +610,40 @@ const auth = getAuth(app);
 const $ = id => document.getElementById(id);
 
 
+// ERROR MESSAGE
+
 function showError(message){
+
  $("success").style.display="none";
+
  $("error").textContent=message;
+
  $("error").style.display="block";
 }
 
+
+// SUCCESS MESSAGE
+
 function showSuccess(message){
+
  $("error").style.display="none";
+
  $("success").textContent=message;
+
  $("success").style.display="block";
 }
 
+
+// DEVICE ID
+
 function getDeviceId(){
+
  let id=localStorage.getItem(DEVICE_KEY);
 
  if(!id){
+
   id=crypto.randomUUID()+crypto.randomUUID();
+
   localStorage.setItem(DEVICE_KEY,id);
  }
 
@@ -542,69 +651,99 @@ function getDeviceId(){
 }
 
 
-// Password visibility
+// SHOW / HIDE PASSWORD
+
 $("eye").addEventListener("click",()=>{
+
  const field=$("password");
+
  const visible=field.type==="password";
 
  field.type=visible?"text":"password";
+
  $("eye").textContent=visible?"HIDE":"SHOW";
+
 });
 
 
-// Login
+// ADMIN LOGIN
+
 $("loginForm").addEventListener("submit",async event=>{
 
  event.preventDefault();
 
  $("error").style.display="none";
+
  $("success").style.display="none";
 
  const button=$("submit");
 
  button.disabled=true;
- button.textContent="VERIFYING ADMIN ACCESS...";
+
+ button.textContent="🔄 VERIFYING ADMIN ACCESS...";
+
 
  try{
 
-  // Firebase authentication
+  // FIREBASE AUTHENTICATION
+
   const credential=await signInWithEmailAndPassword(
    auth,
    $("email").value.trim(),
    $("password").value
   );
 
-  const firebaseToken=await credential.user.getIdToken(true);
 
-  // Backend Owner/Admin verification
-  const response=await fetch(`${API_BASE}/admin/login`,{
-   method:"POST",
-   headers:{
-    "Content-Type":"application/json"
-   },
-   body:JSON.stringify({
-    firebase_id_token:firebaseToken,
-    device_id:getDeviceId()
-   })
-  });
+  // FIREBASE TOKEN
 
-  const result=await response.json().catch(()=>({}));
+  const firebaseToken=
+   await credential.user.getIdToken(true);
+
+
+  // BACKEND OWNER / ADMIN VERIFICATION
+
+  const response=await fetch(
+   `${API_BASE}/admin/login`,
+   {
+    method:"POST",
+
+    headers:{
+     "Content-Type":"application/json"
+    },
+
+    body:JSON.stringify({
+     firebase_id_token:firebaseToken,
+     device_id:getDeviceId()
+    })
+   }
+  );
+
+
+  const result=
+   await response.json().catch(()=>({}));
+
 
   if(
    !response.ok ||
    result.authorized!==true ||
    !result.admin_session_token
   ){
+
    throw new Error(
     result.detail ||
     result.message ||
     "Admin authorization failed."
    );
+
   }
+
+
+  // SAVE ADMIN SESSION
 
   const expiresAt=
    Date.parse(result.expires_at) ||
    Date.now()+86400000;
+
 
   localStorage.setItem(
    SESSION_KEY,
@@ -616,14 +755,22 @@ $("loginForm").addEventListener("submit",async event=>{
    })
   );
 
+
   sessionStorage.setItem(
    "swiftpays_admin_entry",
    "verified"
   );
 
-  showSuccess("Admin verified. Opening dashboard...");
+
+  showSuccess(
+   "🛡️ Admin verified. Opening dashboard..."
+  );
+
+
+  // REDIRECT
 
   location.replace("/admin/dashboard");
+
 
  }catch(error){
 
@@ -631,14 +778,19 @@ $("loginForm").addEventListener("submit",async event=>{
 
   localStorage.removeItem(SESSION_KEY);
 
-  showError(error.message || "Login failed.");
+  showError(
+   error.message || "Login failed."
+  );
 
   button.disabled=false;
-  button.textContent="⇥  SECURE LOGIN";
+
+  button.textContent="🔐 SECURE LOGIN →";
+
  }
 
 });
 
 </script>
+
 </body>
 </html>
