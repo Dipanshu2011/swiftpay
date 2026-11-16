@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,12 +10,12 @@
 <style>
 :root{
     --bg:#030b1c;
-    --card:#071a35;
     --cyan:#20d9ff;
     --blue:#087cff;
     --muted:#a9c2e5;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+
 body{
     min-height:100vh;
     display:flex;
@@ -27,6 +26,7 @@ body{
     color:#fff;
     font-family:Arial,sans-serif;
 }
+
 .container{
     width:100%;
     max-width:440px;
@@ -36,121 +36,203 @@ body{
     background:linear-gradient(145deg,#0b1d39,#061329);
     box-shadow:0 0 35px #087cff35,0 20px 60px #0008;
 }
+
 .brand{text-align:center;margin-bottom:27px}
+
 .logo{
-    width:105px;height:105px;
-    object-fit:contain;border-radius:24px;
+    width:105px;
+    height:105px;
+    object-fit:contain;
+    border-radius:24px;
     filter:drop-shadow(0 0 16px #00bfff65);
 }
+
 .brand h1{font-size:30px;margin-top:8px}
 .brand h1 span{color:var(--cyan)}
+
 .tagline{
     color:var(--cyan);
-    font-size:10px;font-weight:bold;
-    letter-spacing:2px;margin-top:10px;
+    font-size:10px;
+    font-weight:bold;
+    letter-spacing:2px;
+    margin-top:10px;
 }
+
 .heading{text-align:center;margin-bottom:24px}
 .heading h2{font-size:25px;margin-bottom:9px}
-.heading p{font-size:13px;color:var(--muted);line-height:1.6}
-.field-label{
-    display:block;margin:19px 0 9px;
-    font-size:13px;font-weight:bold;
+.heading p{
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.6;
 }
+
+.field-label{
+    display:block;
+    margin:19px 0 9px;
+    font-size:13px;
+    font-weight:bold;
+}
+
 .field{position:relative}
+
 .field input{
-    width:100%;height:57px;
+    width:100%;
+    height:57px;
     padding:0 48px 0 16px;
     border:1px solid #247fc0;
-    border-radius:14px;outline:none;
-    background:#0b2342;color:white;font-size:16px;
+    border-radius:14px;
+    outline:none;
+    background:#0b2342;
+    color:white;
+    font-size:16px;
 }
+
 .field input:focus{
     border-color:var(--cyan);
     box-shadow:0 0 0 3px #20d9ff20;
 }
+
 .field input::placeholder{color:#8199ba}
+
 .eye{
-    position:absolute;right:12px;top:50%;
+    position:absolute;
+    right:12px;
+    top:50%;
     transform:translateY(-50%);
-    border:0;background:none;color:var(--cyan);
-    font-size:20px;cursor:pointer;
-}
-.button{
-    width:100%;height:58px;margin-top:24px;
-    border:0;border-radius:15px;
-    background:linear-gradient(100deg,#087cff,#00cfff);
-    color:white;font-size:16px;font-weight:900;
-    cursor:pointer;box-shadow:0 8px 25px #087cff40;
-}
-.button:disabled{opacity:.55;cursor:wait}
-.links{
-    display:flex;justify-content:space-between;
-    margin-top:17px;font-size:12px;
-}
-.links a,.switch a{
-    color:var(--cyan);text-decoration:none;font-weight:bold;
-}
-.remember-row{
-    display:flex;align-items:center;
-    justify-content:space-between;
-    gap:10px;margin-top:19px;
-}
-.remember{
-    display:flex;align-items:center;gap:9px;
-    color:var(--muted);font-size:13px;
+    border:0;
+    background:none;
+    color:var(--cyan);
+    font-size:20px;
     cursor:pointer;
 }
+
+.button{
+    width:100%;
+    height:58px;
+    margin-top:24px;
+    border:0;
+    border-radius:15px;
+    background:linear-gradient(100deg,#087cff,#00cfff);
+    color:white;
+    font-size:16px;
+    font-weight:900;
+    cursor:pointer;
+    box-shadow:0 8px 25px #087cff40;
+}
+
+.button:disabled{opacity:.55;cursor:wait}
+
+.remember-row{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:10px;
+    margin-top:19px;
+}
+
+.remember{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:var(--muted);
+    font-size:13px;
+    cursor:pointer;
+}
+
 .remember input{
-    width:19px;height:19px;
-    accent-color:#087cff;cursor:pointer;
+    width:19px;
+    height:19px;
+    accent-color:#087cff;
+    cursor:pointer;
 }
+
 .switch{
-    text-align:center;margin-top:25px;
-    padding-top:20px;border-top:1px solid #ffffff20;
-    color:var(--muted);font-size:13px;
+    text-align:center;
+    margin-top:25px;
+    padding-top:20px;
+    border-top:1px solid #ffffff20;
+    color:var(--muted);
+    font-size:13px;
 }
+
+.switch a{
+    color:var(--cyan);
+    text-decoration:none;
+    font-weight:bold;
+}
+
 .status{
-    min-height:22px;margin-top:15px;
-    text-align:center;font-size:12px;
-    line-height:1.6;overflow-wrap:anywhere;
+    min-height:22px;
+    margin-top:15px;
+    text-align:center;
+    font-size:12px;
+    line-height:1.6;
+    overflow-wrap:anywhere;
 }
+
 .error{color:#ff8797}
 .success{color:#53e8b1}
+
 .pin-boxes{
-    display:flex;justify-content:center;
-    gap:9px;margin:27px 0;
+    display:flex;
+    justify-content:center;
+    gap:9px;
+    margin:27px 0;
 }
+
 .pin-box{
-    width:43px;height:53px;
-    border:1px solid #168ce9;border-radius:11px;
+    width:43px;
+    height:53px;
+    border:1px solid #168ce9;
+    border-radius:11px;
     background:#0b2342;
-    display:flex;align-items:center;justify-content:center;
-    color:var(--cyan);font-size:24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--cyan);
+    font-size:24px;
     box-shadow:0 0 12px #087cff15;
 }
+
 .pin-box.filled{
     border-color:var(--cyan);
     box-shadow:0 0 14px #20d9ff35;
 }
+
 .pin-input{
-    position:absolute;opacity:0;
-    width:1px;height:1px;
+    position:absolute;
+    opacity:0;
+    width:1px;
+    height:1px;
 }
+
 .pin-area{position:relative}
+
 .pin-hint{
-    color:var(--muted);font-size:12px;
-    text-align:center;margin-top:12px;
+    color:var(--muted);
+    font-size:12px;
+    text-align:center;
+    margin-top:12px;
 }
+
 .back{
-    display:block;text-align:center;
-    margin-top:19px;color:var(--cyan);
-    font-size:13px;text-decoration:none;
+    display:block;
+    text-align:center;
+    margin-top:19px;
+    color:var(--cyan);
+    font-size:13px;
+    text-decoration:none;
 }
+
 .hidden{display:none!important}
+
 .footer{
-    text-align:center;color:#718eae;
-    font-size:10px;margin-top:25px;
+    text-align:center;
+    color:#718eae;
+    font-size:10px;
+    margin-top:25px;
 }
+
 @media(max-width:360px){
     .container{padding:25px 16px}
     .pin-boxes{gap:6px}
@@ -160,6 +242,7 @@ body{
 </head>
 
 <body>
+
 <main class="container">
 
 <header class="brand">
@@ -168,29 +251,52 @@ body{
     <div class="tagline">💎 PREMIUM SECURE GATEWAY 💎</div>
 </header>
 
+<!-- STEP 1: MOBILE NUMBER + PASSWORD -->
+
 <section id="loginStep">
+
     <div class="heading">
         <h2>Welcome Back</h2>
         <p>Login securely to your SwiftPays account.</p>
     </div>
 
     <form id="loginForm">
+
         <label class="field-label" for="mobile">
             📱 Mobile Number (+91)
         </label>
+
         <div class="field">
-            <input id="mobile" type="tel" inputmode="numeric"
-                maxlength="10" placeholder="Enter 10-digit mobile number"
-                autocomplete="tel-national" required>
+            <input
+                id="mobile"
+                type="tel"
+                inputmode="numeric"
+                maxlength="10"
+                placeholder="Enter 10-digit mobile number"
+                autocomplete="tel-national"
+                required
+            >
         </div>
 
-        <label class="field-label" for="password">🔐 Password</label>
+        <label class="field-label" for="password">
+            🔐 Password
+        </label>
+
         <div class="field">
-            <input id="password" type="password"
+            <input
+                id="password"
+                type="password"
                 placeholder="Enter your password"
-                autocomplete="current-password" required>
-            <button type="button" class="eye"
-                onclick="togglePassword('password',this)">👁</button>
+                autocomplete="current-password"
+                required
+            >
+
+            <button
+                type="button"
+                class="eye"
+                onclick="togglePassword('password',this)"
+                aria-label="Show or hide password"
+            >👁</button>
         </div>
 
         <div class="remember-row">
@@ -198,27 +304,35 @@ body{
                 <input type="checkbox" id="rememberMe" checked>
                 <span>Remember me</span>
             </label>
-            <a href="/forgot-password">Forgot Password?</a>
         </div>
 
         <button class="button" id="loginBtn" type="submit">
             LOGIN SECURELY →
         </button>
+
     </form>
 
     <div class="switch">
         Don't have an account?
         <a href="/register.html">Register</a>
     </div>
+
 </section>
 
+<!-- STEP 2: S-PIN VERIFICATION -->
+
 <section id="pinStep" class="hidden">
+
     <div class="heading">
         <h2>🔒 Security Verification</h2>
-        <p>Enter your 6-digit S-PIN to securely access your SwiftPays dashboard.</p>
+        <p>
+            Enter your 6-digit S-PIN to securely access
+            your SwiftPays dashboard.
+        </p>
     </div>
 
     <div class="pin-area" id="pinArea">
+
         <div class="pin-boxes" id="pinBoxes">
             <div class="pin-box"></div>
             <div class="pin-box"></div>
@@ -227,19 +341,31 @@ body{
             <div class="pin-box"></div>
             <div class="pin-box"></div>
         </div>
-        <input class="pin-input" id="pinInput"
-            type="password" inputmode="numeric"
-            maxlength="6" autocomplete="off"
-            aria-label="Six digit S-PIN">
+
+        <input
+            class="pin-input"
+            id="pinInput"
+            type="password"
+            inputmode="numeric"
+            maxlength="6"
+            autocomplete="off"
+            aria-label="Six digit S-PIN"
+        >
+
     </div>
 
-    <p class="pin-hint">🔐 Enter your private 6-digit S-PIN.</p>
+    <p class="pin-hint">
+        🔐 Enter your private 6-digit S-PIN.
+    </p>
 
     <button class="button" id="verifyPinBtn" type="button">
         CONFIRM LOGIN →
     </button>
 
-    <a href="#" class="back" id="backLogin">← Back to Login</a>
+    <a href="#" class="back" id="backLogin">
+        ← Back to Login
+    </a>
+
 </section>
 
 <p class="status" id="status" role="status" aria-live="polite"></p>
@@ -252,6 +378,7 @@ body{
     🔐 Protected by SwiftPays Security<br>
     © 2026 SwiftPays
 </footer>
+
 </main>
 
 <script>
@@ -277,36 +404,59 @@ function showStatus(message,type=""){
 
 function togglePassword(id,btn){
     const input = document.getElementById(id);
-    input.type = input.type === "password" ? "text" : "password";
-    btn.textContent = input.type === "password" ? "👁" : "🙈";
+
+    input.type =
+        input.type === "password" ? "text" : "password";
+
+    btn.textContent =
+        input.type === "password" ? "👁" : "🙈";
 }
 
-/* Read and locally check the expiry of a SwiftPays token.
-   The backend remains responsible for signature validation. */
+/* Local expiry check.
+   Backend remains responsible for signature validation. */
+
 function isTokenUnexpired(token){
     try{
         const parts = token.split(".");
+
         if(parts.length !== 3) return false;
 
         const hex = parts[1];
-        if(!/^[0-9a-f]+$/i.test(hex) || hex.length % 2 !== 0) return false;
+
+        if(
+            !/^[0-9a-f]+$/i.test(hex) ||
+            hex.length % 2 !== 0
+        ){
+            return false;
+        }
 
         let decoded = "";
+
         for(let i=0;i<hex.length;i+=2){
-            decoded += String.fromCharCode(parseInt(hex.slice(i,i+2),16));
+            decoded += String.fromCharCode(
+                parseInt(hex.slice(i,i+2),16)
+            );
         }
 
         const payload = JSON.parse(decoded);
-        return Number(payload.exp) > Math.floor(Date.now()/1000);
+
+        return Number(payload.exp) >
+            Math.floor(Date.now()/1000);
+
     }catch{
         return false;
     }
 }
 
-/* Existing session check */
+/* EXISTING SESSION CHECK */
+
 function getSavedSession(){
-    const localToken = localStorage.getItem("swiftpays_token");
-    const sessionToken = sessionStorage.getItem("swiftpays_token");
+
+    const localToken =
+        localStorage.getItem("swiftpays_token");
+
+    const sessionToken =
+        sessionStorage.getItem("swiftpays_token");
 
     if(localToken && isTokenUnexpired(localToken)){
         return localToken;
@@ -316,33 +466,52 @@ function getSavedSession(){
         return sessionToken;
     }
 
-    if(localToken) localStorage.removeItem("swiftpays_token");
-    if(sessionToken) sessionStorage.removeItem("swiftpays_token");
+    if(localToken){
+        localStorage.removeItem("swiftpays_token");
+        localStorage.removeItem("swiftpays_user");
+    }
+
+    if(sessionToken){
+        sessionStorage.removeItem("swiftpays_token");
+        sessionStorage.removeItem("swiftpays_user");
+    }
 
     return "";
 }
 
-/* Auto redirect when an existing session is present */
+/* AUTO REDIRECT */
+
 (function checkExistingLogin(){
+
     const token = getSavedSession();
 
     if(token){
         window.location.replace(DASHBOARD_URL);
     }
+
 })();
 
 /* API REQUEST */
+
 async function apiRequest(path,data){
+
     const controller = new AbortController();
-    const timeout = setTimeout(()=>controller.abort(),30000);
+
+    const timeout = setTimeout(
+        ()=>controller.abort(),
+        30000
+    );
 
     try{
+
         const response = await fetch(API_BASE + path,{
             method:"POST",
+
             headers:{
                 "Content-Type":"application/json",
                 "Accept":"application/json"
             },
+
             body:JSON.stringify(data),
             signal:controller.signal
         });
@@ -350,170 +519,315 @@ async function apiRequest(path,data){
         const result = await response.json().catch(()=>({}));
 
         if(!response.ok){
-            throw new Error(result.detail || result.message || "Request failed.");
+            throw new Error(
+                result.detail ||
+                result.message ||
+                "Request failed."
+            );
         }
+
         return result;
+
     }catch(error){
+
         if(error.name === "AbortError"){
-            throw new Error("Server timeout. Please try again.");
+            throw new Error(
+                "Server timeout. Please try again."
+            );
         }
+
         if(error instanceof TypeError){
-            throw new Error("Cannot connect to SwiftPays server.");
+            throw new Error(
+                "Cannot connect to SwiftPays server."
+            );
         }
+
         throw error;
+
     }finally{
+
         clearTimeout(timeout);
+
     }
 }
 
 /* MOBILE INPUT */
-document.getElementById("mobile").addEventListener("input",function(){
-    this.value = this.value.replace(/\D/g,"").slice(0,10);
+
+document.getElementById("mobile")
+.addEventListener("input",function(){
+
+    this.value = this.value
+        .replace(/\D/g,"")
+        .slice(0,10);
+
 });
 
-/* STEP 1: MOBILE + PASSWORD */
-document.getElementById("loginForm").addEventListener("submit",async function(e){
+/* STEP 1: MOBILE + PASSWORD LOGIN */
+
+document.getElementById("loginForm")
+.addEventListener("submit",async function(e){
+
     e.preventDefault();
+
     if(busy) return;
 
-    const mobile = document.getElementById("mobile").value.trim();
-    const password = document.getElementById("password").value;
+    const mobile =
+        document.getElementById("mobile").value.trim();
+
+    const password =
+        document.getElementById("password").value;
 
     if(!/^[6-9][0-9]{9}$/.test(mobile)){
-        showStatus("Enter a valid 10-digit Indian mobile number.","error");
+        showStatus(
+            "Enter a valid 10-digit Indian mobile number.",
+            "error"
+        );
         return;
     }
 
     if(!password){
-        showStatus("Please enter your password.","error");
+        showStatus(
+            "Please enter your password.",
+            "error"
+        );
         return;
     }
 
-    rememberChoice = document.getElementById("rememberMe").checked;
+    rememberChoice =
+        document.getElementById("rememberMe").checked;
 
     busy = true;
-    const button = document.getElementById("loginBtn");
+
+    const button =
+        document.getElementById("loginBtn");
+
     button.disabled = true;
     button.textContent = "VERIFYING LOGIN...";
+
     showStatus("🔐 Checking your account...");
 
     try{
-        const result = await apiRequest("/auth/login",{mobile,password});
 
-        if(result.success !== true || result.pin_required !== true || !result.pin_token){
-            throw new Error("PIN security response missing. Please update the backend.");
+        const result = await apiRequest(
+            "/auth/login",
+            {
+                mobile:mobile,
+                password:password
+            }
+        );
+
+        if(
+            result.success !== true ||
+            result.pin_required !== true ||
+            !result.pin_token
+        ){
+            throw new Error(
+                "PIN security response missing. Please update the backend."
+            );
         }
+
+        /* Save temporary PIN challenge */
 
         pinChallengeToken = result.pin_token;
         authenticatedUser = result.user || null;
 
+        /* Move to PIN screen */
+
         loginStep.classList.add("hidden");
         pinStep.classList.remove("hidden");
 
-        showStatus("✅ Password verified. Enter your S-PIN.","success");
+        showStatus(
+            "✅ Password verified. Enter your S-PIN.",
+            "success"
+        );
+
         pinInput.value = "";
         updatePinBoxes();
-        setTimeout(()=>pinInput.focus(),150);
+
+        setTimeout(()=>{
+            pinInput.focus();
+        },150);
 
     }catch(error){
+
         showStatus(error.message,"error");
+
     }finally{
+
         busy = false;
         button.disabled = false;
         button.textContent = "LOGIN SECURELY →";
+
     }
+
 });
 
 /* PIN BOX DISPLAY */
+
 function updatePinBoxes(){
+
     const value = pinInput.value;
-    document.querySelectorAll(".pin-box").forEach((box,index)=>{
-        box.textContent = value[index] ? "●" : "";
-        box.classList.toggle("filled",!!value[index]);
+
+    document.querySelectorAll(".pin-box")
+    .forEach((box,index)=>{
+
+        box.textContent =
+            value[index] ? "●" : "";
+
+        box.classList.toggle(
+            "filled",
+            !!value[index]
+        );
+
     });
+
 }
 
+/* PIN INPUT */
+
 pinInput.addEventListener("input",function(){
-    this.value = this.value.replace(/\D/g,"").slice(0,6);
+
+    this.value = this.value
+        .replace(/\D/g,"")
+        .slice(0,6);
+
     updatePinBoxes();
+
 });
 
-document.getElementById("pinArea").addEventListener("click",()=>{
+document.getElementById("pinArea")
+.addEventListener("click",()=>{
+
     pinInput.focus();
+
 });
 
-/* STEP 2: CONFIRM LOGIN */
-document.getElementById("verifyPinBtn").addEventListener("click",async function(){
+/* STEP 2: S-PIN VERIFICATION */
+
+document.getElementById("verifyPinBtn")
+.addEventListener("click",async function(){
+
     if(busy) return;
 
     const pin = pinInput.value.trim();
 
     if(!/^[0-9]{6}$/.test(pin)){
-        showStatus("Please enter all 6 digits of your S-PIN.","error");
+
+        showStatus(
+            "Please enter all 6 digits of your S-PIN.",
+            "error"
+        );
+
         pinInput.focus();
         return;
     }
 
     if(!pinChallengeToken){
-        showStatus("Login session expired. Please login again.","error");
+
+        showStatus(
+            "Login session expired. Please login again.",
+            "error"
+        );
+
         return;
     }
 
     busy = true;
+
     const button = this;
+
     button.disabled = true;
     button.textContent = "CONFIRMING LOGIN...";
+
     showStatus("🔒 Verifying your secure PIN...");
 
     try{
-        const result = await apiRequest("/auth/verify-pin",{
-            pin_token:pinChallengeToken,
-            pin:pin
-        });
 
-        if(result.success !== true || !result.token){
-            throw new Error("S-PIN verification response is invalid.");
+        const result = await apiRequest(
+            "/auth/verify-pin",
+            {
+                pin_token:pinChallengeToken,
+                pin:pin
+            }
+        );
+
+        if(
+            result.success !== true ||
+            !result.token
+        ){
+            throw new Error(
+                "S-PIN verification response is invalid."
+            );
         }
 
-        /* Clear old sessions before saving the new session */
+        /* Clear old sessions */
+
         localStorage.removeItem("swiftpays_token");
         sessionStorage.removeItem("swiftpays_token");
+
         localStorage.removeItem("swiftpays_user");
         sessionStorage.removeItem("swiftpays_user");
 
-        /* Save session according to Remember Me */
-        const storage = rememberChoice ? localStorage : sessionStorage;
+        /* Remember Me storage selection */
 
-        storage.setItem("swiftpays_token",result.token);
+        const storage = rememberChoice
+            ? localStorage
+            : sessionStorage;
 
-        const user = result.user || authenticatedUser;
+        storage.setItem(
+            "swiftpays_token",
+            result.token
+        );
+
+        const user =
+            result.user || authenticatedUser;
+
         if(user){
-            storage.setItem("swiftpays_user",JSON.stringify(user));
+
+            storage.setItem(
+                "swiftpays_user",
+                JSON.stringify(user)
+            );
+
         }
 
         pinChallengeToken = "";
         pinInput.value = "";
 
-        showStatus("✅ Login successful. Opening Dashboard...","success");
+        showStatus(
+            "✅ Login successful. Opening Dashboard...",
+            "success"
+        );
 
         setTimeout(()=>{
+
             window.location.replace(DASHBOARD_URL);
+
         },500);
 
     }catch(error){
+
         showStatus(error.message,"error");
+
         pinInput.value = "";
         updatePinBoxes();
         pinInput.focus();
+
     }finally{
+
         busy = false;
         button.disabled = false;
         button.textContent = "CONFIRM LOGIN →";
+
     }
+
 });
 
 /* BACK TO LOGIN */
-document.getElementById("backLogin").addEventListener("click",function(e){
+
+document.getElementById("backLogin")
+.addEventListener("click",function(e){
+
     e.preventDefault();
 
     pinChallengeToken = "";
@@ -524,14 +838,22 @@ document.getElementById("backLogin").addEventListener("click",function(e){
     loginStep.classList.remove("hidden");
 
     showStatus("");
+
 });
 
 /* ENTER KEY */
+
 pinInput.addEventListener("keydown",function(e){
+
     if(e.key === "Enter"){
+
         document.getElementById("verifyPinBtn").click();
+
     }
+
 });
+
 </script>
+
 </body>
 </html>
