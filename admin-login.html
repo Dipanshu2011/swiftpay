@@ -5,12 +5,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#03171b">
-<title>SwiftPays | Secure Admin Login</title>
+<title>SwiftPays | Admin Login</title>
 
 <style>
 :root{
  --mint:#00e5ad;
- --bg:#03171b;
  --muted:#9bb9bd;
 }
 *{box-sizing:border-box}
@@ -315,6 +314,41 @@ const auth = getAuth(app);
 const $ = id => document.getElementById(id);
 
 
+/* DEVICE ID */
+
+function getDeviceId(){
+
+ let id = localStorage.getItem(
+  "swiftpays_admin_device_v1"
+ );
+
+ if(!id){
+
+  if(crypto.randomUUID){
+
+   id = crypto.randomUUID() + crypto.randomUUID();
+
+  }else{
+
+   id = "device-" +
+    Date.now().toString(36) + "-" +
+    Math.random().toString(36).slice(2) +
+    Math.random().toString(36).slice(2);
+
+  }
+
+  localStorage.setItem(
+   "swiftpays_admin_device_v1",
+   id
+  );
+
+ }
+
+ return id;
+
+}
+
+
 /* ERROR FORMATTER */
 
 function getErrorMessage(data,status){
@@ -330,6 +364,7 @@ function getErrorMessage(data,status){
    return field + ": " + (item.msg || "Field required");
 
   }).join("\n");
+
  }
 
  if(data && typeof data.detail === "string"){
@@ -345,6 +380,7 @@ function getErrorMessage(data,status){
  }
 
  return "Request failed. HTTP " + status;
+
 }
 
 
@@ -354,10 +390,11 @@ function showError(message){
 
  const box = $("error");
 
- box.textContent = message;
+ box.textContent = String(message);
  box.style.display = "block";
 
  $("success").style.display = "none";
+
 }
 
 function showSuccess(message){
@@ -368,6 +405,7 @@ function showSuccess(message){
  box.style.display = "block";
 
  $("error").style.display = "none";
+
 }
 
 
@@ -414,18 +452,16 @@ $("loginForm").addEventListener("submit",async event=>{
  button.disabled = true;
  button.textContent = "Verifying secure access…";
 
+ let firebaseLoginCompleted = false;
+
  try{
 
-  /*
-   * STEP 1: FIREBASE PERSISTENCE
-   */
+  /* STEP 1: FIREBASE PERSISTENCE */
 
   await setPersistence(auth,browserLocalPersistence);
 
 
-  /*
-   * STEP 2: FIREBASE LOGIN
-   */
+  /* STEP 2: FIREBASE LOGIN */
 
   const credential = await signInWithEmailAndPassword(
    auth,
@@ -433,23 +469,28 @@ $("loginForm").addEventListener("submit",async event=>{
    password
   );
 
+  firebaseLoginCompleted = true;
 
-  /*
-   * STEP 3: FIREBASE ID TOKEN
-   */
+
+  /* STEP 3: FIREBASE TOKEN */
 
   const idToken = await credential.user.getIdToken(true);
 
   if(!idToken || idToken.length < 20){
 
-   throw new Error("Could not generate Firebase authentication token.");
+   throw new Error(
+    "Could not generate Firebase authentication token."
+   );
 
   }
 
 
-  /*
-   * STEP 4: BACKEND OWNER / ADMIN VERIFICATION
-   */
+  /* STEP 4: DEVICE ID */
+
+  const deviceId = getDeviceId();
+
+
+  /* STEP 5: BACKEND VERIFICATION */
 
   const response = await fetch(API + "/admin/login",{
 
@@ -460,15 +501,17 @@ $("loginForm").addEventListener("submit",async event=>{
    },
 
    body:JSON.stringify({
-    firebase_id_token:idToken
+
+    firebase_id_token:idToken,
+
+    device_id:deviceId
+
    })
 
   });
 
 
-  /*
-   * STEP 5: READ BACKEND RESPONSE
-   */
+  /* STEP 6: BACKEND RESPONSE */
 
   const data = await response.json().catch(()=>({
 
@@ -477,9 +520,7 @@ $("loginForm").addEventListener("submit",async event=>{
   }));
 
 
-  /*
-   * STEP 6: HANDLE API ERRORS
-   */
+  /* STEP 7: ERROR CHECK */
 
   if(!response.ok){
 
@@ -499,31 +540,29 @@ $("loginForm").addEventListener("submit",async event=>{
   }
 
 
-  /*
-   * STEP 7: STORE VERIFIED ENTRY MARKER
-   */
+  /* STEP 8: SAVE VERIFIED SESSION MARKERS */
 
   sessionStorage.setItem(
    "swiftpays_admin_entry",
    "verified"
   );
 
-
-  /*
-   * STEP 8: SAVE ROLE
-   */
-
   sessionStorage.setItem(
    "swiftpays_admin_role",
    data.role || "admin"
   );
 
+  sessionStorage.setItem(
+   "swiftpays_admin_id_token",
+   idToken
+  );
 
-  /*
-   * STEP 9: OPEN DASHBOARD
-   */
 
-  showSuccess("Authentication successful. Opening dashboard…");
+  /* STEP 9: OPEN DASHBOARD */
+
+  showSuccess(
+   "Authentication successful. Opening dashboard…"
+  );
 
   button.textContent = "Access Granted";
 
@@ -536,10 +575,6 @@ $("loginForm").addEventListener("submit",async event=>{
 
  }catch(error){
 
-  /*
-   * DO NOT DISPLAY [object Object]
-   */
-
   const message =
    error instanceof Error
     ? error.message
@@ -547,13 +582,19 @@ $("loginForm").addEventListener("submit",async event=>{
 
 
   /*
-   * Sign out only after an actual login/authorization failure.
+   * Sign out after a failed login or backend authorization.
+   * Keep session if a navigation/network issue happens later.
    */
 
-  await signOut(auth).catch(()=>{});
+  if(firebaseLoginCompleted){
+
+   await signOut(auth).catch(()=>{});
+
+  }
 
   sessionStorage.removeItem("swiftpays_admin_entry");
   sessionStorage.removeItem("swiftpays_admin_role");
+  sessionStorage.removeItem("swiftpays_admin_id_token");
 
   showError(message);
 
