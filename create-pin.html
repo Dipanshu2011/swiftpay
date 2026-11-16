@@ -1,162 +1,469 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#06152e">
-<title>Create S-PIN | SwiftPays</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#030719">
+<title>Create Security PIN | SwiftPays</title>
+
 <style>
-:root{color-scheme:dark;--cyan:#16e6f5;--blue:#1685ff;--ink:#061329;--muted:#a8bddb}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;padding:22px 14px;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% -10%,#0a4d9c 0,transparent 48%),radial-gradient(ellipse at 100% 100%,#073a76 0,transparent 42%),#020817;color:#f7fbff;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif}
-.shell{width:min(100%,440px);padding:27px 22px 24px;border:1px solid #1acde866;border-radius:30px;background:linear-gradient(155deg,#0b1e3b,#061329 65%,#071b35);box-shadow:0 0 45px #007dff24,0 25px 70px #0009;position:relative;overflow:hidden}
-.shell:before{content:"";position:absolute;inset:0;background:linear-gradient(125deg,#0adfff0c,transparent 35%,#267dff0c);pointer-events:none}
-.brand{position:relative;text-align:center;font-weight:850;font-size:25px;letter-spacing:-.7px;margin:2px 0 18px}.brand span{color:var(--cyan)}
-.progress{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 auto 24px;max-width:350px;position:relative}
-.step{display:flex;align-items:center;gap:7px;color:#8ca5c8;font-size:11px;font-weight:700;white-space:nowrap}
-.bubble{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;border:1px solid #547394;color:#c7d8ed;font-size:12px}
-.step.done,.step.active{color:#eafaff}.step.done .bubble,.step.active .bubble{border-color:var(--cyan);background:#0879a8;color:white;box-shadow:0 0 13px #10dfff66}
-.line{height:2px;width:25px;background:#29435f}
-.art{width:106px;height:106px;margin:0 auto 12px;border-radius:30px;display:grid;place-items:center;background:radial-gradient(circle,#0e70ba55,transparent 70%);filter:drop-shadow(0 0 18px #00dfff35)}
-.art svg{width:100px;height:100px}
-h1{text-align:center;font-size:27px;letter-spacing:-.7px;margin:4px 0 7px}
-.sub{text-align:center;color:var(--muted);font-size:13px;line-height:1.55;margin:0 auto 22px;max-width:320px}
-.entry{border:1px solid #147fbd;border-radius:17px;padding:14px 13px 15px;margin:12px 0;background:linear-gradient(110deg,#0b2545,#0a1932);transition:.2s}
-.entry.active{border-color:var(--cyan);box-shadow:0 0 0 2px #16e6f51c,0 0 20px #0c9de52b}
-.entry-head{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:750;margin-bottom:12px}
-.lock{color:var(--cyan);font-size:17px}
-.digits{display:flex;justify-content:center;gap:8px}
-.digit{height:43px;flex:1;max-width:43px;border:1px solid #42658c;border-radius:11px;display:grid;place-items:center;color:var(--cyan);font-size:22px;font-weight:800;background:#06152c}
-.entry.active .digit{border-color:#298bc9}
-.digit.filled{background:#0b4770;border-color:var(--cyan);box-shadow:inset 0 0 12px #0ddcf522}
-.action{width:100%;height:55px;border:0;border-radius:16px;margin:15px 0 14px;background:linear-gradient(100deg,#08cfe7,#087cff 60%,#344cff);color:white;font-size:16px;font-weight:850;letter-spacing:.2px;box-shadow:0 9px 24px #087cff45;cursor:pointer}
-.action:disabled{opacity:.5;cursor:not-allowed}
-.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.key{height:51px;border:1px solid #23476d;border-radius:13px;background:linear-gradient(145deg,#102b4b,#0a1b33);color:#f4f9ff;font-size:21px;font-weight:750;cursor:pointer;box-shadow:inset 0 1px #ffffff0b}
-.key:active{transform:scale(.97);border-color:var(--cyan);background:#10436a}
-.key.utility{color:#8edcf3;font-size:16px}.key.confirm{color:#0cf0e6;background:#063b4b;border-color:#087f93}
-.status{min-height:21px;text-align:center;font-size:12px;line-height:1.5;color:#a9c4df;margin:12px 0 3px}.status.error{color:#ff9999}.status.success{color:#55efb4}
-.note{text-align:center;color:#829ab9;font-size:10px;line-height:1.5;margin:12px 4px 0}
-@media(max-width:380px){.shell{padding:23px 15px 20px}.digits{gap:5px}.digit{height:40px;max-width:40px}.key{height:47px}.step{font-size:10px}.line{width:15px}}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+body {
+  min-height: 100vh;
+  padding: 20px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  background:
+    radial-gradient(ellipse at top left, #0756a955, transparent 40%),
+    radial-gradient(ellipse at bottom right, #0756a955, transparent 40%),
+    #030719;
+}
 
-/* SwiftPays unified NEON BLUE theme */
-:root{--sp-bg:#050b1b;--sp-panel:#0b1730;--sp-panel2:#0e2042;--sp-blue:#168bff;--sp-cyan:#20d9ff;--sp-text:#eaf4ff;--sp-muted:#9bb2d2;--sp-border:#1b4d83}
-html{color-scheme:dark}
-body{background:radial-gradient(ellipse at 8% 4%,#087cff35,transparent 36%),radial-gradient(ellipse at 95% 90%,#00cfff20,transparent 34%),#050b1b!important;color:var(--sp-text)!important}
-.card,.container,.shell,.panel,.section,.modal,.box{background:linear-gradient(145deg,#0b1730f5,#081329f8)!important;border-color:#1768b8!important;box-shadow:0 0 28px #078bff20,0 18px 60px #0008!important}
-button[type=submit],.submit,.action,.btn,.primary,.button-primary{background:linear-gradient(110deg,#087cff,#00bfff)!important;color:#fff!important;border-color:#20d9ff!important;box-shadow:0 8px 26px #087cff45!important}
-input,select,textarea{background:#0b1b36!important;color:#f2f8ff!important;border-color:#285889!important}
-input:focus,select:focus,textarea:focus{border-color:#20d9ff!important;box-shadow:0 0 0 3px #20d9ff22!important}
-a{color:#45dfff}
-label{color:#d7eaff}
-hr{border-color:#1b3b64}
-:focus-visible{outline:2px solid #20d9ff;outline-offset:2px}
-.sp-brand img,.logo{filter:drop-shadow(0 0 12px #00bfff55)}
-@media(max-width:600px){body{padding-left:12px!important;padding-right:12px!important}}
+.card {
+  width: 100%;
+  max-width: 550px;
+  padding: 32px 25px;
+  border: 1.5px solid #168bff;
+  border-radius: 30px;
+  background: linear-gradient(145deg,#06152e,#050b20);
+  box-shadow: 0 0 35px #087dff35;
+}
 
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.logo-icon {
+  font-size: 53px;
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1;
+  background: linear-gradient(130deg,#00eaff,#0874ff);
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 20px #00bfff55;
+}
+
+.logo-name {
+  font-size: 34px;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: -1.5px;
+}
+
+.logo-name span {
+  color: #10d9ef;
+}
+
+.shield {
+  width: 105px;
+  height: 115px;
+  margin: 0 auto 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  filter: drop-shadow(0 0 15px #00bfff77);
+}
+
+.shield svg {
+  width: 100%;
+  height: 100%;
+}
+
+h1 {
+  text-align: center;
+  font-size: clamp(25px,6vw,34px);
+  margin-bottom: 12px;
+}
+
+h1 span {
+  color: #10d9ef;
+}
+
+.subtitle {
+  text-align: center;
+  color: #aebed8;
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+label {
+  display: block;
+  margin: 20px 0 10px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.input-wrap {
+  position: relative;
+}
+
+input {
+  width: 100%;
+  height: 62px;
+  padding: 0 55px 0 55px;
+  border: 1.5px solid #3988d5;
+  border-radius: 15px;
+  background: #101d35;
+  color: white;
+  font-size: 23px;
+  letter-spacing: 9px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #00dff5;
+  box-shadow: 0 0 0 3px #00dff522;
+}
+
+input::placeholder {
+  color: #8798b5;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.lock {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  color: #9bdcff;
+}
+
+.toggle {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  color: #a9d9ff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.hint {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  align-items: center;
+}
+
+.hint-icon {
+  font-size: 32px;
+  color: #10d9ef;
+}
+
+.hint strong {
+  color: #10d9ef;
+  font-size: 15px;
+}
+
+.hint p {
+  color: #aebed8;
+  font-size: 12px;
+  margin-top: 5px;
+  line-height: 1.5;
+}
+
+.submit {
+  width: 100%;
+  min-height: 68px;
+  margin-top: 30px;
+  border: none;
+  border-radius: 17px;
+  background: linear-gradient(100deg,#08d9e8,#0875ff);
+  color: white;
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 25px #087dff44;
+}
+
+.submit:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+.status {
+  min-height: 25px;
+  margin-top: 17px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.error { color: #ff8585; }
+.success { color: #38e9ae; }
+
+.footer {
+  margin-top: 24px;
+  text-align: center;
+  color: #8295b7;
+  font-size: 12px;
+}
+
+@media(max-width:400px) {
+  .card { padding: 27px 18px; }
+  .logo-name { font-size: 29px; }
+  input { height: 58px; }
+}
 </style>
 </head>
+
 <body>
-<main class="shell">
-  <div class="brand">Swift<span>Pays</span></div>
-  <div class="progress" aria-label="Registration progress">
-    <div class="step done"><span class="bubble">✓</span><span>Account</span></div>
-    <div class="line"></div>
-    <div class="step active" id="stepPin"><span class="bubble">2</span><span>S-PIN</span></div>
-    <div class="line"></div>
-    <div class="step" id="stepReady"><span class="bubble">3</span><span>Ready</span></div>
+
+<main class="card">
+
+  <!-- SWIFTPAYS LOGO -->
+  <div class="logo">
+    <div class="logo-icon">ϟ</div>
+    <div class="logo-name">Swift<span>Pays</span></div>
   </div>
 
-  <div class="art" aria-hidden="true">
-    <svg viewBox="0 0 120 120" fill="none">
-      <path d="M60 7 103 24v34c0 27-17 44-43 56C34 102 17 85 17 58V24L60 7Z" fill="#0754a3" stroke="#22e7fa" stroke-width="3.5"/>
-      <path d="M60 17 93 30v28c0 20-12 34-33 45C39 92 27 78 27 58V30l33-13Z" fill="url(#g)"/>
-      <rect x="43" y="52" width="34" height="29" rx="7" fill="#e9fbff"/>
-      <path d="M49 52V43a11 11 0 0 1 22 0v9" stroke="#e9fbff" stroke-width="7" stroke-linecap="round"/>
-      <circle cx="60" cy="65" r="4" fill="#0877c8"/><path d="M60 68v6" stroke="#0877c8" stroke-width="3" stroke-linecap="round"/>
-      <defs><linearGradient id="g" x1="27" y1="17" x2="93" y2="103"><stop stop-color="#078fff"/><stop offset="1" stop-color="#062d70"/></linearGradient></defs>
+  <!-- SECURITY SHIELD -->
+  <div class="shield">
+    <svg viewBox="0 0 120 130" fill="none">
+      <defs>
+        <linearGradient id="shieldGradient" x1="10" y1="5" x2="110" y2="125">
+          <stop stop-color="#00EFFF"/>
+          <stop offset="1" stop-color="#0875FF"/>
+        </linearGradient>
+      </defs>
+
+      <path d="M60 5 L108 25 V60
+      C108 91 88 112 60 127
+      C32 112 12 91 12 60 V25 Z"
+      fill="#09244B"
+      stroke="url(#shieldGradient)"
+      stroke-width="5"/>
+
+      <rect x="43" y="55" width="34" height="29"
+      rx="7" fill="white"/>
+
+      <path d="M49 55 V45
+      C49 30 71 30 71 45 V55"
+      stroke="white" stroke-width="6"
+      stroke-linecap="round"/>
+
+      <circle cx="60" cy="68" r="4" fill="#0875FF"/>
+      <path d="M60 70 V76" stroke="#0875FF" stroke-width="3"/>
     </svg>
   </div>
-  <h1 id="heading">Create S-PIN</h1>
-  <p class="sub" id="subheading">Set a private 6-digit S-PIN to secure your SwiftPays account.</p>
 
-  <section class="entry active" id="newPanel">
-    <div class="entry-head"><span class="lock">🔒</span> ENTER 6-DIGIT S-PIN</div>
-    <div class="digits" id="newDigits" aria-label="New PIN"></div>
-  </section>
-  <section class="entry" id="confirmPanel">
-    <div class="entry-head"><span class="lock">🔐</span> CONFIRM 6-DIGIT S-PIN</div>
-    <div class="digits" id="confirmDigits" aria-label="Confirm PIN"></div>
-  </section>
+  <h1>Create Your Security <span>PIN</span></h1>
 
-  <button class="action" id="create" type="button" disabled>Create S-PIN　➜</button>
-  <div class="keypad" aria-label="Secure numeric keypad">
-    <button class="key" data-digit="1">1</button><button class="key" data-digit="2">2</button><button class="key" data-digit="3">3</button>
-    <button class="key" data-digit="4">4</button><button class="key" data-digit="5">5</button><button class="key" data-digit="6">6</button>
-    <button class="key" data-digit="7">7</button><button class="key" data-digit="8">8</button><button class="key" data-digit="9">9</button>
-    <button class="key utility" id="clear">CLEAR</button><button class="key" data-digit="0">0</button><button class="key utility" id="back">⌫ DELETE</button>
+  <p class="subtitle">
+    Set a 6-digit PIN to secure your SwiftPays
+    account and transactions.
+  </p>
+
+  <form id="pinForm">
+
+    <label for="pin">Enter 6-digit PIN</label>
+    <div class="input-wrap">
+      <span class="lock">🔒</span>
+      <input
+        id="pin"
+        type="password"
+        inputmode="numeric"
+        maxlength="6"
+        minlength="6"
+        placeholder="••••••"
+        autocomplete="new-password"
+        required>
+      <button class="toggle" type="button"
+        onclick="togglePin('pin',this)">◉</button>
+    </div>
+
+    <label for="confirmPin">Confirm PIN</label>
+    <div class="input-wrap">
+      <span class="lock">🔒</span>
+      <input
+        id="confirmPin"
+        type="password"
+        inputmode="numeric"
+        maxlength="6"
+        minlength="6"
+        placeholder="••••••"
+        autocomplete="new-password"
+        required>
+      <button class="toggle" type="button"
+        onclick="togglePin('confirmPin',this)">◉</button>
+    </div>
+
+    <div class="hint">
+      <div class="hint-icon">🛡</div>
+      <div>
+        <strong>Use a strong PIN</strong>
+        <p>Avoid simple patterns like 123456 or 000000.</p>
+      </div>
+    </div>
+
+    <button class="submit" id="submitBtn" type="submit">
+      Create PIN &nbsp;➜
+    </button>
+
+  </form>
+
+  <div class="status" id="status" role="status"></div>
+
+  <div class="footer">
+    🔐 Your security is our priority.
+    <br><br>
+    © SwiftPays. All rights reserved.
   </div>
-  <p class="status" id="status" role="status" aria-live="polite"></p>
-  <p class="note">Your S-PIN is securely hashed before saving. Never share your PIN with anyone.</p>
+
 </main>
+
 <script>
 "use strict";
-const API_BASE="https://swiftpay-api-6azu.onrender.com";
-const params=new URLSearchParams(location.search);
-let setupToken=params.get("token")||sessionStorage.getItem("swiftpays_setup_token")||"";
-let pin="",confirmPin="",stage="new",busy=false;
-const $=id=>document.getElementById(id);
-function say(text,type=""){const el=$("status");el.textContent=text;el.className="status "+type;}
-function draw(target,value){
-  const el=$(target);el.innerHTML="";
-  for(let i=0;i<6;i++){const box=document.createElement("span");box.className="digit"+(i<value.length?" filled":"");box.textContent=i<value.length?"●":"";el.appendChild(box);}
+
+const API = "https://swiftpay-api-6azu.onrender.com";
+
+const form = document.getElementById("pinForm");
+const pinInput = document.getElementById("pin");
+const confirmInput = document.getElementById("confirmPin");
+const submitBtn = document.getElementById("submitBtn");
+const statusBox = document.getElementById("status");
+
+function showStatus(message, type = "") {
+  statusBox.textContent = message;
+  statusBox.className = "status " + type;
 }
-function render(){
-  draw("newDigits",pin);draw("confirmDigits",confirmPin);
-  $("newPanel").classList.toggle("active",stage==="new");
-  $("confirmPanel").classList.toggle("active",stage==="confirm");
-  $("create").disabled=!(pin.length===6&&confirmPin.length===6&&!busy);
-  $("heading").textContent=stage==="new"?"Create S-PIN":"Confirm S-PIN";
-  $("subheading").textContent=stage==="new"?"Choose a private 6-digit S-PIN for your SwiftPays account.":"Enter the same 6 digits again to confirm your S-PIN.";
+
+function togglePin(id, button) {
+  const input = document.getElementById(id);
+  input.type = input.type === "password" ? "text" : "password";
+  button.textContent = input.type === "password" ? "◉" : "◎";
 }
-document.querySelectorAll("[data-digit]").forEach(button=>button.addEventListener("click",()=>{
-  if(busy)return;
-  if(stage==="new"){if(pin.length>=6)return;pin+=button.dataset.digit;if(pin.length===6){stage="confirm";say("Now confirm your 6-digit S-PIN.");}}
-  else{if(confirmPin.length>=6)return;confirmPin+=button.dataset.digit;if(confirmPin.length===6)say(pin===confirmPin?"S-PIN confirmed. Tap Create S-PIN to finish.":"PIN does not match. Clear confirmation and try again.",pin===confirmPin?"success":"error");}
-  render();
-}));
-$("clear").addEventListener("click",()=>{if(busy)return;if(stage==="new")pin="";else confirmPin="";render();say("");});
-$("back").addEventListener("click",()=>{if(busy)return;if(stage==="new")pin=pin.slice(0,-1);else confirmPin=confirmPin.slice(0,-1);render();});
-$("newPanel").addEventListener("click",()=>{if(!busy){stage="new";render();}});
-$("confirmPanel").addEventListener("click",()=>{if(!busy&&pin.length===6){stage="confirm";render();}});
-$("create").addEventListener("click",async()=>{
-  if(busy)return;
-  if(!setupToken){say("Registration token is missing or expired. Please register again.","error");return;}
-  if(pin.length!==6||confirmPin.length!==6){say("Please enter and confirm all 6 digits.","error");return;}
-  if(pin!==confirmPin){confirmPin="";stage="confirm";render();say("S-PIN does not match. Please confirm again.","error");return;}
-  busy=true;$("create").disabled=true;$("create").textContent="Securing Your Account...";say("Saving your S-PIN securely...");
-  try{
-    const response=await fetch(API_BASE+"/auth/setup-pin",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({setup_token:setupToken,pin})});
-    const result=await response.json().catch(()=>({detail:"Invalid server response."}));
-    if(!response.ok)throw new Error(result.detail||"Could not save S-PIN.");
-    if(!result.token)throw new Error("Account session was not returned. Please contact support.");
-    localStorage.setItem("swiftpays_token",result.token);
-    sessionStorage.setItem("swiftpays_token",result.token);
+
+[pinInput, confirmInput].forEach(input => {
+  input.addEventListener("input", () => {
+    input.value = input.value.replace(/\D/g, "").slice(0, 6);
+  });
+});
+
+// Get registration setup token
+const params = new URLSearchParams(window.location.search);
+
+let setupToken =
+  params.get("token") ||
+  sessionStorage.getItem("swiftpays_setup_token");
+
+if (!setupToken) {
+  showStatus(
+    "Registration session missing. Please register again.",
+    "error"
+  );
+  submitBtn.disabled = true;
+}
+
+form.addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  const pin = pinInput.value.trim();
+  const confirmPin = confirmInput.value.trim();
+
+  if (!setupToken) {
+    showStatus("Registration session expired. Please register again.", "error");
+    return;
+  }
+
+  if (!/^[0-9]{6}$/.test(pin)) {
+    showStatus("Please enter a valid 6-digit PIN.", "error");
+    return;
+  }
+
+  if (pin !== confirmPin) {
+    showStatus("Both PINs do not match.", "error");
+    return;
+  }
+
+  if (pin === "123456" || pin === "000000" ||
+      pin === "111111" || pin === "654321") {
+    showStatus("Please choose a stronger PIN.", "error");
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Creating Secure PIN...";
+  showStatus("Please wait. Securing your account...");
+
+  try {
+    const response = await fetch(API + "/auth/setup-pin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        setup_token: setupToken,
+        pin: pin
+      })
+    });
+
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(
+        result.detail || "Unable to create PIN. Please try again."
+      );
+    }
+
+    if (!result.token) {
+      throw new Error("Account created, but login token was not returned.");
+    }
+
+    // Save authenticated session
+    localStorage.setItem("swiftpays_token", result.token);
+
+    if (result.user) {
+      localStorage.setItem(
+        "swiftpays_user",
+        JSON.stringify(result.user)
+      );
+    }
+
     sessionStorage.removeItem("swiftpays_setup_token");
-    history.replaceState({},"",location.pathname);
-    $("stepReady").classList.add("done");
-    $("stepReady").querySelector(".bubble").textContent="✓";
-    say("S-PIN created successfully. Opening your dashboard...","success");
-    $("create").textContent="Account Ready ✓";
-    setTimeout(()=>location.replace("/dashboard"),900);
-  }catch(error){
-    say(error.message||"Something went wrong. Please try again.","error");
-    busy=false;$("create").textContent="Create S-PIN　➜";render();
+
+    showStatus(
+      "Your PIN is created successfully! Redirecting...",
+      "success"
+    );
+
+    submitBtn.textContent = "PIN Created ✓";
+
+    setTimeout(() => {
+      window.location.replace("/dashboard.html");
+    }, 1200);
+
+  } catch (error) {
+    showStatus(
+      error.message || "Something went wrong. Please try again.",
+      "error"
+    );
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Create PIN ➜";
   }
 });
-render();
-if(!setupToken)say("Registration token is missing. Please complete Create Account first.","error");
 </script>
+
 </body>
 </html>
