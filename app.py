@@ -43,8 +43,7 @@ def make_session(user_id):
     secret = os.getenv("SESSION_SECRET")
     if not secret:
         raise HTTPException(503, "Backend SESSION_SECRET is not configured")
-    payload = json.dumps({"sub": user_id, "exp": int(time.time()) + 86400}, separators=(",", ":")).encode()
-    body = secrets.token_urlsafe(8) + "." + payload.hex()
+    payload = json.dumps({"sub": user_id, "exp": int(time.time()) + (5 * 24 * 60 * 60)}, separators=(",", ":")).encode()
     sig = hmac.new(secret.encode(), body.encode(), hashlib.sha256).hexdigest()
     return body + "." + sig
 
