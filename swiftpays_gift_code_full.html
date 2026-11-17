@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0755dc">
+<title>SwiftPays — Gift Code</title>
+<style>
+:root{--blue:#0755dc;--blue2:#1688ff;--navy:#071b49;--muted:#667792;--line:#e4ecf8;--bg:#f4f8ff;--green:#16a34a;--red:#dc2626;--purple:#7c3aed}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#f9fbff,#edf4ff);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#102044}
+button,input{font:inherit}button{cursor:pointer}
+.topbar{height:76px;background:#fff;box-shadow:0 5px 22px #1257bb20;display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,calc((100% - 1120px)/2));position:sticky;top:0;z-index:5;border-bottom:2px solid #d9e8ff}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:22px;color:#0b1e48;letter-spacing:-.8px}.brand img{width:42px;height:42px;object-fit:contain;border-radius:12px}.brand span{color:#0876ee}
+.balance{border:1px solid #c8f0d7;background:#effcf4;color:#07833a;padding:10px 16px;border-radius:30px;font-weight:800}
+.wrap{max-width:1120px;margin:25px auto;padding:0 18px 105px}.crumb{color:#64748b;margin:10px 0 22px}.crumb b{color:var(--blue)}
+.hero{background:#fff;border:1px solid var(--line);border-radius:24px;padding:26px;text-align:center;box-shadow:0 10px 28px #154b9910;margin-bottom:20px}.gift-emoji{font-size:48px}.hero h1{margin:8px 0;color:#102044;font-size:28px}.hero p{margin:0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.choice{border:1px solid var(--line);background:#fff;border-radius:20px;padding:22px;text-align:left;box-shadow:0 8px 22px #174c9910;transition:.2s}.choice:hover{transform:translateY(-3px);border-color:#9fc5ff}.choice .ico{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:25px;background:#eaf2ff;margin-bottom:13px}.choice:nth-child(2) .ico{background:#e8fbef}.choice:nth-child(3) .ico{background:#f3eaff}.choice h3{margin:0 0 6px}.choice p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}.arrow{float:right;color:var(--blue);font-size:24px}
+.panel{display:none;background:#fff;border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:0 10px 28px #154b9910}.panel.active{display:block}.back{border:0;background:#edf4ff;color:var(--blue);border-radius:12px;padding:9px 13px;font-weight:800;margin-bottom:16px}.panel h2{margin:0 0 8px;font-size:24px}.sub{color:var(--muted);margin:0 0 22px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:flex;flex-direction:column;gap:7px;margin-bottom:15px}.field label{font-weight:750;font-size:14px;color:#40516e}.field input{width:100%;border:1.5px solid #d6e3f6;border-radius:13px;padding:14px 15px;outline:none;color:#12254b;background:#fbfdff}.field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #0755dc15}
+.codebox{display:flex;gap:9px}.codebox input{font-weight:900;font-size:21px;letter-spacing:1.5px;text-align:center;background:#eef5ff;color:#073eac}.secondary{border:1px solid #c9dcfb;background:#edf5ff;color:#0755dc;border-radius:13px;padding:0 15px;font-weight:800}
+.primary{border:0;background:linear-gradient(110deg,#0755dc,#1688ff);color:#fff;border-radius:14px;padding:15px 20px;font-weight:850;box-shadow:0 8px 18px #0755dc35}.primary.full{width:100%}.notice{padding:15px;border-radius:15px;background:#edf5ff;color:#34517e;font-size:14px;line-height:1.55;margin-top:18px}.notice b{color:#123a87}.success{background:#edfff3;border:1px solid #c7f2d5;color:#087b35;border-radius:16px;padding:16px;margin-top:16px;display:none}
+.listhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0 18px}.filters{display:flex;gap:8px;flex-wrap:wrap}.filter{border:0;border-radius:10px;padding:9px 13px;background:#edf3fc;color:#52627b;font-weight:750}.filter.active{background:var(--blue);color:white}.codecard{border:1px solid var(--line);border-radius:17px;padding:17px;margin:12px 0;display:flex;justify-content:space-between;gap:12px;align-items:center;background:#fff}.codeval{font-weight:900;letter-spacing:1px;font-size:18px;overflow-wrap:anywhere}.meta{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.6}.status{font-size:12px;font-weight:850;border-radius:20px;padding:6px 10px;background:#e8fbed;color:#12813c;display:inline-block}.status.expired{background:#feecec;color:#c52222}.copy{border:1px solid #cfe0fa;background:#f1f7ff;color:var(--blue);border-radius:10px;padding:9px 12px;font-weight:800;margin-top:8px}
+.empty{text-align:center;color:var(--muted);padding:35px 12px}.bottom{position:fixed;bottom:0;left:0;right:0;background:#ffffffed;backdrop-filter:blur(12px);border-top:1px solid #e1eafa;display:flex;justify-content:center;gap:clamp(15px,7vw,80px);padding:12px 10px 10px;z-index:4}.navitem{color:#71819a;text-align:center;font-size:12px;font-weight:750}.navitem strong{display:block;font-size:21px;color:#71819a;margin-bottom:2px}.navitem.active,.navitem.active strong{color:var(--blue)}
+.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:#102044;color:#fff;padding:12px 18px;border-radius:12px;display:none;z-index:10;box-shadow:0 8px 24px #0002}
+@media(max-width:650px){.topbar{height:66px;padding:0 15px}.brand{font-size:19px}.brand img{width:36px;height:36px}.balance{font-size:13px;padding:9px 12px}.wrap{margin:16px auto;padding:0 13px 100px}.hero{padding:21px 14px}.hero h1{font-size:24px}.grid{grid-template-columns:1fr;gap:11px}.choice{display:flex;align-items:center;gap:13px;padding:15px}.choice .ico{margin:0;flex:0 0 50px}.choice h3{font-size:16px}.choice p{font-size:13px}.arrow{margin-left:auto}.panel{padding:18px}.formgrid{grid-template-columns:1fr;gap:0}.codecard{align-items:flex-start}.codeval{font-size:16px}.bottom{gap:0;justify-content:space-around}.navitem{font-size:10px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><img src="https://swiftpays.pages.dev/logo.png" alt="SwiftPays logo" onerror="this.style.display='none'"><div>Swift<span>Pays</span><small style="display:block;font-size:9px;letter-spacing:2px;color:#6d82a4">PAYMENT GATEWAY</small></div></div>
+  <div class="balance">₹ <span id="wallet">0.00</span></div>
+</header>
+<main class="wrap">
+  <div class="crumb"><b>Dashboard</b> &nbsp;/&nbsp; Gift Code</div>
+
+  <section id="home" class="view">
+    <div class="hero"><div class="gift-emoji">🎁</div><h1>Gift Code</h1><p>Claim rewards, create new codes and manage your codes.</p></div>
+    <div class="grid">
+      <button class="choice" onclick="showView('claim')"><div class="ico">🎁</div><div><h3>Claim Code</h3><p>Redeem a gift code and get instant reward.</p></div><span class="arrow">→</span></button>
+      <button class="choice" onclick="showView('create')"><div class="ico">＋</div><div><h3>Create Code</h3><p>Generate a new random gift code with reward.</p></div><span class="arrow">→</span></button>
+      <button class="choice" onclick="showView('mycodes')"><div class="ico">☷</div><div><h3>My Codes</h3><p>View and manage the codes you have created.</p></div><span class="arrow">→</span></button>
+    </div>
+  </section>
+
+  <section id="claim" class="panel view">
+    <button class="back" onclick="showView('home')">← Back</button>
+    <h2>Claim Gift Code</h2><p class="sub">Enter your 10-character gift code to claim your reward.</p>
+    <div class="field"><label for="claimInput">Gift Code</label><input id="claimInput" maxlength="10" minlength="10" placeholder="e.g. A7K9M2P4XZ" autocomplete="off" style="text-transform:uppercase;font-weight:900;letter-spacing:1.4px"></div>
+    <button class="primary full" onclick="claimCode()">Claim Reward →</button>
+    <div id="claimResult" class="success"></div>
+    <div class="notice"><b>Code Rules</b><br>✓ Exactly 10 characters<br>✓ A–Z letters and 0–9 numbers<br>✓ Each user can claim a code once<br>✓ Reward is credited after successful validation</div>
+  </section>
+
+  <section id="create" class="panel view">
+    <button class="back" onclick="showView('home')">← Back</button>
+    <h2>Create Gift Code</h2><p class="sub">Generate a random 10-character code and set its reward details.</p>
+    <div class="field"><label>Gift Code (Auto Generated)</label><div class="codebox"><input id="generatedCode" readonly value="Press Generate"><button class="secondary" onclick="generateCode()">↻ Generate</button></div></div>
+    <div class="formgrid">
+      <div class="field"><label for="reward">Reward Amount (₹)</label><input id="reward" type="number" min="1" step="0.01" placeholder="50"></div>
+      <div class="field"><label for="usage">Usage Limit</label><input id="usage" type="number" min="1" step="1" value="100"></div>
+      <div class="field"><label for="expiry">Expiry Date</label><input id="expiry" type="date"></div>
+    </div>
+    <button class="primary full" onclick="createCode()">＋ Create Code</button>
+    <div class="notice"><b>Code format:</b> 10 random characters using A–Z and 0–9. Code uniqueness is checked before saving.</div>
+  </section>
+
+  <section id="mycodes" class="panel view">
+    <button class="back" onclick="showView('home')">← Back</button>
+    <h2>My Codes</h2><p class="sub">Manage your generated gift codes and check their usage.</p>
+    <div class="listhead"><div class="filters">
+      <button class="filter active" data-filter="all" onclick="filterCodes('all',this)">All</button>
+      <button class="filter" data-filter="active" onclick="filterCodes('active',this)">Active</button>
+      <button class="filter" data-filter="expired" onclick="filterCodes('expired',this)">Expired / Used</button>
+    </div></div>
+    <div id="codesList"></div>
+  </section>
+</main>
+<nav class="bottom">
+  <div class="navitem active"><strong>▦</strong>Dashboard</div>
+  <div class="navitem"><strong>▣</strong>Withdraw</div>
+  <div class="navitem"><strong>＋</strong>Pay</div>
+  <div class="navitem"><strong>‹/›</strong>API</div>
+  <div class="navitem"><strong>⚙</strong>Settings</div>
+</nav>
+<div id="toast" class="toast"></div>
+<script>
+const STORE_CODES='swiftpays_demo_gift_codes_v1';
+const STORE_CLAIMS='swiftpays_demo_gift_claims_v1';
+const STORE_WALLET='swiftpays_demo_wallet_v1';
+let currentFilter='all';
+const $=id=>document.getElementById(id);
+function read(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}}
+function write(key,value){localStorage.setItem(key,JSON.stringify(value))}
+function codes(){return read(STORE_CODES,[])}
+function claims(){return read(STORE_CLAIMS,[])}
+function wallet(){return Number(localStorage.getItem(STORE_WALLET)||0)}
+function updateWallet(){$('wallet').textContent=wallet().toFixed(2)}
+function toast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.style.display='none',2400)}
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));if(id==='home')$('home').style.display='block';else $('home').style.display='none';if(id!=='home')$(id).classList.add('active');if(id==='mycodes')renderCodes();window.scrollTo({top:0,behavior:'smooth'})}
+function randomCode(){const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';const bytes=new Uint8Array(10);if(window.crypto&&crypto.getRandomValues)crypto.getRandomValues(bytes);else for(let i=0;i<10;i++)bytes[i]=Math.floor(Math.random()*256);return Array.from(bytes,b=>chars[b%chars.length]).join('')}
+function generateCode(){let list=codes(),code;do{code=randomCode()}while(list.some(x=>x.code===code));$('generatedCode').value=code;toast('New random code generated')}
+function createCode(){
+ const code=$('generatedCode').value.trim(),amount=Number($('reward').value),limit=Number($('usage').value),expiry=$('expiry').value;
+ if(!/^[A-Z0-9]{10}$/.test(code)){toast('Generate a valid 10-character code first');return}
+ if(codes().some(x=>x.code===code)){toast('Code already exists. Generate another.');generateCode();return}
+ if(!Number.isFinite(amount)||amount<=0){toast('Enter a valid reward amount');return}
+ if(!Number.isInteger(limit)||limit<1){toast('Usage limit must be at least 1');return}
+ if(!expiry){toast('Select an expiry date');return}
+ if(new Date(expiry+'T23:59:59')<new Date()){toast('Expiry date must be in the future');return}
+ const all=codes();all.unshift({code,amount,limit,used:0,expiry,createdAt:new Date().toISOString(),status:'active'});write(STORE_CODES,all);
+ toast('Gift code created: '+code);$('reward').value='';$('generatedCode').value='';renderCodes();showView('mycodes');
+}
+function claimCode(){
+ const code=$('claimInput').value.trim().toUpperCase();$('claimResult').style.display='none';
+ if(!/^[A-Z0-9]{10}$/.test(code)){toast('Enter exactly 10 letters/numbers');return}
+ const all=codes(),item=all.find(x=>x.code===code);
+ if(!item){toast('Invalid gift code');return}
+ if(new Date(item.expiry+'T23:59:59')<new Date()){toast('This gift code has expired');return}
+ if(item.used>=item.limit){toast('This gift code usage limit is over');return}
+ if(claims().some(x=>x.code===code)){toast('You have already claimed this code');return}
+ // Demo only: one browser profile represents one user. Production must enforce this on the server.
+ item.used+=1;write(STORE_CODES,all);
+ const newBalance=wallet()+item.amount;localStorage.setItem(STORE_WALLET,String(newBalance));
+ const history=claims();history.unshift({code,amount:item.amount,claimedAt:new Date().toISOString()});write(STORE_CLAIMS,history);
+ updateWallet();$('claimResult').innerHTML='✓ Code redeemed successfully!<br><b>₹'+item.amount.toFixed(2)+'</b> added to your demo wallet.';$('claimResult').style.display='block';$('claimInput').value='';toast('Reward added to demo wallet');
+}
+function filterCodes(filter,btn){currentFilter=filter;document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));btn.classList.add('active');renderCodes()}
+function renderCodes(){
+ const list=$('codesList');let all=codes();const now=new Date();
+ all=all.filter(x=>currentFilter==='all'||(currentFilter==='active'&&x.used<x.limit&&new Date(x.expiry+'T23:59:59')>=now)||(currentFilter==='expired'&&(x.used>=x.limit||new Date(x.expiry+'T23:59:59')<now)));
+ if(!all.length){list.innerHTML='<div class="empty">🎁<br><b>No gift codes found</b><br>Create your first code to see it here.</div>';return}
+ list.innerHTML=all.map(x=>{const expired=x.used>=x.limit||new Date(x.expiry+'T23:59:59')<now;return `<article class="codecard"><div><div class="codeval">${escapeHtml(x.code)}</div><div class="meta">🎁 ₹${Number(x.amount).toFixed(2)} &nbsp; · &nbsp; 👥 ${x.used}/${x.limit} used<br>📅 Expires ${escapeHtml(x.expiry)}</div><span class="status ${expired?'expired':''}">${expired?(x.used>=x.limit?'Limit reached':'Expired'):'Active'}</span></div><button class="copy" onclick="copyCode('${x.code}')">Copy</button></article>`}).join('');
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+async function copyCode(code){try{await navigator.clipboard.writeText(code);toast('Code copied')}catch{toast('Copy not available in this browser')}}
+$('claimInput').addEventListener('input',e=>{e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,10)});
+$('expiry').min=new Date().toISOString().slice(0,10);
+updateWallet();showView('home');
+</script>
+</body>
+</html>
