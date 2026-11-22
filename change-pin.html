@@ -15,6 +15,10 @@
       font-family: Arial, sans-serif;
     }
 
+    html {
+      visibility: hidden;
+    }
+
     body {
       min-height: 100vh;
       background: #07111f;
@@ -162,6 +166,66 @@
       font-size: 11px;
     }
   </style>
+
+  <!-- AUTHENTICATION PROTECTION -->
+  <script>
+    (async function () {
+      const API_URL = "https://swiftpay-api-6azu.onrender.com";
+      const LOGIN_URL = "/login";
+
+      const publicPages = [
+        "/login",
+        "/login.html",
+        "/register",
+        "/register.html",
+        "/forgot-password",
+        "/forgot-password.html",
+        "/reset-password",
+        "/reset-password.html"
+      ];
+
+      const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
+
+      if (publicPages.includes(currentPath)) {
+        document.documentElement.style.visibility = "visible";
+        return;
+      }
+
+      const token = localStorage.getItem("swiftpays_token");
+
+      if (!token) {
+        window.location.replace(LOGIN_URL);
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}/user/me`, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          },
+          cache: "no-store"
+        });
+
+        if (!response.ok) {
+          throw new Error("Session expired");
+        }
+
+        const data = await response.json();
+
+        if (!data.success || !data.user) {
+          throw new Error("Invalid session");
+        }
+
+        // Authenticated user: show page
+        document.documentElement.style.visibility = "visible";
+
+      } catch (error) {
+        localStorage.removeItem("swiftpays_token");
+        window.location.replace(LOGIN_URL);
+      }
+    })();
+  </script>
 </head>
 
 <body>
@@ -169,19 +233,26 @@
   <main class="container">
 
     <div class="logo">
-      <img src="https://swiftpays.pages.dev/logo.png" alt="SwiftPays Logo">
+      <img
+        src="https://swiftpays.pages.dev/logo.png"
+        alt="SwiftPays Logo"
+      >
       <h2>SWIFTPAYS</h2>
     </div>
 
     <div class="heading">
       <h1>Change S-PIN</h1>
-      <p>Update your six-digit security PIN to keep your account protected.</p>
+      <p>
+        Update your six-digit security PIN to keep
+        your account protected.
+      </p>
     </div>
 
     <form id="pinForm">
 
       <div class="field">
         <label for="currentPin">Current S-PIN</label>
+
         <div class="input-box">
           <input
             type="password"
@@ -193,12 +264,17 @@
             autocomplete="current-password"
             required
           >
-          <span class="eye" onclick="toggle('currentPin', this)">🙈</span>
+
+          <span
+            class="eye"
+            onclick="toggle('currentPin', this)"
+          >🙈</span>
         </div>
       </div>
 
       <div class="field">
         <label for="newPin">New S-PIN</label>
+
         <div class="input-box">
           <input
             type="password"
@@ -210,12 +286,17 @@
             autocomplete="new-password"
             required
           >
-          <span class="eye" onclick="toggle('newPin', this)">🙈</span>
+
+          <span
+            class="eye"
+            onclick="toggle('newPin', this)"
+          >🙈</span>
         </div>
       </div>
 
       <div class="field">
         <label for="confirmPin">Confirm New S-PIN</label>
+
         <div class="input-box">
           <input
             type="password"
@@ -227,7 +308,11 @@
             autocomplete="new-password"
             required
           >
-          <span class="eye" onclick="toggle('confirmPin', this)">🙈</span>
+
+          <span
+            class="eye"
+            onclick="toggle('confirmPin', this)"
+          >🙈</span>
         </div>
       </div>
 
@@ -235,11 +320,18 @@
         Update S-PIN
       </button>
 
-      <div class="message" id="message" role="status" aria-live="polite"></div>
+      <div
+        class="message"
+        id="message"
+        role="status"
+        aria-live="polite"
+      ></div>
 
     </form>
 
-    <a href="/dashboard" class="back">← Back to Dashboard</a>
+    <a href="/dashboard" class="back">
+      ← Back to Dashboard
+    </a>
 
     <div class="security-note">
       🔒 Your S-PIN is securely protected by SwiftPays.
@@ -250,7 +342,7 @@
   <script>
     const API_URL = "https://swiftpay-api-6azu.onrender.com";
 
-    // Show / Hide S-PIN
+    // SHOW / HIDE S-PIN
     function toggle(id, el) {
       const input = document.getElementById(id);
 
@@ -263,94 +355,127 @@
       }
     }
 
-    // Allow numbers only
+    // NUMBERS ONLY
     ["currentPin", "newPin", "confirmPin"].forEach(id => {
       const input = document.getElementById(id);
 
       input.addEventListener("input", () => {
-        input.value = input.value.replace(/[^0-9]/g, "").slice(0, 6);
+        input.value = input.value
+          .replace(/[^0-9]/g, "")
+          .slice(0, 6);
       });
     });
 
-    // Change S-PIN
-    document.getElementById("pinForm").addEventListener("submit", async function(e) {
-      e.preventDefault();
+    // CHANGE S-PIN
+    document.getElementById("pinForm").addEventListener(
+      "submit",
+      async function(e) {
+        e.preventDefault();
 
-      const currentPin = document.getElementById("currentPin").value;
-      const newPin = document.getElementById("newPin").value;
-      const confirmPin = document.getElementById("confirmPin").value;
+        const currentPin =
+          document.getElementById("currentPin").value;
 
-      const message = document.getElementById("message");
-      const button = document.getElementById("submitBtn");
+        const newPin =
+          document.getElementById("newPin").value;
 
-      message.style.color = "#ff6b6b";
-      message.textContent = "";
+        const confirmPin =
+          document.getElementById("confirmPin").value;
 
-      if (!/^[0-9]{6}$/.test(currentPin) ||
+        const message =
+          document.getElementById("message");
+
+        const button =
+          document.getElementById("submitBtn");
+
+        message.style.color = "#ff6b6b";
+        message.textContent = "";
+
+        if (
+          !/^[0-9]{6}$/.test(currentPin) ||
           !/^[0-9]{6}$/.test(newPin) ||
-          !/^[0-9]{6}$/.test(confirmPin)) {
-        message.textContent = "Please enter all S-PINs as exactly 6 digits.";
-        return;
-      }
-
-      if (newPin !== confirmPin) {
-        message.textContent = "New S-PIN and confirmation do not match.";
-        return;
-      }
-
-      if (currentPin === newPin) {
-        message.textContent = "New S-PIN must be different from current S-PIN.";
-        return;
-      }
-
-      const token = localStorage.getItem("swiftpays_token");
-
-      if (!token) {
-        message.textContent = "Session expired. Please login again.";
-        return;
-      }
-
-      button.disabled = true;
-      button.textContent = "Updating...";
-
-      try {
-        const response = await fetch(`${API_URL}/auth/change-pin`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            current_pin: currentPin,
-            new_pin: newPin
-          })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data.detail || data.message || "Unable to change S-PIN."
-          );
+          !/^[0-9]{6}$/.test(confirmPin)
+        ) {
+          message.textContent =
+            "Please enter all S-PINs as exactly 6 digits.";
+          return;
         }
 
-        message.style.color = "#48e6a2";
-        message.textContent = "S-PIN changed successfully! Redirecting...";
+        if (newPin !== confirmPin) {
+          message.textContent =
+            "New S-PIN and confirmation do not match.";
+          return;
+        }
 
-        document.getElementById("pinForm").reset();
+        if (currentPin === newPin) {
+          message.textContent =
+            "New S-PIN must be different from current S-PIN.";
+          return;
+        }
 
-        // Redirect immediately after successful change
-        window.location.replace("/dashboard");
-        return;
+        const token =
+          localStorage.getItem("swiftpays_token");
 
-      } catch (error) {
-        message.style.color = "#ff6b6b";
-        message.textContent = error.message || "Something went wrong. Please try again.";
+        if (!token) {
+          window.location.replace("/login");
+          return;
+        }
 
-        button.disabled = false;
-        button.textContent = "Update S-PIN";
+        button.disabled = true;
+        button.textContent = "Updating...";
+
+        try {
+          const response = await fetch(
+            `${API_URL}/auth/change-pin`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+              },
+              body: JSON.stringify({
+                current_pin: currentPin,
+                new_pin: newPin
+              })
+            }
+          );
+
+          const data = await response.json();
+
+          if (response.status === 401) {
+            localStorage.removeItem("swiftpays_token");
+            window.location.replace("/login");
+            return;
+          }
+
+          if (!response.ok) {
+            throw new Error(
+              data.detail ||
+              data.message ||
+              "Unable to change S-PIN."
+            );
+          }
+
+          message.style.color = "#48e6a2";
+          message.textContent =
+            "S-PIN changed successfully!";
+
+          document.getElementById("pinForm").reset();
+
+          // IMMEDIATE DASHBOARD REDIRECT
+          window.location.replace("/dashboard");
+          return;
+
+        } catch (error) {
+          message.style.color = "#ff6b6b";
+          message.textContent =
+            error.message ||
+            "Something went wrong. Please try again.";
+
+          button.disabled = false;
+          button.textContent = "Update S-PIN";
+        }
       }
-    });
+    );
   </script>
 
 </body>
