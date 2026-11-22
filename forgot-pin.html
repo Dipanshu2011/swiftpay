@@ -1,0 +1,422 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forgot S-PIN | SwiftPays</title>
+
+<link rel="icon" href="https://swiftpays.pages.dev/logo.png">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 15px;
+    background:
+      radial-gradient(circle at 10% 20%, #06316b 0%, transparent 35%),
+      radial-gradient(circle at 90% 80%, #062b65 0%, transparent 35%),
+      #020d20;
+    color: #fff;
+}
+
+.container {
+    width: 100%;
+    max-width: 520px;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo img {
+    width: 75px;
+    height: 75px;
+    object-fit: contain;
+}
+
+.logo h1 {
+    font-size: 30px;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: 1px;
+    color: #08c9ff;
+    margin-top: 5px;
+}
+
+.card {
+    width: 100%;
+    padding: 30px;
+    border: 1.5px solid #087cff;
+    border-radius: 25px;
+    background: rgba(3, 20, 45, 0.96);
+    box-shadow:
+      0 0 20px rgba(0, 136, 255, .25),
+      inset 0 0 25px rgba(0, 80, 180, .08);
+}
+
+.lock-icon {
+    width: 75px;
+    height: 75px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background: #062d72;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #9bbce9;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 28px;
+}
+
+.field {
+    margin-bottom: 20px;
+}
+
+.field label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #e9f4ff;
+    font-weight: 600;
+}
+
+.input-box {
+    position: relative;
+}
+
+.input-box input {
+    width: 100%;
+    height: 58px;
+    padding: 0 52px 0 17px;
+    border: 1px solid #2871ad;
+    border-radius: 13px;
+    background: #03152e;
+    color: white;
+    outline: none;
+    font-size: 18px;
+    letter-spacing: 3px;
+    transition: .2s;
+}
+
+.input-box input:focus {
+    border-color: #08c9ff;
+    box-shadow: 0 0 12px rgba(0, 195, 255, .2);
+}
+
+.input-box input::placeholder {
+    color: #607b9d;
+    letter-spacing: 1px;
+}
+
+.toggle {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 21px;
+    user-select: none;
+}
+
+button {
+    width: 100%;
+    height: 60px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(100deg, #05c9e9, #0875ff);
+    color: white;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: .2s;
+}
+
+button:active {
+    transform: scale(.98);
+}
+
+button:disabled {
+    opacity: .65;
+    cursor: not-allowed;
+}
+
+.message {
+    display: none;
+    margin-top: 18px;
+    padding: 13px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.5;
+    background: #102746;
+}
+
+.back {
+    display: block;
+    text-align: center;
+    color: #08c9ff;
+    text-decoration: none;
+    margin-top: 24px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 25px;
+    color: #9bbce9;
+    font-size: 13px;
+}
+
+.footer span {
+    color: #00dca0;
+    margin-right: 7px;
+}
+
+@media(max-width: 480px) {
+    .card {
+        padding: 24px 18px;
+    }
+
+    h2 {
+        font-size: 26px;
+    }
+
+    .logo h1 {
+        font-size: 27px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        <img src="https://swiftpays.pages.dev/logo.png"
+             alt="SwiftPays Logo">
+        <h1>SWIFTPAYS</h1>
+    </div>
+
+    <div class="card">
+
+        <div class="lock-icon">🔒</div>
+
+        <h2>Forgot S-PIN</h2>
+
+        <p class="subtitle">
+            Reset your S-PIN using your account password.
+        </p>
+
+        <form id="pinForm">
+
+            <div class="field">
+                <label>🔑 Account Password</label>
+                <div class="input-box">
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter account password"
+                        autocomplete="current-password"
+                        required
+                    >
+                    <span class="toggle"
+                          onclick="togglePassword('password',this)">🙈</span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>🔐 New S-PIN</label>
+                <div class="input-box">
+                    <input
+                        type="password"
+                        id="newPin"
+                        placeholder="Enter 6-digit S-PIN"
+                        inputmode="numeric"
+                        maxlength="6"
+                        pattern="[0-9]{6}"
+                        autocomplete="new-password"
+                        required
+                    >
+                    <span class="toggle"
+                          onclick="togglePassword('newPin',this)">🙈</span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>🔐 Confirm New S-PIN</label>
+                <div class="input-box">
+                    <input
+                        type="password"
+                        id="confirmPin"
+                        placeholder="Confirm 6-digit S-PIN"
+                        inputmode="numeric"
+                        maxlength="6"
+                        pattern="[0-9]{6}"
+                        autocomplete="new-password"
+                        required
+                    >
+                    <span class="toggle"
+                          onclick="togglePassword('confirmPin',this)">🙈</span>
+                </div>
+            </div>
+
+            <button type="submit" id="resetBtn">
+                ↻ &nbsp; Reset S-PIN
+            </button>
+
+            <div class="message" id="message"></div>
+
+        </form>
+
+        <a href="/dashboard" class="back">
+            ← &nbsp; Back to Dashboard
+        </a>
+
+    </div>
+
+    <div class="footer">
+        <span>🛡</span>
+        Your security is our priority
+    </div>
+
+</div>
+
+<script>
+const API = "https://swiftpay-api-6azu.onrender.com";
+
+const token = localStorage.getItem("swiftpays_token");
+
+// Require an active login session
+if (!token) {
+    window.location.replace("/login");
+}
+
+function togglePassword(id, element) {
+    const input = document.getElementById(id);
+
+    if (input.type === "password") {
+        input.type = "text";
+        element.textContent = "👁️";
+    } else {
+        input.type = "password";
+        element.textContent = "🙈";
+    }
+}
+
+// Allow only numeric digits in S-PIN fields
+["newPin", "confirmPin"].forEach(id => {
+    document.getElementById(id).addEventListener("input", function() {
+        this.value = this.value.replace(/\D/g, "").slice(0, 6);
+    });
+});
+
+function showMessage(text, success = false) {
+    const message = document.getElementById("message");
+
+    message.style.display = "block";
+    message.style.color = success ? "#48e6a2" : "#ff7777";
+    message.textContent = text;
+}
+
+document.getElementById("pinForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const password = document.getElementById("password").value;
+    const newPin = document.getElementById("newPin").value;
+    const confirmPin = document.getElementById("confirmPin").value;
+
+    const btn = document.getElementById("resetBtn");
+
+    if (!token) {
+        window.location.replace("/login");
+        return;
+    }
+
+    if (newPin.length !== 6 || confirmPin.length !== 6) {
+        showMessage("S-PIN must contain exactly 6 digits.");
+        return;
+    }
+
+    if (newPin !== confirmPin) {
+        showMessage("New S-PIN and Confirm S-PIN do not match.");
+        return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "Please wait...";
+
+    try {
+        const response = await fetch(API + "/auth/forgot-pin", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({
+                password: password,
+                new_pin: newPin
+            })
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (response.status === 401) {
+            localStorage.removeItem("swiftpays_token");
+            window.location.replace("/login");
+            return;
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                data.detail || data.message || "Unable to reset S-PIN."
+            );
+        }
+
+        showMessage(
+            data.message || "S-PIN reset successfully!",
+            true
+        );
+
+        document.getElementById("pinForm").reset();
+
+        // Redirect immediately after successful reset
+        window.location.replace("/dashboard");
+
+    } catch (error) {
+        showMessage(error.message || "Something went wrong. Please try again.");
+
+        btn.disabled = false;
+        btn.textContent = "↻  Reset S-PIN";
+    }
+});
+</script>
+
+</body>
+              </html>
+              
