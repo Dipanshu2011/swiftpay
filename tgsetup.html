@@ -1,25 +1,273 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#071426">
-<title>Telegram Bot Alerts | SwiftPays</title>
-<style>
-:root{--navy:#071426;--blue:#1677ff;--ink:#17263c;--muted:#68788e;--line:#e3eaf3;--bg:#f4f7fb;--green:#159b62}*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink)}.top{height:70px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,calc((100% - 1080px)/2));position:sticky;top:0;z-index:5}.brand{display:flex;align-items:center;gap:11px;font-weight:850}.brand img{width:42px;height:42px;object-fit:contain;border-radius:12px}.brand span{font-size:19px}.brand b{color:#168cff}.wrap{max-width:920px;margin:30px auto;padding:0 16px}.crumb{font-size:14px;color:#64758c;margin:0 0 20px}.crumb a{color:#3975d8;text-decoration:none}.card{background:#fff;border:1px solid #e7edf5;border-radius:20px;padding:26px;box-shadow:0 12px 35px rgba(12,35,68,.07)}.head{display:flex;align-items:center;gap:16px}.tgicon{width:64px;height:64px;display:grid;place-items:center;border-radius:19px;background:linear-gradient(145deg,#32a9f4,#1264c8);color:white;font-size:31px}.head h1{font-size:25px;margin:0 0 5px}.head p{margin:0;color:var(--muted);line-height:1.5}.status{display:inline-flex;align-items:center;gap:8px;margin:20px 0 18px;padding:9px 15px;border-radius:30px;background:#eefbf5;color:var(--green);font-weight:750;font-size:14px}.dot{width:8px;height:8px;border-radius:50%;background:currentColor}.current{background:#f8fafc;border:1px dashed #cbd7e5;border-radius:15px;padding:17px 19px;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:25px}.eyebrow{font-size:12px;color:#8998aa;font-weight:800;letter-spacing:.8px}.chat{font-size:23px;font-weight:800;letter-spacing:.6px;margin-top:5px;overflow-wrap:anywhere}.pill{padding:8px 13px;border-radius:30px;background:#eaf8f1;color:#168b5a;font-weight:750;font-size:13px;white-space:nowrap}.section-title{display:flex;align-items:center;gap:12px;color:#95a2b2;font-size:12px;font-weight:850;letter-spacing:1.1px;margin:24px 0 15px}.section-title:before,.section-title:after{content:"";height:1px;background:#e1e8f0;flex:1}.steps{display:grid;gap:13px}.step{display:flex;gap:15px;padding:18px;border:1px solid #e0e7f0;background:#f9fbfd;border-radius:16px}.num{flex:0 0 42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#7255ef,#5130d7);color:white;font-weight:850}.step h3{font-size:16px;margin:1px 0 6px}.step p{font-size:14px;line-height:1.65;color:#68788e;margin:0}.step a{display:inline-flex;margin-top:12px;padding:11px 15px;border-radius:11px;background:#e7f4ff;color:#1468aa;text-decoration:none;font-weight:750}.info{display:flex;gap:12px;padding:16px;border-radius:15px;background:#eef7ff;border:1px solid #cce4fa;color:#234b82;line-height:1.6;font-size:14px;margin:19px 0 25px}.info strong{color:#153e78}.fieldlabel{display:block;font-size:13px;font-weight:850;color:#65758b;letter-spacing:.6px;margin:0 0 9px}.inputrow{display:flex;gap:10px}.inputrow input{min-width:0;flex:1;padding:15px 16px;border:1px solid #d8e1ec;border-radius:13px;font-size:17px;outline:none;background:#fbfcfe}.inputrow input:focus{border-color:#2387ee;box-shadow:0 0 0 3px #2387ee18}.actions{display:flex;flex-wrap:wrap;gap:11px;margin-top:14px}.btn{border:0;border-radius:12px;padding:14px 19px;font-weight:800;font-size:15px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:9px}.primary{background:linear-gradient(110deg,#175fff,#4724e8);color:#fff;box-shadow:0 8px 18px #3d43df30}.outline{border:1.5px solid #4b29e9;color:#4825d9;background:white}.btn:disabled{opacity:.55;cursor:not-allowed}.message{display:none;margin-top:14px;padding:12px 14px;border-radius:11px;font-size:14px;line-height:1.5}.message.show{display:block}.message.error{background:#fff0f0;color:#a52d38}.message.ok{background:#edfbf4;color:#13764b}.footer{text-align:center;color:#94a1b1;font-size:12px;margin:18px 0 28px}@media(max-width:600px){.wrap{margin:19px auto}.card{padding:19px 16px;border-radius:17px}.head h1{font-size:21px}.tgicon{width:54px;height:54px}.current{align-items:flex-start;flex-direction:column}.inputrow{flex-direction:column}.actions .btn{width:100%}.top{height:62px}.brand img{width:37px;height:37px}}
-</style></head>
+  <script>
+  (async function () {
+    const token = localStorage.getItem('swiftpays_token');
+    const login = '/login?next=' + encodeURIComponent('/tgsetup');
+
+    if (!token) return location.replace(login);
+
+    try {
+      const res = await fetch('https://swiftpay-api-6azu.onrender.com/user/me', {
+        headers: { Authorization: 'Bearer ' + token },
+        cache: 'no-store'
+      });
+
+      if (!res.ok) {
+        localStorage.removeItem('swiftpays_token');
+        return location.replace(login);
+      }
+
+      document.documentElement.style.visibility = 'visible';
+    } catch (e) {
+      document.documentElement.style.visibility = 'visible';
+      window.addEventListener('DOMContentLoaded', () => {
+        const m = document.getElementById('message');
+        if (m) showMessage('Connection error. Please check your internet and reload.', 'error');
+      });
+    }
+  })();
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050d1c">
+  <title>Telegram Alerts | SwiftPays</title>
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+    body{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:18px;overflow-x:hidden;color:#fff;background:#050d1c}
+    .outer-background{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0;background:radial-gradient(circle at 10% 15%,#073b55,transparent 38%),radial-gradient(circle at 90% 85%,#082b58,transparent 38%),#050d1c}
+    .outer-glow{position:absolute;width:280px;height:280px;border-radius:50%;filter:blur(90px);opacity:.35;animation:glowMove 9s ease-in-out infinite alternate}
+    .glow-one{background:#00cfff;top:-120px;left:-100px}
+    .glow-two{background:#075bff;bottom:-130px;right:-100px;animation-delay:3s}
+    @keyframes glowMove{to{transform:translate(80px,65px) scale(1.3)}}
+    .floating-logo{position:absolute;width:85px;height:85px;object-fit:contain;opacity:.13;filter:drop-shadow(0 0 18px #00cfff)}
+    .logo-one{top:12%;left:7%;animation:floatOne 8s ease-in-out infinite alternate}
+    .logo-two{top:48%;right:5%;animation:floatTwo 10s ease-in-out infinite alternate}
+    .logo-three{bottom:8%;left:24%;animation:floatOne 9s ease-in-out infinite alternate}
+    .logo-four{top:75%;right:18%;width:55px;height:55px;animation:floatTwo 11s ease-in-out infinite alternate}
+    @keyframes floatOne{to{transform:translate(25px,35px) rotate(18deg);opacity:.22}}
+    @keyframes floatTwo{to{transform:translate(-25px,-35px) rotate(-18deg);opacity:.2}}
+    .light-wave{position:absolute;width:150%;height:150px;left:-25%;top:25%;background:linear-gradient(90deg,transparent,rgba(0,205,255,.15),transparent);filter:blur(35px);transform:rotate(-25deg);animation:waveMove 9s ease-in-out infinite alternate}
+    .wave-two{top:65%;animation-delay:3s;background:linear-gradient(90deg,transparent,rgba(0,90,255,.18),transparent)}
+    @keyframes waveMove{from{transform:translateX(-12%) rotate(-25deg)}to{transform:translateX(12%) rotate(-25deg)}}
+    .particle{position:absolute;width:4px;height:4px;border-radius:50%;background:#00d9ff;box-shadow:0 0 12px 3px #00d9ff80;animation:particleFloat linear infinite}
+    @keyframes particleFloat{0%{transform:translateY(30px);opacity:0}20%,80%{opacity:.8}100%{transform:translateY(-110vh);opacity:0}}
+    .card{position:relative;z-index:2;width:100%;max-width:430px;padding:27px 25px;border-radius:23px;background:#0d1d35;border:1px solid #17466b;box-shadow:0 20px 55px #0008,0 0 25px #00b4ff14}
+    .brand{text-align:center;margin-bottom:22px}
+    .main-logo{width:69px;height:69px;object-fit:contain;border-radius:17px;margin-bottom:8px;filter:drop-shadow(0 0 12px #00d2ff4d)}
+    .brand-name{font-size:27px;font-weight:900;letter-spacing:2px;color:#00d5ff;text-shadow:0 0 18px #00d2ff40}
+    .brand-sub{font-size:9px;letter-spacing:3px;color:#91a9c6;margin-top:5px}
+    h1{text-align:center;font-size:23px;margin-bottom:9px}
+    .intro{text-align:center;color:#9db4cf;font-size:13px;line-height:1.55;margin:0 auto 20px;max-width:330px}
+    .section{background:#091a30;border:1px solid #214568;border-radius:15px;padding:16px;margin-bottom:14px}
+    .section-title{font-size:15px;font-weight:800;color:#eaf6ff;margin-bottom:13px}
+    .steps{display:grid;gap:13px}
+    .step{display:flex;gap:12px;align-items:flex-start}
+    .step-no{flex:0 0 29px;height:29px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#00d9ff,#087dff);color:#001426;font-weight:900}
+    .step-copy strong{display:block;font-size:13px;color:#fff;margin:1px 0 4px}
+    .step-copy span{font-size:12px;line-height:1.45;color:#9db4cf}
+    .field{margin-bottom:12px}
+    label{display:block;font-size:13px;font-weight:700;color:#cbdcf0;margin-bottom:8px}
+    input{width:100%;height:51px;padding:0 14px;background:#08172a;border:1px solid #294766;border-radius:12px;outline:none;color:#fff;font-size:15px;transition:.2s}
+    input:focus{border-color:#00d5ff;box-shadow:0 0 0 3px #00d5ff1a}
+    input::placeholder{color:#657e9a;font-size:12px}
+    button{width:100%;height:52px;margin-top:7px;border:0;border-radius:12px;background:linear-gradient(100deg,#00d9ff,#087dff);color:#001426;font-size:14px;font-weight:900;cursor:pointer;box-shadow:0 7px 22px #0091ff38;transition:.2s}
+    button:hover{filter:brightness(1.08);transform:translateY(-2px)}
+    button:disabled{opacity:.6;cursor:not-allowed;transform:none}
+    .secondary{background:#102b49;border:1px solid #17628b;color:#69eaff;box-shadow:none}
+    .status-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;border-radius:12px;background:#00dc8014;border:1px solid #00dc8040;margin-bottom:14px}
+    .status-label{font-size:13px;font-weight:800;color:#8bffc5}
+    .status-detail{font-size:11px;color:#a9c9c5;margin-top:4px}
+    .status-pill{white-space:nowrap;font-size:11px;font-weight:800;color:#7dffc1;background:#00dc8021;padding:7px 10px;border-radius:20px}
+    .hint{font-size:11px;line-height:1.5;color:#91a9c6;margin-top:9px}
+    .message{display:none;margin-top:13px;padding:11px;border-radius:10px;font-size:12px;text-align:center;line-height:1.5}
+    .message.success{display:block;color:#7dffc1;background:#00dc801a;border:1px solid #00dc8040}
+    .message.error{display:block;color:#ffaaaa;background:#ff3c3c1a;border:1px solid #ff3c3c40}
+    .back{display:block;text-align:center;color:#00d5ff;font-size:13px;text-decoration:none;margin-top:20px}
+    .back:hover{text-decoration:underline}
+    @media(max-width:480px){body{padding:14px}.card{padding:25px 19px}.brand-name{font-size:25px}h1{font-size:21px}.floating-logo{width:65px;height:65px}}
+    @media(prefers-reduced-motion:reduce){.outer-background *{animation:none!important}}
+  </style>
+</head>
+
 <body>
-<header class="top"><div class="brand"><img src="https://swiftpays.pages.dev/logo.png" alt="SwiftPays logo"><span>Swift<b>Pays</b></span></div><a class="btn outline" href="/dashboard">← Dashboard</a></header>
-<main class="wrap"><p class="crumb"><a href="/dashboard">Dashboard</a> &nbsp;/&nbsp; Telegram Bot Alerts</p><section class="card">
-<div class="head"><div class="tgicon">➤</div><div><h1>Telegram Bot Alerts</h1><p>Get instant notifications for withdrawals, deposits and account activity.</p></div></div>
-<div class="status"><span class="dot"></span><span id="statusText">Checking connection…</span></div>
-<div class="current"><div><div class="eyebrow">CURRENT CHAT ID</div><div class="chat" id="currentChat">Not connected</div></div><span class="pill" id="activePill">Inactive</span></div>
-<div class="section-title">HOW TO SET UP</div><div class="steps">
-<article class="step"><div class="num">1</div><div><h3>Start SwiftPays Telegram Bot</h3><p>Open our official bot and tap Start. It will show your unique Telegram Chat ID.</p><a href="https://t.me/SwiftPaysBot" target="_blank" rel="noopener">➤ &nbsp; Start @SwiftPaysBot</a></div></article>
-<article class="step"><div class="num">2</div><div><h3>Copy Your Chat ID</h3><p>Copy the numeric Chat ID sent by @SwiftPaysBot and paste it in the field below.</p></div></article>
-<article class="step"><div class="num">3</div><div><h3>Save & Verify Your Chat ID</h3><p>Tap Update Chat ID. SwiftPays will send a verification message to confirm that you control this Telegram account.</p></div></article></div>
-<div class="info"><span>ℹ️</span><div><strong>Alerts will be sent for:</strong> Login, deposits, withdrawals, money sent/received and account updates. Your Chat ID is used only for SwiftPays notifications.</div></div>
-<div class="section-title">UPDATE CHAT ID</div><label class="fieldlabel" for="chatId"># YOUR TELEGRAM CHAT ID</label><div class="inputrow"><input id="chatId" type="text" inputmode="numeric" autocomplete="off" placeholder="Enter Telegram Chat ID" maxlength="24"><button class="btn outline" type="button" id="clearBtn">✕</button></div>
-<div class="actions"><button class="btn primary" id="saveBtn" type="button">▣ &nbsp; Update Chat ID</button><button class="btn outline" id="testBtn" type="button">➤ &nbsp; Send Test Alert</button></div><div class="message" id="messageBox" role="status" aria-live="polite"></div>
-</section><p class="footer">🔐 Secure • Fast • Reliable &nbsp;|&nbsp; © SwiftPays</p></main>
-<script>
-(() => {"use strict";const API="https://swiftpay-api-6azu.onrender.com",token=localStorage.getItem("swiftpays_token"),$=id=>document.getElementById(id);const headers=()=>({Authorization:`Bearer ${token}`,"Content-Type":"application/json"});function show(text,type){const b=$("messageBox");b.textContent=text;b.className=`message show ${type||""}`;}async function api(path,options={}){const r=await fetch(API+path,{...options,headers:{...headers(),...(options.headers||{})}});const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.detail||d.message||`Request failed (${r.status})`);return d;}async function load(){if(!token){$("statusText").textContent="Please log in to SwiftPays";$("currentChat").textContent="Login required";$("saveBtn").disabled=true;$("testBtn").disabled=true;show("Please log in to your SwiftPays account first.","error");return;}try{const d=await api("/user/telegram-alerts");const linked=!!d.linked;$("statusText").textContent=linked?"Alerts Active":"Alerts Not Connected";$("currentChat").textContent=d.chat_id||"Not connected";$("activePill").textContent=linked&&d.alerts_enabled?"Active":"Inactive";$("chatId").value=d.chat_id||"";$("testBtn").disabled=!linked||!d.alerts_enabled;}catch(e){$("statusText").textContent="Unable to load status";show(e.message,"error");}}$("clearBtn").onclick=()=>{$("chatId").value="";$("chatId").focus();};$("saveBtn").onclick=async()=>{const chat_id=$("chatId").value.trim();if(!/^-?\d{5,24}$/.test(chat_id)){show("Enter a valid numeric Telegram Chat ID.","error");return;}$("saveBtn").disabled=true;try{const d=await api("/user/telegram-alerts/link",{method:"POST",body:JSON.stringify({chat_id})});show(d.message||"Verification message sent. Open Telegram and complete verification.","ok");await load();}catch(e){show(e.message,"error");}finally{$("saveBtn").disabled=false;}};$("testBtn").onclick=async()=>{$("testBtn").disabled=true;try{const d=await api("/user/telegram-alerts/test",{method:"POST"});show(d.message||"Test alert sent successfully.","ok");}catch(e){show(e.message,"error");}finally{$("testBtn").disabled=false;}};load();})();
-</script></body></html>
+  <div class="outer-background">
+    <div class="outer-glow glow-one"></div>
+    <div class="outer-glow glow-two"></div>
+    <img src="https://swiftpays.pages.dev/logo.png" class="floating-logo logo-one" alt="">
+    <img src="https://swiftpays.pages.dev/logo.png" class="floating-logo logo-two" alt="">
+    <img src="https://swiftpays.pages.dev/logo.png" class="floating-logo logo-three" alt="">
+    <img src="https://swiftpays.pages.dev/logo.png" class="floating-logo logo-four" alt="">
+    <div class="light-wave"></div>
+    <div class="light-wave wave-two"></div>
+  </div>
+
+  <main class="card">
+    <div class="brand">
+      <img class="main-logo" src="https://swiftpays.pages.dev/logo.png" alt="SwiftPays Logo">
+      <div class="brand-name">SWIFTPAYS</div>
+      <div class="brand-sub">SECURE PAYMENT EXPERIENCE</div>
+    </div>
+
+    <h1>Telegram Bot Alerts</h1>
+    <p class="intro">Connect your Telegram account to receive important SwiftPays notifications.</p>
+
+    <section class="section">
+      <div class="section-title">How to Connect</div>
+      <div class="steps">
+        <div class="step"><div class="step-no">1</div><div class="step-copy"><strong>Start SwiftPaysBot</strong><span>Open @SwiftPaysBot on Telegram and press /start.</span></div></div>
+        <div class="step"><div class="step-no">2</div><div class="step-copy"><strong>Enter Your Chat ID</strong><span>Copy the Chat ID shown by the official bot and enter it below.</span></div></div>
+        <div class="step"><div class="step-no">3</div><div class="step-copy"><strong>Verify & Receive Alerts</strong><span>Complete the verification sent by SwiftPaysBot to activate alerts.</span></div></div>
+      </div>
+      <button type="button" class="secondary" id="openBotBtn">✈️ OPEN @SWIFTPAYSBOT</button>
+    </section>
+
+    <section class="section">
+      <div class="section-title">Your Telegram Connection</div>
+      <div class="status-row">
+        <div>
+          <div class="status-label" id="statusTitle">Checking connection...</div>
+          <div class="status-detail" id="statusDetail">Please wait</div>
+        </div>
+        <div class="status-pill" id="statusPill">CHECKING</div>
+      </div>
+      <div class="field">
+        <label for="chatId">Telegram Chat ID</label>
+        <input id="chatId" type="text" inputmode="numeric" autocomplete="off" placeholder="Enter your Telegram Chat ID">
+      </div>
+      <button type="button" id="updateBtn">🔐 UPDATE CHAT ID</button>
+      <p class="hint">Only link a Chat ID provided by @SwiftPaysBot. Ownership must be verified before alerts are enabled.</p>
+      <div class="message" id="message"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">Test Telegram Alert</div>
+      <p class="hint">Send a test notification to your verified Telegram account to check whether alerts are working.</p>
+      <button type="button" class="secondary" id="testBtn">✉️ SEND TEST ALERT</button>
+    </section>
+
+    <a class="back" href="/dashboard">← Back to Dashboard</a>
+  </main>
+
+  <script>
+    const API='https://swiftpay-api-6azu.onrender.com';
+    const token=localStorage.getItem('swiftpays_token');
+    const message=document.getElementById('message');
+    const updateBtn=document.getElementById('updateBtn');
+    const testBtn=document.getElementById('testBtn');
+
+    function showMessage(text,type){
+      message.textContent=text;
+      message.className='message '+type;
+    }
+
+    for(let i=0;i<24;i++){
+      const p=document.createElement('div');
+      p.className='particle';
+      p.style.left=Math.random()*100+'%';
+      p.style.top=(50+Math.random()*60)+'%';
+      p.style.animationDelay=Math.random()*8+'s';
+      p.style.animationDuration=(7+Math.random()*9)+'s';
+      document.querySelector('.outer-background').appendChild(p);
+    }
+
+    async function api(path,options={}){
+      const res=await fetch(API+path,{
+        ...options,
+        headers:{
+          Authorization:'Bearer '+token,
+          ...(options.headers||{})
+        },
+        cache:'no-store'
+      });
+
+      const data=await res.json().catch(()=>({}));
+
+      if(res.status===401||res.status===403){
+        localStorage.removeItem('swiftpays_token');
+        location.replace('/login?next='+encodeURIComponent('/tgsetup'));
+        throw new Error('Session expired.');
+      }
+
+      if(!res.ok) throw new Error(data.detail||data.message||'Request failed.');
+      return data;
+    }
+
+    async function loadStatus(){
+      try{
+        const data=await api('/user/telegram-alerts');
+        const linked=!!data.linked;
+
+        document.getElementById('statusTitle').textContent=
+          linked?'Telegram Alerts Connected':'Telegram Not Connected';
+
+        document.getElementById('statusDetail').textContent=
+          linked?'Your Telegram account is linked.':'Connect and verify your Telegram account to receive alerts.';
+
+        document.getElementById('statusPill').textContent=
+          linked?'LINKED':'NOT LINKED';
+      }catch(e){
+        document.getElementById('statusTitle').textContent='Unable to load status';
+        document.getElementById('statusDetail').textContent=e.message;
+        document.getElementById('statusPill').textContent='ERROR';
+      }
+    }
+
+    document.getElementById('openBotBtn').addEventListener('click',()=>{
+      window.open('https://t.me/SwiftPaysBot','_blank','noopener');
+    });
+
+    updateBtn.addEventListener('click',async()=>{
+      const chatId=document.getElementById('chatId').value.trim();
+
+      if(!/^\d{5,20}$/.test(chatId)){
+        showMessage('Please enter a valid numeric Telegram Chat ID.','error');
+        return;
+      }
+
+      updateBtn.disabled=true;
+      updateBtn.textContent='SENDING VERIFICATION...';
+
+      try{
+        const data=await api('/user/telegram-alerts/link',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({chat_id:chatId})
+        });
+
+        showMessage(
+          data.message||'Verification request sent. Follow the instructions in Telegram to confirm ownership.',
+          'success'
+        );
+        loadStatus();
+      }catch(e){
+        showMessage(e.message,'error');
+      }finally{
+        updateBtn.disabled=false;
+        updateBtn.textContent='🔐 UPDATE CHAT ID';
+      }
+    });
+
+    testBtn.addEventListener('click',async()=>{
+      testBtn.disabled=true;
+      testBtn.textContent='PLEASE WAIT...';
+
+      try{
+        await api('/user/telegram-alerts/test',{method:'POST'});
+        showMessage('Test alert request sent. Check your linked Telegram chat.','success');
+      }catch(e){
+        showMessage(e.message,'error');
+      }finally{
+        testBtn.disabled=false;
+        testBtn.textContent='✉️ SEND TEST ALERT';
+      }
+    });
+
+    loadStatus();
+  </script>
+</body>
+</html>
