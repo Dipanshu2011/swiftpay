@@ -1,39 +1,111 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SwiftPays | Transaction History</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SwiftPays — Profile</title>
 <style>
-:root{--bg:#07111f;--panel:#0d1b2d;--line:#1c3550;--text:#edf6ff;--muted:#8da5bd;--cyan:#16d8f5;--green:#36d69a;--red:#ff6b7d;--yellow:#ffc857}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -10%,#123451,transparent 38%),var(--bg);color:var(--text);font:15px/1.5 system-ui,Arial}.wrap{max-width:1050px;margin:auto;padding:26px 18px 55px}
-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}.brand{display:flex;align-items:center;gap:11px;font-size:20px;font-weight:800}.brand img{width:42px;height:42px;border-radius:12px}.back{color:var(--muted);text-decoration:none;border:1px solid var(--line);padding:8px 12px;border-radius:10px}
-h1{font-size:29px;margin:0}.sub{color:var(--muted);margin:4px 0 22px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:18px}.card,.filters,.list{background:linear-gradient(145deg,#102239,#0a192b);border:1px solid var(--line);border-radius:16px}.card{padding:16px}.label,.meta,.foot{color:var(--muted);font-size:12px}.amount{font-size:23px;font-weight:800;margin-top:5px}.green{color:var(--green)}.red{color:var(--red)}
-.filters{padding:15px;margin-bottom:20px}.searchrow{display:flex;gap:9px;margin-bottom:13px}.search,select{background:#081626;color:var(--text);border:1px solid var(--line);padding:11px 12px;border-radius:10px}.search{flex:1;min-width:100px}button{cursor:pointer}.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{border:1px solid var(--line);background:#0a1929;color:var(--muted);padding:7px 13px;border-radius:30px}.chip.active{border-color:var(--cyan);color:var(--cyan);background:#103044}
-.heading{display:flex;justify-content:space-between;margin:0 2px 10px}.heading h2{font-size:17px;margin:0}.count{color:var(--muted);font-size:12px}
-.txn{display:grid;grid-template-columns:minmax(180px,1.5fr) minmax(100px,1fr) minmax(130px,1fr) auto;gap:12px;align-items:center;padding:15px 17px;border-bottom:1px solid #1c3550}.txn:last-child{border:0}.kind{display:flex;align-items:center;gap:11px}.ico{width:40px;height:40px;border-radius:12px;background:#12304a;display:grid;place-items:center;font-size:18px}.name{font-weight:700}.status{font-size:11px;padding:5px 9px;border-radius:30px;background:#183b35;color:var(--green)}.pending{background:#3a301b;color:var(--yellow)}.failed,.reversed{background:#3b202b;color:var(--red)}.value{text-align:right;font-weight:800}.empty{display:none;text-align:center;color:var(--muted);padding:35px}.foot{margin-top:13px}
-@media(max-width:650px){.wrap{padding:18px 12px}.stats{grid-template-columns:1fr 1fr}.stats .card:last-child{grid-column:span 2}h1{font-size:25px}.searchrow{flex-wrap:wrap}.search{flex-basis:100%}.txn{grid-template-columns:1fr auto;gap:5px;padding:13px}.txn .type{grid-column:1}.txn .date{grid-column:1}.txn .status{grid-column:2;grid-row:2;justify-self:end}.txn .value{grid-column:2;grid-row:1}.hide{display:none}}
-</style></head><body><main class="wrap">
-<header><div class="brand"><img src="https://swiftpays.pages.dev/logo.png" alt="SwiftPays">SwiftPays</div><a class="back" href="#">← Dashboard</a></header>
-<h1>Transaction History</h1><p class="sub">Track every movement in your SwiftPays wallet.</p>
-<section class="stats"><div class="card"><div class="label">Total Credits</div><div class="amount green">+₹8,450.00</div></div><div class="card"><div class="label">Total Debits</div><div class="amount red">−₹3,220.00</div></div><div class="card"><div class="label">Transactions</div><div class="amount">12</div></div></section>
-<section class="filters"><div class="searchrow"><input id="search" class="search" placeholder="Search transaction, ID or amount…"><select id="type"><option value="all">All types</option><option>Deposit</option><option>Withdrawal</option><option>Send Money</option><option>Receive Money</option><option>Refund</option><option>Cashback</option><option>Bonus</option><option>Fee / Charge</option><option>Adjustment</option></select><select id="status"><option value="all">All statuses</option><option>Success</option><option>Pending</option><option>Failed</option><option>Reversed</option></select></div>
-<div id="chips" class="chips"><button class="chip active" data-f="All">All</button><button class="chip" data-f="Credit">Credit</button><button class="chip" data-f="Debit">Debit</button><button class="chip" data-f="Pending">Pending</button><button class="chip" data-f="Failed">Failed</button></div></section>
-<div class="heading"><h2>All Transactions</h2><span id="count" class="count">12 records</span></div><section class="list" id="list">
-<div class="txn" data-type="Deposit" data-status="Success" data-flow="Credit"><div class="kind"><span class="ico">↓</span><div><div class="name">Wallet Deposit</div><div class="meta">SP10482 · UPI</div></div></div><div class="type">Deposit</div><div class="meta date">Today, 10:42 AM</div><div class="value green">+₹2,500.00</div><span class="status">Success</span></div>
-<div class="txn" data-type="Withdrawal" data-status="Pending" data-flow="Debit"><div class="kind"><span class="ico">↑</span><div><div class="name">Bank Withdrawal</div><div class="meta">SP10479 · Bank transfer</div></div></div><div class="type">Withdrawal</div><div class="meta date">Today, 09:18 AM</div><div class="value red">−₹1,000.00</div><span class="status pending">Pending</span></div>
-<div class="txn" data-type="Send Money" data-status="Success" data-flow="Debit"><div class="kind"><span class="ico">↗</span><div><div class="name">Sent to Rahul</div><div class="meta">SP10465 · Wallet transfer</div></div></div><div class="type">Send Money</div><div class="meta date">Yesterday, 08:25 PM</div><div class="value red">−₹500.00</div><span class="status">Success</span></div>
-<div class="txn" data-type="Receive Money" data-status="Success" data-flow="Credit"><div class="kind"><span class="ico">↙</span><div><div class="name">Received from Aman</div><div class="meta">SP10451 · Wallet transfer</div></div></div><div class="type">Receive Money</div><div class="meta date">Yesterday, 05:10 PM</div><div class="value green">+₹750.00</div><span class="status">Success</span></div>
-<div class="txn" data-type="Refund" data-status="Success" data-flow="Credit"><div class="kind"><span class="ico">↩</span><div><div class="name">Order Refund</div><div class="meta">SP10430 · Refunded payment</div></div></div><div class="type">Refund</div><div class="meta date">20 Nov 2026</div><div class="value green">+₹299.00</div><span class="status">Success</span></div>
-<div class="txn" data-type="Cashback" data-status="Success" data-flow="Credit"><div class="kind"><span class="ico">★</span><div><div class="name">Cashback Reward</div><div class="meta">SP10412 · Promotional reward</div></div></div><div class="type">Cashback</div><div class="meta date">19 Nov 2026</div><div class="value green">+₹45.00</div><span class="status">Success</span></div>
-<div class="txn" data-type="Bonus" data-status="Success" data-flow="Credit"><div class="kind"><span class="ico">🎁</span><div><div class="name">Welcome Bonus</div><div class="meta">SP10398 · Account reward</div></div></div><div class="type">Bonus</div><div class="meta date">18 Nov 2026</div><div class="value green">+₹100.00</div><span class="status">Success</span></div>
-<div class="txn" data-type="Fee / Charge" data-status="Success" data-flow="Debit"><div class="kind"><span class="ico">₹</span><div><div class="name">Service Fee</div><div class="meta">SP10376 · Processing charge</div></div></div><div class="type">Fee / Charge</div><div class="meta date">17 Nov 2026</div><div class="value red">−₹10.00</div><span class="status">Success</span></div>
-<div class="txn" data-type="Adjustment" data-status="Reversed" data-flow="Credit"><div class="kind"><span class="ico">⚙</span><div><div class="name">Wallet Adjustment</div><div class="meta">SP10361 · Balance correction</div></div></div><div class="type">Adjustment</div><div class="meta date">16 Nov 2026</div><div class="value green">+₹25.00</div><span class="status reversed">Reversed</span></div>
-<div class="txn" data-type="Withdrawal" data-status="Failed" data-flow="Debit"><div class="kind"><span class="ico">↑</span><div><div class="name">Bank Withdrawal</div><div class="meta">SP10340 · Bank transfer</div></div></div><div class="type">Withdrawal</div><div class="meta date">15 Nov 2026</div><div class="value red">−₹1,200.00</div><span class="status failed">Failed</span></div>
-<div class="txn" data-type="Deposit" data-status="Success" data-flow="Credit"><div class="kind"><span class="ico">↓</span><div><div class="name">Wallet Deposit</div><div class="meta">SP10321 · UPI</div></div></div><div class="type">Deposit</div><div class="meta date">14 Nov 2026</div><div class="value green">+₹5,000.00</div><span class="status">Success</span></div>
-<div class="txn" data-type="Send Money" data-status="Pending" data-flow="Debit"><div class="kind"><span class="ico">↗</span><div><div class="name">Sent to Priya</div><div class="meta">SP10298 · Wallet transfer</div></div></div><div class="type">Send Money</div><div class="meta date">13 Nov 2026</div><div class="value red">−₹510.00</div><span class="status pending">Pending</span></div>
-</section><div id="empty" class="empty">No transactions match your filters.</div>
-<p class="foot">Demo preview only — connect the SwiftPays transaction API before displaying real wallet records.</p>
+:root{--bg:#020b22;--panel:#06183a;--panel2:#071f4b;--cyan:#08d9ff;--blue:#087bff;--line:#087be8;--white:#eef7ff;--muted:#a8bddb;--red:#ff2457}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% 0%,#092d67 0%,#03122f 38%,#01091d 100%);color:var(--white);font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;min-height:100vh;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(120deg,transparent 0 42%,rgba(0,190,255,.035) 50%,transparent 58%);animation:ambient 8s ease-in-out infinite alternate}
+@keyframes ambient{from{transform:translateX(-8%)}to{transform:translateX(8%)}}
+@keyframes glow{0%,100%{box-shadow:0 0 12px #007bff55,inset 0 0 14px #007bff18}50%{box-shadow:0 0 26px #00d9ff88,inset 0 0 22px #007bff30}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes appear{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.topbar{height:86px;display:flex;align-items:center;gap:18px;padding:0 22px;border-bottom:1px solid #087be855;background:#020b22d9;position:sticky;top:0;z-index:5;backdrop-filter:blur(16px)}
+.hamburger{width:48px;height:48px;border:1px solid #078cff;border-radius:50%;background:#061b42;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;cursor:pointer;box-shadow:0 0 16px #007bff55;flex-shrink:0}
+.hamburger span{width:22px;height:2.5px;background:var(--cyan);border-radius:5px;transition:.25s}
+.hamburger.active span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+.brand{display:flex;align-items:center;gap:12px;margin:auto}
+.brand img{width:52px;height:52px;object-fit:contain;filter:drop-shadow(0 0 10px #00bfff88)}
+.brand strong{font-size:clamp(22px,5vw,32px);letter-spacing:-1px}.brand strong span{color:var(--cyan)}
+.top-spacer{width:48px}
+main{width:min(820px,100%);margin:22px auto 44px;padding:0 16px}
+.card{position:relative;background:linear-gradient(135deg,rgba(7,31,75,.97),rgba(2,13,37,.98));border:1px solid #087be8;border-radius:25px;padding:22px;margin:0 0 18px;overflow:hidden;animation:appear .65s both,glow 5s ease-in-out infinite}
+.card:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,transparent 0 22%,#078cff12 32%,transparent 43% 72%,#00d9ff0b 83%,transparent 92%)}
+.profile-photo{text-align:center;padding:26px 18px 22px}
+.avatar-wrap{width:164px;height:164px;margin:0 auto 20px;position:relative;animation:float 4s ease-in-out infinite}
+.avatar{width:100%;height:100%;border-radius:50%;border:4px solid var(--cyan);background:#02102b;display:grid;place-items:center;overflow:hidden;box-shadow:0 0 18px #00cfff,0 0 42px #006bff66}
+.avatar img{width:100%;height:100%;object-fit:contain;padding:12px}
+.camera{position:absolute;right:-3px;bottom:8px;border:2px solid var(--cyan);background:#06183a;color:white;width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer}
+.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+button{font:inherit}
+.btn{border:1px solid var(--cyan);border-radius:18px;padding:14px 20px;color:#00152c;background:linear-gradient(110deg,#00dcf5,#087bff,#00dcf5);background-size:200% 100%;font-weight:800;cursor:pointer;box-shadow:0 0 18px #008cff44;transition:transform .2s,filter .2s;animation:shimmer 5s linear infinite}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.15)}
+.btn.outline{background:transparent;color:var(--cyan);border:1.5px solid var(--cyan);animation:none}
+.section-title{display:flex;align-items:center;gap:13px;font-size:22px;font-weight:800;margin:0 0 8px}
+.section-sub{color:var(--muted);margin:0 0 22px 48px}
+.field-label{display:block;font-weight:700;margin:16px 0 9px}
+.input-row{display:flex;gap:10px;align-items:center}
+input{width:100%;min-width:0;border:1px solid #1a5da8;background:#03132f;color:white;border-radius:16px;padding:15px 16px;font-size:17px;outline:none}
+input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #00cfff20}
+.readonly{background:#061a3c;color:#d4e7ff}
+.phone-wrap{position:relative}.phone-wrap input{padding-right:56px}.eye{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:0;color:#c7eaff;font-size:22px;cursor:pointer}
+.save{white-space:nowrap;padding:15px 18px}
+.setting{display:flex;align-items:center;gap:17px;padding:18px 20px;cursor:pointer}
+.setting-icon{font-size:31px;color:var(--cyan);width:42px;text-align:center}
+.setting-copy{flex:1}.setting-copy strong{display:block;font-size:19px}.setting-copy small{display:block;color:var(--muted);margin-top:4px;font-size:14px}
+.arrow{color:var(--cyan);font-size:26px}
+.note{border-color:#00bce8;background:linear-gradient(110deg,#061a3c,#071b43)}
+.note strong{color:var(--cyan)}
+.logout{border-color:#b51d54}.logout .setting-icon,.logout .arrow{color:#ff426c}
+.overlay{display:none;position:fixed;inset:0;background:#0009;z-index:10;align-items:center;justify-content:center;padding:18px}.overlay.show{display:flex}
+.modal{width:min(440px,100%);background:#06183a;border:1px solid var(--cyan);border-radius:22px;padding:24px;box-shadow:0 0 35px #007bff66;animation:appear .25s}
+.modal h3{margin:0 0 16px}.modal .btn{width:100%;margin-top:15px}.close{float:right;background:none;border:0;color:white;font-size:25px;cursor:pointer}
+@media(max-width:520px){.topbar{height:76px;padding:0 15px;gap:12px}.brand{gap:8px}.brand img{width:43px;height:43px}.top-spacer{width:35px}.hamburger{width:44px;height:44px}.card{padding:18px;border-radius:21px}.profile-photo{padding:22px 12px}.avatar-wrap{width:145px;height:145px}.actions{display:grid;grid-template-columns:1fr 1fr}.actions .btn{padding:13px 8px;font-size:13px}.input-row{align-items:stretch;flex-direction:column}.save{width:100%}.setting{padding:17px 14px}.setting-copy strong{font-size:17px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button class="hamburger" id="menuBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
+  <div class="brand"><img src="https://swiftpays.pages.dev/logo.png" alt="SwiftPays logo"><strong>Swift<span>Pays</span></strong></div>
+  <div class="top-spacer"></div>
+</header>
+<main>
+  <section class="card profile-photo">
+    <div class="avatar-wrap"><div class="avatar"><img id="avatar" src="https://swiftpays.pages.dev/logo.png" alt="Profile picture"></div><button class="camera" id="cameraBtn" aria-label="Upload profile photo">📷</button></div>
+    <input id="photoInput" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    <div class="actions">
+      <button class="btn outline" id="revertBtn">↻ Revert to Official Logo</button>
+      <button class="btn" id="uploadBtn">▧ Upload Photo</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="section-title"><span style="color:var(--cyan)">●</span> Profile Information</h2>
+    <p class="section-sub">Your basic information</p>
+    <label class="field-label" for="name">✎ &nbsp; Name</label>
+    <div class="input-row"><input id="name" value="Ankur Prajapati" maxlength="60"><button class="btn save" id="saveName">✓ Save Changes</button></div>
+    <label class="field-label" for="phone">☎ &nbsp; Mobile Number &nbsp; 🔒</label>
+    <div class="phone-wrap"><input id="phone" class="readonly" value="8720xxxxxx16" readonly><button class="eye" id="togglePhone" aria-label="Show or hide mobile number">◉</button></div>
+  </section>
+
+  <section class="card setting" data-modal="password"><div class="setting-icon">🔐</div><div class="setting-copy"><strong>Change Password</strong><small>Update your account password</small></div><div class="arrow">›</div></section>
+  <section class="card setting" data-modal="pin"><div class="setting-icon">▦</div><div class="setting-copy"><strong>Change PIN</strong><small>Update your 4–6 digit PIN</small></div><div class="arrow">›</div></section>
+  <section class="card setting logout" id="logoutBtn"><div class="setting-icon">⇥</div><div class="setting-copy"><strong>Logout Session</strong><small>Logout from all devices</small></div><div class="arrow">›</div></section>
+  <section class="card note"><strong>ⓘ &nbsp; Note:</strong><div style="margin-top:6px;color:var(--muted)">For your security, always keep your account details confidential and log out after use.</div></section>
 </main>
+
+<div class="overlay" id="modalOverlay"><div class="modal"><button class="close" id="closeModal">×</button><h3 id="modalTitle">Change Password</h3><div id="modalFields"></div><button class="btn" id="submitModal">Update</button></div></div>
 <script>
-const rows=[...document.querySelectorAll('.txn')],q=document.querySelector('#search'),t=document.querySelector('#type'),s=document.querySelector('#status'),count=document.querySelector('#count'),empty=document.querySelector('#empty');let quick='All';
-function apply(){let n=0;rows.forEach(r=>{let ok=(!q.value||r.textContent.toLowerCase().includes(q.value.toLowerCase()))&&(t.value==='all'||r.dataset.type===t.value)&&(s.value==='all'||r.dataset.status===s.value)&&(quick==='All'||(quick==='Credit'&&r.dataset.flow==='Credit')||(quick==='Debit'&&r.dataset.flow==='Debit')||r.dataset.status===quick);r.style.display=ok?'grid':'none';if(ok)n++});count.textContent=n+' records';empty.style.display=n?'none':'block'}
-[q,t,s].forEach(x=>x.addEventListener('input',apply));document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');quick=b.dataset.f;apply()});
-</script></body></html>
+const officialLogo='https://swiftpays.pages.dev/logo.png';
+const avatar=document.getElementById('avatar'),photoInput=document.getElementById('photoInput');
+document.getElementById('uploadBtn').onclick=()=>photoInput.click();
+document.getElementById('cameraBtn').onclick=()=>photoInput.click();
+photoInput.onchange=()=>{const f=photoInput.files[0];if(!f)return;if(!['image/jpeg','image/png','image/webp'].includes(f.type)||f.size>2*1024*1024){alert('Choose JPG, PNG or WebP under 2 MB.');photoInput.value='';return;}avatar.src=URL.createObjectURL(f);};
+document.getElementById('revertBtn').onclick=()=>{avatar.src=officialLogo;photoInput.value='';};
+document.getElementById('saveName').onclick=()=>{const n=document.getElementById('name').value.trim();if(n.length<2){alert('Please enter a valid name.');return;}alert('Name ready to save. Connect this button to your SwiftPays profile API to persist it.');};
+let phoneVisible=false;document.getElementById('togglePhone').onclick=()=>{phoneVisible=!phoneVisible;document.getElementById('phone').value=phoneVisible?'8720••••••16':'8720xxxxxx16';document.getElementById('togglePhone').textContent=phoneVisible?'◎':'◉';};
+document.getElementById('menuBtn').onclick=e=>{e.currentTarget.classList.toggle('active');};
+const overlay=document.getElementById('modalOverlay'),fields=document.getElementById('modalFields'),title=document.getElementById('modalTitle');let mode='';
+function openModal(type){mode=type;title.textContent=type==='password'?'Change Password':'Change PIN';fields.innerHTML=type==='password'?'<label class="field-label">Current Password</label><input type="password" placeholder="Enter current password"><label class="field-label">New Password</label><input type="password" placeholder="Enter new password"><label class="field-label">Confirm New Password</label><input type="password" placeholder="Confirm new password">':'<label class="field-label">Current PIN</label><input type="password" inputmode="numeric" maxlength="6" placeholder="Enter current PIN"><label class="field-label">New PIN (4–6 digits)</label><input type="password" inputmode="numeric" maxlength="6" placeholder="Enter new PIN"><label class="field-label">Confirm New PIN</label><input type="password" inputmode="numeric" maxlength="6" placeholder="Confirm new PIN">';overlay.classList.add('show');}
+document.querySelectorAll('[data-modal]').forEach(el=>el.onclick=()=>openModal(el.dataset.modal));
+document.getElementById('closeModal').onclick=()=>overlay.classList.remove('show');
+overlay.onclick=e=>{if(e.target===overlay)overlay.classList.remove('show')};
+document.getElementById('submitModal').onclick=()=>{const vals=[...fields.querySelectorAll('input')].map(x=>x.value);if(vals.some(x=>!x)){alert('Please fill all fields.');return;}if(vals[1]!==vals[2]){alert('Confirmation does not match.');return;}if(mode==='pin'&&!/^\d{4,6}$/.test(vals[1])){alert('PIN must contain 4–6 digits.');return;}alert('Form validated. Connect this action to the secure backend endpoint; credentials must never be stored in browser storage.');};
+document.getElementById('logoutBtn').onclick=()=>{if(confirm('Logout from all devices?'))alert('Connect this action to your backend session-revocation endpoint.');};
+</script>
+</body>
+</html>
